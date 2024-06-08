@@ -11,4 +11,8 @@ Rails.application.routes.draw do
   root "dashboard#index"
 
   get 'dashboard/index'
+
+  devise_scope :user do
+    get 'users/sign_in' => "devise/sessions#new", :as => :login
+  end
 end
