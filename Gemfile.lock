@@ -1,3 +1,14 @@
+GIT
+  remote: https://github.com/rubycdp/ferrum.git
+  revision: 443b268543da5347513dafb0ec7ccfe8b609b199
+  branch: main
+  specs:
+    ferrum (0.15)
+      addressable (~> 2.5)
+      concurrent-ruby (~> 1.1)
+      webrick (~> 1.7)
+      websocket-driver (~> 0.7)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -317,6 +328,7 @@ DEPENDENCIES
   capybara
   debug
   devise (~> 4.9)
+  ferrum!
   importmap-rails
   jbuilder
   mailcatcher (~> 0.10.0)

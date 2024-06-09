@@ -1,0 +1,2 @@
+class Connectors::Base
+end
