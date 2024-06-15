@@ -15,4 +15,11 @@ Rails.application.routes.draw do
   devise_scope :user do
     get 'users/sign_in' => "devise/sessions#new", :as => :login
   end
+
+  resources :connectors, only: [:show] do
+    member do
+      post '/', to: 'connectors#create', as: 'create'
+    end
+  end
+
 end
