@@ -1,6 +1,6 @@
 class ConnectorsController < ApplicationController
   before_action :set_connector, only: [:show, :create]
-  before_action :set_bank_name, only: [:show]
+  before_action :set_bank_name, only: [:show, :create]
 
   def show
     if @connector.persisted?
@@ -10,9 +10,17 @@ class ConnectorsController < ApplicationController
   end
 
   def create
-    puts 'hello world'
+    @connector.assign_attributes connector_params
+    #@connector.save!
+
     respond_to do |format|
-      format.turbo_stream
+      format.turbo_stream do
+        if @connector.valid?
+          render turbo_stream: turbo_stream.replace(:connector_process, partial: 'connectors/connector_process')
+        else
+          render turbo_stream: turbo_stream.replace(:new_connector_form, partial: 'connectors/connector_form')
+        end
+      end
     end
   end
 
@@ -29,5 +37,9 @@ class ConnectorsController < ApplicationController
 
   def valid_bank?
     Connector.banks.values.include? params['id']
+  end
+
+  def connector_params
+    params.require(:connector).permit(:username, :password, :auth_type)
   end
 end

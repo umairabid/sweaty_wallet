@@ -1,0 +1,18 @@
+<div data-controller="connector_process" id="connector_process" class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+  <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+      Connect with <%= @bank_name %>
+    </h3>
+    <button type="button" class="text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="connector-modal">
+      <%= render "icons/cross" %>
+      <span class="sr-only">Close modal</span>
+    </button>
+  </div>
+  <!-- Modal body -->
+  <div class="p-4 md:p-5 space-y-4">
+  </div>
+  <!-- Modal footer -->
+  <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b justify-end justify-items-center">
+    <button data-modal-hide="connector-modal" data-action="click->connector_process#close_modal" type="button" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 ">Decline</button>
+  </div>
+</div>

@@ -1,4 +1,9 @@
-<div class="px-4 pt-6 dark:bg-gray-900">
+<div 
+  data-controller="new_connector" 
+  id="new_connector" 
+  class="px-4 pt-6 dark:bg-gray-900" 
+  data-action="connector_process:close_modal@window->new_connector#close_modal"
+  data-new_connector-errors-count="<%= @connector.errors.size %>">
   <div class="mb-4 col-span-full xl:mb-2">
     <nav class="flex mb-5" aria-label="Breadcrumb">
       <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
@@ -26,43 +31,14 @@
     <div class="px-4 p-6 my-6 bg-white border border-gray-200 rounded-lg shadow-sm">
       <% unless @connector.persisted? %>
         <span> You are not connected to <%= @bank_name %> yet, </span>
-        <button class="" data-modal-target="connector-modal" data-modal-toggle="connector-modal" type="button">Connect Now</button>
+        <button class="" type="button" data-modal-target="connector-modal"  id="connector-modal-opener">Connect Now</button>
       </div>
     <% end -%>
   </div>
 </div>
 <div id="connector-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
   <div class="relative p-4 w-full max-w-2xl max-h-full">
-    <!-- Modal content -->
-    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-      <%= form_with(model: @connector, url: create_connector_path(id: params['id'])) do |f| %>
-        <!-- Modal header -->
-        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-            Connect with <%= @bank_name %>
-          </h3>
-          <button type="button" class="text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="connector-modal">
-            <%= render "icons/cross" %>
-            <span class="sr-only">Close modal</span>
-          </button>
-        </div>
-        <!-- Modal body -->
-        <div class="p-4 md:p-5 space-y-4">
-          <div>
-            <%= f.label :email, 'Your Email', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white', required: true %>
-            <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'name@company.com', class: 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5' %>
-          </div>
-          <div>
-            <%= f.label :password, 'Your Password', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
-            <%= f.password_field :password, autocomplete: "current-password", placeholder: '••••••••', class: 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5' %>
-          </div>
-        </div>
-        <!-- Modal footer -->
-        <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b justify-end justify-items-center">
-          <button data-modal-hide="connector-modal" type="button" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 ">Decline</button>
-          <%= f.submit "Connect", class: 'cursor-pointer ms-3 text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center' %>
-        </div>
-      </div>
-    <% end %>
+    <%= render 'connectors/connector_form' %>
+    <div id="connector_process"></div>
   </div>
 </div>

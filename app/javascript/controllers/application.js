@@ -1,4 +1,5 @@
 import { Application } from "@hotwired/stimulus"
+import 'flowbite';
 
 const application = Application.start()
 

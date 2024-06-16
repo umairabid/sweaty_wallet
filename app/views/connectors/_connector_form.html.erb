@@ -1,0 +1,49 @@
+<!-- Modal content -->
+<div id="new_connector_form" class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+  <%= form_with(model: @connector, url: create_connector_path(id: params['id'])) do |f| %>
+    <!-- Modal header -->
+    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+      <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+        Connect with <%= @bank_name %>
+      </h3>
+      <button type="button" class="text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="connector-modal">
+        <%= render "icons/cross" %>
+        <span class="sr-only">Close modal</span>
+      </button>
+    </div>
+    <!-- Modal body -->
+    <div class="p-4 md:p-5 space-y-4">
+      <% if @connector.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@connector.errors.count, "error") %> prohibited this article from being saved:</h2>
+          <ul>
+            <% @connector.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <div>
+        <%= f.label :username, 'Your Bank Username', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+        <%= f.text_field :username, autofocus: true, autocomplete: "username", placeholder: 'name@company.com', class: 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5' %>
+      </div>
+      <div>
+        <%= f.label :password, 'Your Bank Password', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+        <%= f.password_field :password, autocomplete: "current-password", placeholder: '••••••••', class: 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5' %>
+      </div>
+      <div>
+        <%= f.radio_button :auth_type, "persisted", class: 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300' %>
+        <%= f.label :auth_type_persisted, "I want to save my credentials for future use", class: 'ms-2 text-sm font-medium text-gray-900 ' %>
+      </div>
+      <div>
+        <%= f.radio_button :auth_type, "transient", class: 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300' %>
+        <%= f.label :auth_type_transient, "I don't wany my credentials saved", class: 'ms-2 text-sm font-medium text-gray-900 ' %>
+      </div>
+    </div>
+    <!-- Modal footer -->
+    <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b justify-end justify-items-center">
+      <button data-modal-hide="connector-modal" type="button" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 ">Decline</button>
+      <%= f.submit "Connect", class: 'cursor-pointer ms-3 text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center' %>
+    </div>
+  <% end %>
+</div>
