@@ -31,7 +31,7 @@
     <div class="px-4 p-6 my-6 bg-white border border-gray-200 rounded-lg shadow-sm">
       <% unless @connector.persisted? %>
         <span> You are not connected to <%= @bank_name %> yet, </span>
-        <button class="" type="button" data-modal-target="connector-modal"  id="connector-modal-opener">Connect Now</button>
+        <button class="text-sky-500" type="button" data-modal-target="connector-modal"  id="connector-modal-opener">Connect Now</button>
       </div>
     <% end -%>
   </div>

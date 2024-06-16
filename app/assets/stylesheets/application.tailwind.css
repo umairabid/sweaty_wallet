@@ -11,3 +11,16 @@
 }
 
 */
+.field_with_errors {
+  display: inline;
+}
+
+.form-errors ul {
+  list-style: disc;
+}
+
+.field_with_errors {
+  input {
+    border-color: rgb(153 27 27/var(--tw-text-opacity));
+  }
+}

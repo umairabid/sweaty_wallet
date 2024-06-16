@@ -14,11 +14,11 @@
     <!-- Modal body -->
     <div class="p-4 md:p-5 space-y-4">
       <% if @connector.errors.any? %>
-        <div id="error_explanation">
+        <div class="form-errors p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50">
           <h2><%= pluralize(@connector.errors.count, "error") %> prohibited this article from being saved:</h2>
-          <ul>
+          <ul class="m-4">
             <% @connector.errors.each do |error| %>
-              <li><%= error.full_message %></li>
+              <li class="ml-4"><%= error.full_message %></li>
             <% end %>
           </ul>
         </div>
