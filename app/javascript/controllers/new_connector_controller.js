@@ -3,11 +3,8 @@ import { Modal } from "../flowbite_modules";
 
 export default class extends Controller {
   connect() {
-    let modalOpener = document.getElementById("connector-modal-opener");
-    modalOpener.onclick = () => {
-      this.get_modal().show()
-    }
-      
+    this.get_modal().show();
+    console.log(this.get_modal())
   }
 
   get_modal() {
@@ -22,7 +19,7 @@ export default class extends Controller {
   }
 
   create_modal() {
-    const $targetEl = document.getElementById("connector-modal");
+    const $targetEl = document.getElementById("new_connector");
 
     // options with default values
     const options = {
@@ -34,10 +31,6 @@ export default class extends Controller {
         console.log("modal is hidden");
       },
       onShow: () => {
-        const form = document.getElementById('new_connector_form');
-        form.classList.remove('hidden')
-        const processor = document.getElementById('connector_process');
-        processor.classList.add('hidden')
       },
       onToggle: () => {
         console.log("modal has been toggled");

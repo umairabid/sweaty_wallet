@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :connectors, only: [:show] do
     member do
       post '/', to: 'connectors#create', as: 'create'
+      get '/new', to: 'connectors#new', as: 'new'
     end
   end
 

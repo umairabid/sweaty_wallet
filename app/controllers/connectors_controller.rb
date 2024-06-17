@@ -1,12 +1,19 @@
 class ConnectorsController < ApplicationController
-  before_action :set_connector, only: [:show, :create]
-  before_action :set_bank_name, only: [:show, :create]
+  before_action :set_connector
+  before_action :set_bank_name
 
-  def show
-    if @connector.persisted?
-    else
-      render :new
+  def new
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(:new_connector, template: 'connectors/new')
+      end
+
+      format.html {  render :new }
     end
+  end
+  
+  def show
+    
   end
 
   def create
@@ -18,7 +25,7 @@ class ConnectorsController < ApplicationController
         if @connector.valid?
           render turbo_stream: turbo_stream.replace(:connector_process, partial: 'connectors/connector_process')
         else
-          render turbo_stream: turbo_stream.replace(:new_connector_form, partial: 'connectors/connector_form')
+          render turbo_stream: turbo_stream.replace(:new_connector, partial: 'connectors/connector_form')
         end
       end
     end
