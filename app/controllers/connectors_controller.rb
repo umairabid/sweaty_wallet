@@ -23,6 +23,7 @@ class ConnectorsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         if @connector.valid?
+          
           render turbo_stream: turbo_stream.replace(:connector_process, partial: 'connectors/connector_process')
         else
           render turbo_stream: turbo_stream.replace(:new_connector, partial: 'connectors/connector_form')
