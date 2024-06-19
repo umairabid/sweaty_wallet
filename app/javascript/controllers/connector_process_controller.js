@@ -5,7 +5,7 @@ export default class extends Controller {
   connect() {
     const form = document.getElementById('new_connector_form');
     form.classList.add('hidden');
-    consumer.subscriptions.create({channel: "BankConnectorChannel", room: "Best Toom"}, {
+    consumer.subscriptions.create(this.channel_params(), {
       connected() {
         // Called when the subscription is ready for use on the server
         console.log('connected')
@@ -19,6 +19,14 @@ export default class extends Controller {
         console.log(data)
       }
     });
+  }
+
+  channel_params() {
+    return {
+      channel: "BankConnectorChannel", 
+      user_id: this.element.dataset.user_id,
+      bank_id: this.element.dataset.bank_id
+    }
   }
 
   close_modal() {

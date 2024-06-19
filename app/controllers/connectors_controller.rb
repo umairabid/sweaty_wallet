@@ -19,17 +19,14 @@ class ConnectorsController < ApplicationController
   def create
     @connector.assign_attributes connector_params
     #@connector.save!
+    render_lambda = -> { render turbo_stream: turbo_stream.replace(:new_connector, partial: 'connectors/connector_form') }
 
-    respond_to do |format|
-      format.turbo_stream do
-        if @connector.valid?
-          
-          render turbo_stream: turbo_stream.replace(:connector_process, partial: 'connectors/connector_process')
-        else
-          render turbo_stream: turbo_stream.replace(:new_connector, partial: 'connectors/connector_form')
-        end
-      end
+    if @connector.valid?
+      ConnectBankJob.perform_later(connector_params)
+      render_lambda = -> { render turbo_stream: turbo_stream.replace(:connector_process, partial: 'connectors/connector_process') }
     end
+
+    respond_to { |format| format.turbo_stream &render_lambda }
   end
 
   private
@@ -48,6 +45,9 @@ class ConnectorsController < ApplicationController
   end
 
   def connector_params
-    params.require(:connector).permit(:username, :password, :auth_type)
+    params.require(:connector)
+    .permit(:username, :password, :auth_type)
+    .to_h
+    .merge!({bank: params['id'], user_id: @connector.user_id})
   end
 end

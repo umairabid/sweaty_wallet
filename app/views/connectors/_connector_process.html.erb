@@ -1,4 +1,4 @@
-<div data-controller="connector_process" id="connector_process" class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+<div data-bank_id="<%= params['id'] %>" data-user_id="<%= @current_user.id %>" data-controller="connector_process" id="connector_process" class="relative bg-white rounded-lg shadow dark:bg-gray-700">
   <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
     <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
       Connect with <%= @bank_name %>

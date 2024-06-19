@@ -4,7 +4,6 @@ import { Modal } from "../flowbite_modules";
 export default class extends Controller {
   connect() {
     this.get_modal().show();
-    console.log(this.get_modal())
   }
 
   get_modal() {
