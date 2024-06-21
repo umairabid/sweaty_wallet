@@ -24,7 +24,7 @@
     </nav>
     <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white"><%= @bank_name %></h1>
     <div class="px-4 p-6 my-6 bg-white border border-gray-200 rounded-lg shadow-sm">
-      <% unless @connector.persisted? %>
+      <% unless @connector.status == 'connected' %>
         <span> You are not connected to <%= @bank_name %> yet, </span>
         <%= link_to "Connect", new_connector_path(id: params['id']), class: 'text-blue-600', data: {'turbo-stream' => ''} %>
       </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_16_183601) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_20_031120) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,8 +22,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_16_183601) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "status", default: 1, null: false
+    t.string "two_factor_key"
     t.index ["auth_type"], name: "index_connectors_on_auth_type"
     t.index ["bank"], name: "index_connectors_on_bank"
+    t.index ["status"], name: "index_connectors_on_status"
     t.index ["user_id"], name: "index_connectors_on_user_id"
   end
 

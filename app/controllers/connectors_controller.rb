@@ -17,8 +17,7 @@ class ConnectorsController < ApplicationController
   end
 
   def create
-    @connector.assign_attributes connector_params
-    #@connector.save!
+    #@connector.assign_attributes connector_params
     render_lambda = -> { render turbo_stream: turbo_stream.replace(:new_connector, partial: 'connectors/connector_form') }
 
     if @connector.valid?
@@ -41,7 +40,7 @@ class ConnectorsController < ApplicationController
   end
 
   def valid_bank?
-    Connector.banks.values.include? params['id']
+    Connector.banks.keys.include? params['id']
   end
 
   def connector_params

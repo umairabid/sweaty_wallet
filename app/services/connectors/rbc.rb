@@ -1,52 +1,66 @@
 class Connectors::Rbc < Connectors::Base
+  include Connectors::Connectable
+
   def initialize(connector_params)
     @params = connector_params.with_indifferent_access
-    connect_by_browser
+    set_connector
+    @browser = Ferrum::Browser.new(headless: false)
+    @page = @browser.create_page
   end
 
-  def connect_by_browser
-    broadcast 'initializing'
-    sleep(4)
-    broadcast 'another message'
-    return
-    browser = Ferrum::Browser.new
-    page = browser.create_page
-    page.go_to("https://secure.royalbank.com/statics/login-service-ui/index#/full/signin")
-    #browser.go_to("https://google.com")
-    selector = "//input[@id='userName']"
-    user_node = wait_for_node(page, selector)
-    user_node.focus.type(@username)
+  def call_fa
+    broadcast({ status: "logging_in" })
+    sleep(5)
+    broadcast({ status: "confirm_two_factor_notification" })
+    two_factor_key = wait_for_connector_prompt(:two_factor_key)
+    broadcast({ status: "received_connector_prompt" })
+    puts two_factor_key
+  end
 
-    next_button = wait_for_node(page, "//a[@id='signinNext']")
-    next_button.click
-    password_node = wait_for_node(page, "//input[@id='password']")
-    password_node.focus.type(@password)
-    next_button = wait_for_node(page, "//button[@id='signinNext']")
-    next_button.click
-    sleep(10)
+  def call
+    @page.go_to("https://secure.royalbank.com/statics/login-service-ui/index#/full/signin")
+    broadcast({ status: "logging_in" })
+    return
     
-    page.screenshot(path: "rbc-login.png")
+    wait_and_fill_node("//input[@id='userName']", @params[:username])
+    sleep(10)
+    wait_and_click_node("//a[@id='signinNext']")
+    
+    wait_and_fill_node("//input[@id='password']", @params[:password])
+    sleep(10)
+    wait_and_click_node("//button[@id='signinNext']")
+
+    sleep(20)
+
+    @page.screenshot(path: "rbc-login.png")
+    wait_for_node(@page, "//core-banking-trusted-device-notification")
+    broadcast({ status: "confirm_two_factor_notification" })
+
+    wait_for_connector_prompt(:two_factor_key)
+    broadcast({ status: "received_connector_prompt" })
+    @page.screenshot(path: "rbc-login-3.png")
+    @page.go_to("https://www1.royalbank.com/sgw1/olb/index-en/#/summary")
+    
+    wait_for_node(@page, "//rbc-account-summary-layout")
+    @page.screenshot(path: "rbc-login-4.png")
+    broadcast({ status: "login_complete" })
+    @page.screenshot(path: "rbc-login-2.png")
     browser.quit
   end
 
-  def wait_for_node(page, selector, max_tries: 5, current_try: 0, delay: 1)
-    puts "current_try: #{current_try}"
-    raise 'Cannot find node' if current_try > max_tries
+  private
 
-    node = page.at_xpath(selector)
-    return node if node.present?
-
-    sleep(delay)
-    wait_for_node(page, selector, max_tries: max_tries, current_try: current_try + 1, delay: delay)
+  def wait_and_click_node(selector)
+    node = wait_for_node(@page, selector)
+    node.click
   end
 
-  def broadcast(message)
-    puts channel_name.inspect
-    ActionCable.server.broadcast(channel_name, message)
+  def wait_and_fill_node(selector, fill_value)
+    node = wait_for_node(@page, selector)
+    node.focus.type(fill_value)
   end
 
   def channel_name
     "bank_connector_#{@params[:bank]}_#{@params[:user_id]}"
   end
-
 end
