@@ -4,7 +4,19 @@
   "description": "Base Level Extension",
   "version": "1.0",
   "action": {
-    "default_popup": "hello.html",
-    "default_icon": "hello_extensions.png"
+    "default_popup": "popups/popup.html",
+    "default_icon": "popups/images/default_icon.png"
+  },
+  "content_scripts": [
+    {
+      "js": ["scripts/content.js"],
+      "matches": ["*://localhost/connectors/rbc"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["*://localhost/connectors/rbc"]
+  },
+  "background": {
+    "service_worker": "scripts/service-worker.js"
   }
 }
