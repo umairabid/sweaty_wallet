@@ -1,4 +1,4 @@
-<div data-bank_id="<%= params['id'] %>" data-user_id="<%= @current_user.id %>" data-controller="connector_process" id="connector_process" class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+<div data-bank="<%= params['bank'] %>" data-user_id="<%= @current_user.id %>" data-controller="direct_connector_process" id="connector_process" class="relative bg-white rounded-lg shadow dark:bg-gray-700">
   <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
     <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
       Connect with <%= @bank_name %>
@@ -21,7 +21,7 @@
     <div class="progress-message hidden" id="confirm_two_factor_notification">
       <div class="flex justify-center align-items-center text-sm m-4">You should have received notification, please confirm when you have allowed access</div>
       <div class="flex justify-center align-items-center">
-        <button data-action="click->connector_process#send_two_factor" class="text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Confirm Access</button>
+        <button data-action="click->direct_connector_process#send_two_factor" class="text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Confirm Access</button>
       </div>
     </div>
     <div class="flex justify-center align-items-center progress-message text-sm hidden" id="received_connector_prompt">Recieved Two Factor</div>
@@ -29,6 +29,6 @@
   </div>
   <!-- Modal footer -->
   <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b justify-end justify-items-center">
-    <button data-action="click->connector_process#close_modal" type="button" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 ">Decline</button>
+    <button data-action="click->direct_connector_process#close_modal" type="button" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 ">Decline</button>
   </div>
 </div>

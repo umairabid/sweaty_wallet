@@ -11,16 +11,17 @@ module Connectors
       @page = @browser.create_page
     end
 
-    def call_fa
+    def call
       broadcast({ status: 'logging_in' })
       sleep(5)
       broadcast({ status: 'confirm_two_factor_notification' })
       two_factor_key = wait_for_connector_prompt(:two_factor_key)
       broadcast({ status: 'received_connector_prompt' })
-      puts two_factor_key
+      sleep(5)
+      broadcast({ status: 'login_complete' })
     end
 
-    def call
+    def call_fa
       @page.go_to('https://secure.royalbank.com/statics/login-service-ui/index#/full/signin')
       broadcast({ status: 'logging_in' })
 
@@ -32,9 +33,6 @@ module Connectors
       sleep(10)
       wait_and_click_node("//button[@id='signinNext']")
 
-      sleep(20)
-
-      @page.screenshot(path: 'rbc-login.png')
       wait_for_node(@page, '//core-banking-trusted-device-notification')
       broadcast({ status: 'confirm_two_factor_notification' })
 

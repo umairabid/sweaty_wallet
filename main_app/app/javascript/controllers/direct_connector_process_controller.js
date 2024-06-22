@@ -30,7 +30,6 @@ export default class extends Controller {
               element.classList.add('hidden');
             }
             const elem = document.getElementById(data['status']);
-            console.log(elem)
             elem.classList.remove('hidden')
           }
         },
@@ -48,7 +47,7 @@ export default class extends Controller {
     return {
       channel: "BankConnectorChannel",
       user_id: this.element.dataset.user_id,
-      bank_id: this.element.dataset.bank_id,
+      bank_id: this.element.dataset.bank,
     };
   }
 

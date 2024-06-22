@@ -25,8 +25,23 @@
     <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white"><%= @bank_name %></h1>
     <div class="px-4 p-6 my-6 bg-white border border-gray-200 rounded-lg shadow-sm">
       <% unless @connector.status == 'connected' %>
-        <span> You are not connected to <%= @bank_name %> yet, </span>
-        <%= link_to "Connect", new_connector_path(id: params['id']), class: 'text-blue-600', data: {'turbo-stream' => ''} %>
+        <span> You are not connected to <%= @bank_name %> yet. Bank can be connected through following options</span>
+        <h3 class="my-4 mb-2 text-lg font-semibold text-gray-900">We connect to your bank directly</h3>
+        <ol class="space-y-1 text-gray-500 list-disc list-inside">
+          <li> We take your username and password </li>
+          <li> We login in your bank account </li>
+          <li> You authroize connection </li>
+          <li> We fetch your accounts and transaction </li>
+        </ol>
+        <%= link_to "Connect Directly", new_direct_connect_path(bank: params[:bank]), class: 'text-blue-600', data: {'turbo-stream' => ''} %>
+        <h3 class="mt-6 my-4 mb-2 text-lg font-semibold text-gray-900"> You connect us through our extension </h3>
+        <ol class="space-y-1 text-gray-500 list-disc list-inside">
+          <li> You install our extension </li>
+          <li> You login to your bank account </li>
+          <li> We verify your login and fetch your accounst and transactions </li>
+        </ol>
+        <%= link_to "Connect Through Extension", new_extension_connect_path(bank: params[:bank]), class: 'text-blue-600', data: {'turbo-stream' => ''} %>
+        
       </div>
     <% end -%>
   </div>

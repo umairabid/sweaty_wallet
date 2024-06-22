@@ -1,31 +1,39 @@
-# frozen_string_literal: true
-
 class ConnectorsController < ApplicationController
   before_action :set_connector
   before_action :set_bank_name
 
-  def new
+  def new_direct
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(:new_connector, template: 'connectors/new')
+        render turbo_stream: turbo_stream.replace(:new_connector, template: "connectors/new_direct")
       end
 
-      format.html { render :new }
+      format.html { render :new_direct }
+    end
+  end
+
+  def new_extension
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(:new_connector, template: "connectors/new_extension")
+      end
+
+      format.html { render :new_direct }
     end
   end
 
   def show; end
 
-  def create
+  def create_direct
     # @connector.assign_attributes connector_params
     render_lambda = lambda {
-      render turbo_stream: turbo_stream.replace(:new_connector, partial: 'connectors/connector_form')
+      render turbo_stream: turbo_stream.replace(:new_connector, partial: "connectors/direct/connector_form")
     }
 
     if @connector.valid?
       ConnectBankJob.perform_later(connector_params)
       render_lambda = lambda {
-        render turbo_stream: turbo_stream.replace(:connector_process, partial: 'connectors/connector_process')
+        render turbo_stream: turbo_stream.replace(:connector_process, partial: "connectors/direct/connector_process")
       }
     end
 
@@ -34,27 +42,31 @@ class ConnectorsController < ApplicationController
 
   private
 
+  def bank
+    params[:bank]
+  end
+
   def set_bank_name
-    @bank_name = Connector::BANK_NAMES[params['id']]
+    @bank_name = Connector::BANK_NAMES[bank]
   end
 
   def set_connector
     raise NotFound unless valid_bank?
 
-    @connector = Connector.find_by(bank: params['id'],
+    @connector = Connector.find_by(bank: bank,
                                    user: current_user) || Connector.new(
-                                     user: current_user, bank: params['id']
-                                   )
+      user: current_user, bank: bank,
+    )
   end
 
   def valid_bank?
-    Connector.banks.keys.include? params['id']
+    Connector.banks.keys.include? bank
   end
 
   def connector_params
     params.require(:connector)
           .permit(:username, :password, :auth_type)
           .to_h
-          .merge!({ bank: params['id'], user_id: @connector.user_id })
+          .merge!({ bank: bank, user_id: @connector.user_id })
   end
 end

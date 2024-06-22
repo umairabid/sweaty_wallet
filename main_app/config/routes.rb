@@ -17,10 +17,12 @@ Rails.application.routes.draw do
     get 'users/sign_in' => 'devise/sessions#new', :as => :login
   end
 
-  resources :connectors, only: [:show] do
+  resources :connect, param: :bank, controller: 'connectors', only: %i[show update] do
     member do
-      post '/', to: 'connectors#create', as: 'create'
-      get '/new', to: 'connectors#new', as: 'new'
+      post '/extension' => 'connectors#create_extension', as: :create_extension
+      post '/direct' => 'connectors#create_direct', as: :create_direct
+      get '/extension/new' => 'connectors#new_extension', as: :new_extension
+      get '/direct/new' => 'connectors#new_direct', as: :new_direct
     end
   end
 end
