@@ -19,7 +19,6 @@ Rails.application.routes.draw do
 
   resources :connect, param: :bank, controller: 'connectors', only: %i[show update] do
     member do
-      post '/extension' => 'connectors#create_extension', as: :create_extension
       post '/direct' => 'connectors#create_direct', as: :create_direct
       get '/extension/new' => 'connectors#new_extension', as: :new_extension
       get '/direct/new' => 'connectors#new_direct', as: :new_direct

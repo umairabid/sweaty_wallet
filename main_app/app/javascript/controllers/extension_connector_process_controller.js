@@ -15,36 +15,30 @@ export default class extends Controller {
 
   get_subscription() {
     if (this.subscription == null) {
-      this.subscription = consumer.subscriptions.create(this.channel_params(), {
-        connected() {
-          // Called when the subscription is ready for use on the server
-          console.log("connected");
-        },
-
-        disconnected() {
-          // Called when the subscription has been terminated by the server
-        },
-
-        received(data) {
-          console.log(data['status'])
-          if (data['status']) {
-            const elements = document.getElementsByClassName('progress-message');
-            for (let i = 0; i < elements.length; i++) {
-              const element = elements[i];
-              element.classList.add('hidden');
-            }
-            const elem = document.getElementById(data['status']);
-            elem.classList.remove('hidden')
-          }
-        },
-      });
+      this.subscription = this.create_subscription();
     }
 
     return this.subscription;
   }
 
+  disconnect() {
+    this.get_subscription().unsubscribe();
+  }
+
+  channel_params() {
+    return {
+      channel: "BankConnectorChannel",
+      user_id: this.element.dataset.user_id,
+      bank_id: this.element.dataset.bank,
+    };
+  }
+
+  close_modal() {
+    this.get_modal().hide();
+  }
+
   create_modal() {
-    const $targetEl = document.getElementById("connector_process");
+    const $targetEl = document.getElementById("new_connector");
 
     // options with default values
     const options = {
@@ -72,19 +66,29 @@ export default class extends Controller {
     return new Modal($targetEl, options, instanceOptions);
   }
 
-  disconnect() {
-    this.get_subscription().unsubscribe();
-  }
+  create_subscription() {
+    return consumer.subscriptions.create(this.channel_params(), {
+      connected() {
+        // Called when the subscription is ready for use on the server
+        console.log("connected");
+      },
 
-  channel_params() {
-    return {
-      channel: "BankConnectorChannel",
-      user_id: this.element.dataset.user_id,
-      bank_id: this.element.dataset.bank,
-    };
-  }
+      disconnected() {
+        // Called when the subscription has been terminated by the server
+      },
 
-  close_modal() {
-    this.dispatch("close_modal");
+      received(data) {
+        console.log(data["status"]);
+        if (data["status"]) {
+          const elements = document.getElementsByClassName("progress-message");
+          for (let i = 0; i < elements.length; i++) {
+            const element = elements[i];
+            element.classList.add("hidden");
+          }
+          const elem = document.getElementById(data["status"]);
+          elem.classList.remove("hidden");
+        }
+      },
+    });
   }
 }

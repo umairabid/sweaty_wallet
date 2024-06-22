@@ -25,7 +25,6 @@ class ConnectorsController < ApplicationController
   def show; end
 
   def create_direct
-    # @connector.assign_attributes connector_params
     render_lambda = lambda {
       render turbo_stream: turbo_stream.replace(:new_connector, partial: "connectors/direct/connector_form")
     }
