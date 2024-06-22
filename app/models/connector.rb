@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Connector < ApplicationRecord
   BANK_NAMES = { rbc: 'Royal Bank of Canada' }.with_indifferent_access
   enum bank: { rbc: 1 }
