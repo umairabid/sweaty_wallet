@@ -10,11 +10,15 @@
   "content_scripts": [
     {
       "js": ["scripts/content.js"],
-      "matches": ["*://localhost/connectors/rbc"]
+      "matches": ["*://localhost/*"]
+    },
+    {
+      "js": ["scripts/rbc.js"],
+      "matches": ["https://www1.royalbank.com/sgw1/olb/index-en/*"]
     }
   ],
   "externally_connectable": {
-    "matches": ["*://localhost/connectors/rbc"]
+    "matches": ["*://localhost/*"]
   },
   "background": {
     "service_worker": "scripts/service-worker.js"
