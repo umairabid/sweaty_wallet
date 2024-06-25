@@ -90,7 +90,7 @@ chrome.runtime.onMessageExternal.addListener(function (
     const rbc_port = ports.get_rbc_port();
     rbc_port.execute_command(
       `pull_tranactions_${request.type}`,
-      { encrypted_identifier: request.encrypted_identifier },
+      { encrypted_identifier: request.encrypted_identifier, external_id: request.identifier },
       (response) => {
         sendResponse({
           success: true,
@@ -100,13 +100,5 @@ chrome.runtime.onMessageExternal.addListener(function (
         });
       }
     );
-    /**
-     * sendResponse({
-      success: true,
-      status: `pulled_transactions_for_${request.type}`,
-      external_id: request.identifier,
-      transactions: [{id: 1}],
-    });
-     */
   }
 });

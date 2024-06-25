@@ -13,8 +13,19 @@ function mapRbcAccount(type, account) {
   };
 }
 
+function mapTransaction(account_id, transaction) {
+  return {
+    external_id: transaction.id,
+    external_account_id: account_id,
+    description: transaction.description.join(' | '),
+    booking_date: transaction.bookingDate,
+    posted_date: transaction.postedDate,
+    type: transaction.creditDebitIndicator,
+    amount: transaction.amount
+  }
+}
+
 port.onMessage.addListener(function (msg) {
-  console.log(msg)
   if (msg.name == "ping") {
     port.postMessage({ name: msg.name, params: { received: true } });
   } else if (msg.name == "pull_accounts") {
@@ -51,10 +62,10 @@ port.onMessage.addListener(function (msg) {
     );
     req.send();
   } else if (msg.name == "pull_tranactions_deposit_account") {
-    console.log(msg)
     function reqListener() {
       const response = JSON.parse(this.responseText);
-      port.postMessage({ name: msg.name, params: response });
+      const transactions = response.transactionList.map(mapTransaction.bind(null, msg.external_id))
+      port.postMessage({ name: msg.name, params: transactions });
     }
 
     const req = new XMLHttpRequest();
@@ -65,10 +76,10 @@ port.onMessage.addListener(function (msg) {
     );
     req.send();
   }  else if (msg.name == "pull_tranactions_credit_card") {
-    console.log(msg)
     function reqListener() {
       const response = JSON.parse(this.responseText);
-      port.postMessage({ name: msg.name, params: response });
+      const transactions = response.transactionList.map(mapTransaction.bind(null, msg.external_id));
+      port.postMessage({ name: msg.name, params: transactions });
     }
 
     const req = new XMLHttpRequest();
