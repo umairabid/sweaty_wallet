@@ -86,7 +86,6 @@ chrome.runtime.onMessageExternal.addListener(function (
       });
     });
   } else if (request.message == "pull_transactions_rbc") {
-    console.log('pulling transactions')
     const rbc_port = ports.get_rbc_port();
     rbc_port.execute_command(
       `pull_tranactions_${request.type}`,

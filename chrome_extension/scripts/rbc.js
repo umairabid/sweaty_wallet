@@ -18,8 +18,7 @@ function mapTransaction(account_id, transaction) {
     external_id: transaction.id,
     external_account_id: account_id,
     description: transaction.description.join(' | '),
-    booking_date: transaction.bookingDate,
-    posted_date: transaction.postedDate,
+    date: transaction.bookingDate || transaction.postedDate,
     type: transaction.creditDebitIndicator,
     amount: transaction.amount
   }

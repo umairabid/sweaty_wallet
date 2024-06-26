@@ -48,7 +48,6 @@ class ConnectorExtension {
           }
         );
       } catch (err) {
-        console.log(err)
         return reject({ status: "unable_to_reach_extension" });
       }
     });
