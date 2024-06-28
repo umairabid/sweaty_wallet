@@ -1,5 +1,4 @@
 import { Controller } from "@hotwired/stimulus";
-import consumer from "channels/consumer";
 import ConnectorExtension from "lib/connector_extension";
 import handle_message from "lib/handle_message";
 
@@ -25,8 +24,7 @@ export default class extends Controller {
       .then(this.ping_extension)
       .then(this.connect_with_bank)
       .then(this.pull_accounts)
-      .then(this.pull_transactions)
-      .catch(() => {});
+      .then(this.pull_transactions);
   }
 
   handle_success(data) {
@@ -45,18 +43,23 @@ export default class extends Controller {
     this.error_messages_alert().classList.remove("hidden");
     handle_message("progress-message");
     handle_message("error-message", data.status);
-    throw data;
   }
 
   connect_with_bank() {
     return this.extension
       .send_message_with_response_timeout({
-        message: `ping_${this.element.dataset.bank}`,
+        message: "ping",
+        bank: this.element.dataset.bank,
       })
       .then(this.handle_success)
       .catch((data) => {
-        if (data.status == "message_failed"  || data.status == "unable_to_reach_extension") {
-          this.handle_error({ status: "rbc_not_found" });
+        if (
+          data.status == "message_failed" ||
+          data.status == "unable_to_reach_extension"
+        ) {
+          this.handle_error({
+            status: `${this.element.dataset.bank}_not_found`,
+          });
         }
       });
   }
@@ -64,14 +67,16 @@ export default class extends Controller {
   pull_accounts() {
     return this.extension
       .send_message_with_response_timeout({
-        message: `pull_accounts_${this.element.dataset.bank}`,
+        message: `pull_accounts`,
+        bank: this.element.dataset.bank,
       })
       .then(this.handle_success)
       .catch(this.handle_error);
   }
 
   ping_extension() {
-    return this.extension.ping()
+    return this.extension
+      .ping()
       .then(this.handle_success)
       .catch(this.handle_error);
   }
@@ -83,10 +88,13 @@ export default class extends Controller {
     );
     const promises = accounts_with_transactions.map((a) => {
       const message = {
-        message: `pull_transactions_${this.element.dataset.bank}`,
-        type: a.type,
-        identifier: a.external_id,
-        encrypted_identifier: a.encrypted_external_id,
+        message: `pull_transactions`,
+        bank: this.element.dataset.bank,
+        params: {
+          type: a.type,
+          identifier: a.external_id,
+          encrypted_identifier: a.encrypted_external_id,
+        }
       };
       return this.extension.send_message_with_response_timeout.bind(
         this.extension,
@@ -97,7 +105,7 @@ export default class extends Controller {
     promises.forEach((promise) => {
       promiseChain = promiseChain.then(() =>
         this.wrap_promise_in_delay(promise, 5000).then((res) => {
-          transactions[res.external_id] = res.transactions;
+          transactions[res.identifier] = res.transactions;
         })
       );
     });

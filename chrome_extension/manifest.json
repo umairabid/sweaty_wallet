@@ -9,11 +9,11 @@
   },
   "content_scripts": [
     {
-      "js": ["scripts/content.js"],
+      "js": ["scripts/tabs/content.js"],
       "matches": ["*://localhost/*"]
     },
     {
-      "js": ["scripts/rbc.js"],
+      "js": ["scripts/tabs/rbc.js"],
       "matches": ["https://www1.royalbank.com/sgw1/olb/index-en/*"]
     }
   ],
@@ -21,6 +21,7 @@
     "matches": ["*://localhost/*"]
   },
   "background": {
-    "service_worker": "scripts/service-worker.js"
+    "service_worker": "scripts/worker/service-worker.js",
+    "type": "module"
   }
 }
