@@ -72,6 +72,7 @@ class RbcPort {
     if (!name || !this.commands[name]) return;
 
     this.commands[name](message.params);
+    this.commands[name] = () => {};
   }
 }
 

@@ -28,15 +28,22 @@ class TdPort {
     return new Promise((resolve) => {
       if (!this.is_connected_with_new_frontend()) {
         this.on_port_change_callback = this.pull_accounts;
-        console.log("issuing redirect");
         this.execute_internal_command("redirect_to_new_frontend", {}, () => {
           this.execute_command("pull_accounts", {}, (res) => {
-            console.log(res);
+            resolve({
+              success: true,
+              status: "pulled_accounts",
+              accounts: res,
+            });
           });
         });
       } else {
         this.execute_command("pull_accounts", {}, (res) => {
-          console.log(res);
+          resolve({
+            success: true,
+            status: "pulled_accounts",
+            accounts: res,
+          });
         });
       }
     });
@@ -93,6 +100,7 @@ class TdPort {
     if (!name || !this.commands[name]) return;
 
     this.commands[name](message.params);
+    this.commands[name] = () => {};
   }
 }
 

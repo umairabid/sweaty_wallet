@@ -29,7 +29,7 @@ function extract_accounts_from_profile_groups(profile_groups) {
       td_accounts.forEach((account) => {
         accounts.push({
           type: type,
-          external_id: account.accountIdentifier,
+          external_id: account.accountKey,
           encrypted_external_id: account.accountIdentifier,
           account_name: account.accountDesc,
           nick_name: null,
