@@ -24,7 +24,8 @@ export default class extends Controller {
       .then(this.ping_extension)
       .then(this.connect_with_bank)
       .then(this.pull_accounts)
-      .then(this.pull_transactions);
+      .then(this.pull_transactions)
+      .catch((err) => {});
   }
 
   handle_success(data) {
@@ -43,6 +44,7 @@ export default class extends Controller {
     this.error_messages_alert().classList.remove("hidden");
     handle_message("progress-message");
     handle_message("error-message", data.status);
+    throw data;
   }
 
   connect_with_bank() {

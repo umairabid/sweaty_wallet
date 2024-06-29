@@ -15,6 +15,10 @@
     {
       "js": ["scripts/tabs/rbc.js"],
       "matches": ["https://www1.royalbank.com/sgw1/olb/index-en/*"]
+    },
+    {
+      "js": ["scripts/tabs/td.js"],
+      "matches": ["https://easyweb.td.com/*"]
     }
   ],
   "externally_connectable": {
@@ -23,5 +27,9 @@
   "background": {
     "service_worker": "scripts/worker/service-worker.js",
     "type": "module"
-  }
+  },
+  "permissions": ["webRequest"],
+  "host_permissions": [
+    "https://easyweb.td.com/*"
+  ]
 }

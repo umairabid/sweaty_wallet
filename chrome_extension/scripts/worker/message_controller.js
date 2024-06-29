@@ -27,6 +27,7 @@ class MessageController {
 
   get_bank_port(bank) {
     if (bank == 'rbc') return this.ports.get_rbc_port();
+    if (bank == 'td') return this.ports.get_td_port();
   }
 
   ping() {
