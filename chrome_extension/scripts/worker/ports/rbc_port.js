@@ -5,7 +5,7 @@ class RbcPort {
       ping: () => {},
       pull_accounts: () => {},
       pull_transactions_credit_card: () => {},
-      pull_trasnactions_deposit_account: () => {},
+      pull_transactions_deposit_account: () => {},
     };
   }
 

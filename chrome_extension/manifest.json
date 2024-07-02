@@ -9,10 +9,6 @@
   },
   "content_scripts": [
     {
-      "js": ["scripts/tabs/content.js"],
-      "matches": ["*://localhost/*"]
-    },
-    {
       "js": ["scripts/tabs/rbc.js"],
       "matches": ["https://www1.royalbank.com/sgw1/olb/index-en/*"]
     },

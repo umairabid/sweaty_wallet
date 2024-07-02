@@ -29,7 +29,7 @@ class ConnectorExtension {
       })
   }
 
-  send_message_with_response_timeout(message, timeout = 10000) {
+  send_message_with_response_timeout(message, timeout = 20000) {
     return new Promise((resolve, reject) => {
       const timeoutId = setTimeout(() => {
         return reject({ status: "unable_to_reach_extension" });

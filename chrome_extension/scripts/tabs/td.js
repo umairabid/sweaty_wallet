@@ -127,7 +127,6 @@ function onTabLoad() {
   }
 
   port.onMessage.addListener(function (msg) {
-    console.log(msg);
     if (msg.name == "ping") {
       port.postMessage({ name: msg.name, params: { received: true } });
     } else if (msg.name == "redirect_to_new_frontend_url") {

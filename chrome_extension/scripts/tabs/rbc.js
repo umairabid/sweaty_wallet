@@ -63,7 +63,7 @@ port.onMessage.addListener(function (msg) {
   } else if (msg.name == "pull_transactions_deposit_account") {
     function reqListener() {
       const response = JSON.parse(this.responseText);
-      const transactions = response.transactionList.map(mapTransaction.bind(null, msg.identifier))
+      const transactions = response.transactionList.map(mapTransaction.bind(null, msg.params.identifier))
       port.postMessage({ name: msg.name, params: transactions });
     }
 
@@ -77,7 +77,7 @@ port.onMessage.addListener(function (msg) {
   }  else if (msg.name == "pull_transactions_credit_card") {
     function reqListener() {
       const response = JSON.parse(this.responseText);
-      const transactions = response.transactionList.map(mapTransaction.bind(null, msg.identifier));
+      const transactions = response.transactionList.map(mapTransaction.bind(null, msg.params.identifier));
       port.postMessage({ name: msg.name, params: transactions });
     }
 

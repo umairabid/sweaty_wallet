@@ -13,10 +13,10 @@ export default class extends Controller {
 
     this.get_modal().show();
     this.extension = new ConnectorExtension(this.element.dataset.extension_id);
-    this.connect_with_extension();
+    this.pull_bank();
   }
 
-  connect_with_extension() {
+  pull_bank() {
     this.progress_spinner().classList.remove("hidden");
     this.error_messages_alert().classList.add("hidden");
     this.extension
@@ -29,7 +29,6 @@ export default class extends Controller {
   }
 
   handle_success(data) {
-    console.log(data);
     return new Promise((resolve) => {
       setTimeout(() => {
         handle_message("progress-message", data.status);
@@ -39,7 +38,6 @@ export default class extends Controller {
   }
 
   handle_error(data) {
-    console.log(data);
     this.progress_spinner().classList.add("hidden");
     this.error_messages_alert().classList.remove("hidden");
     handle_message("progress-message");
@@ -105,16 +103,15 @@ export default class extends Controller {
     });
     let promiseChain = Promise.resolve(); // Start with a resolved promise
     promises.forEach((promise) => {
-      promiseChain = promiseChain.then(() =>
-        this.wrap_promise_in_delay(promise, 20000).then((res) => {
+      promiseChain = promiseChain.then(() => {
+        return this.wrap_promise_in_delay(promise, 10000).then((res) => {
           transactions[res.identifier] = res.transactions;
         })
-      );
+      });
     });
 
     return promiseChain
       .then(() => {
-        console.log(transactions);
         return { status: "pulled_transactions" };
       })
       .then(this.handle_success)
