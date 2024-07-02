@@ -60,7 +60,7 @@ port.onMessage.addListener(function (msg) {
       `https://www1.royalbank.com/sgw5/omniapi/product-summary-presentation-service-v3/v3/accountListSummary?timestamp=${new Date().getTime()}`
     );
     req.send();
-  } else if (msg.name == "pull_tranactions_deposit_account") {
+  } else if (msg.name == "pull_transactions_deposit_account") {
     function reqListener() {
       const response = JSON.parse(this.responseText);
       const transactions = response.transactionList.map(mapTransaction.bind(null, msg.identifier))
@@ -74,7 +74,7 @@ port.onMessage.addListener(function (msg) {
       `https://www1.royalbank.com/sgw5/omniapi/transaction-presentation-service-v3-dbb/v3/transactions/pda/account/${msg.params.encrypted_identifier}?intervalType=DAY&intervalValue=14&type=ALL&txType=pda&useColtOnly=response&timestamp=${new Date().getTime()}`
     );
     req.send();
-  }  else if (msg.name == "pull_tranactions_credit_card") {
+  }  else if (msg.name == "pull_transactions_credit_card") {
     function reqListener() {
       const response = JSON.parse(this.responseText);
       const transactions = response.transactionList.map(mapTransaction.bind(null, msg.identifier));

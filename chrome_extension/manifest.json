@@ -28,7 +28,7 @@
     "service_worker": "scripts/worker/service-worker.js",
     "type": "module"
   },
-  "permissions": ["webRequest"],
+  "permissions": ["webRequest", "scripting", "activeTab"],
   "host_permissions": [
     "https://easyweb.td.com/*"
   ]

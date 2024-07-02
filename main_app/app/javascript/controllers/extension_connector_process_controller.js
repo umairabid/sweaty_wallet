@@ -106,7 +106,7 @@ export default class extends Controller {
     let promiseChain = Promise.resolve(); // Start with a resolved promise
     promises.forEach((promise) => {
       promiseChain = promiseChain.then(() =>
-        this.wrap_promise_in_delay(promise, 5000).then((res) => {
+        this.wrap_promise_in_delay(promise, 20000).then((res) => {
           transactions[res.identifier] = res.transactions;
         })
       );

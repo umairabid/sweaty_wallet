@@ -4,9 +4,13 @@ class TdPort {
     this.on_port_change_callback = () => {};
     this.commands = {
       ping: () => {},
+      redirect_to_new_frontend_url: () => {},
+      redirect_to_old_frontend_url: () => {},
+      redirect_to_credit_card_url: () => {},
       pull_accounts: () => {},
-      pull_tranactions_credit_card: () => {},
-      pull_tranactions_deposit_account: () => {},
+      pull_transactions_credit_card: () => {},
+      load_three_month_transactions: () => {},
+      pull_transactions_deposit_account: () => {},
     };
   }
 
@@ -26,9 +30,10 @@ class TdPort {
 
   pull_accounts() {
     return new Promise((resolve) => {
-      if (!this.is_connected_with_new_frontend()) {
-        this.on_port_change_callback = this.pull_accounts;
-        this.execute_internal_command("redirect_to_new_frontend", {}, () => {
+      this.execute_command(
+        "redirect_to_new_frontend_url",
+        { url: "https://easyweb.td.com/ui/ew/fs?fsType=PFS" },
+        () => {
           this.execute_command("pull_accounts", {}, (res) => {
             resolve({
               success: true,
@@ -36,56 +41,84 @@ class TdPort {
               accounts: res,
             });
           });
-        });
-      } else {
-        this.execute_command("pull_accounts", {}, (res) => {
-          resolve({
-            success: true,
-            status: "pulled_accounts",
-            accounts: res,
-          });
-        });
-      }
-    });
-  }
-
-  pull_transactions(params) {
-    return new Promise((resolve) => {
-      this.execute_command(
-        `pull_tranactions_${params.type}`,
-        {
-          encrypted_identifier: params.encrypted_identifier,
-          identifier: params.identifier,
-        },
-        (response) => {
-          resolve({
-            success: true,
-            status: `pulled_transactions_for_${params.type}`,
-            identifier: params.identifier,
-            transactions: response,
-          });
         }
       );
     });
   }
 
-  is_connected_with_new_frontend() {
-    if (this.port == null) return false;
+  pull_transactions(params) {
+    if (params.type == "credit_card") {
+      return this.pull_transactions_credit_card(params);
+    } else {
+      return this.pull_transactions_deposit_account(params);
+    }
+  }
 
-    return this.port.sender.url.startsWith("https://easyweb.td.com/ui/ew/fs");
+  pull_transactions_credit_card(params) {
+    return new Promise((resolve) => {
+      this.execute_command(
+        "redirect_to_credit_card_url",
+        {
+          url: this.account_url(params.encrypted_identifier),
+        },
+        () => {
+          setTimeout(() => {
+            this.execute_command(
+              "pull_transactions_credit_card",
+              params,
+              (res) => {
+                resolve({
+                  success: true,
+                  identifier: params.identifier,
+                  status: "pulled_transactions_credit_card",
+                  transactions: res,
+                });
+              }
+            );
+          }, 4000);
+        }
+      );
+    });
+  }
+
+  pull_transactions_deposit_account(params) {
+    return new Promise((resolve) => {
+      this.execute_command(
+        "redirect_to_old_frontend_url",
+        { url: this.deposit_account_url_three_month(params.identifier) },
+        () => {
+          setTimeout(() => {
+            this.execute_command(
+              "pull_transactions_deposit_account",
+              params,
+              (res) => {
+                resolve({
+                  success: true,
+                  status: "pulled_transactions_deposit_account",
+                  identifier: params.identifier,
+                  transactions: res,
+                });
+              }
+            );
+          }, 3000);
+        }
+      );
+    });
+  }
+
+  account_url(account_id) {
+    return `https://easyweb.td.com/waw/ezw/servlet/TransferInFromNorthStarServlet?ezwTargetRoute=servlet%2Fca.tdbank.banking.servlet.AccountDetailsServlet&accountIdentifier=${account_id}`;
+  }
+
+  deposit_account_url_three_month(account_id) {
+    return `https://easyweb.td.com/waw/ezw/servlet/ca.tdbank.banking.servlet.AccountDetailsServlet?selectedAccount=${account_id}&period=L120&filter=f1&reverse=&xptype=PRXP&requestedPage=0&sortBy=date&sortByOrder=&fromjsp=activity`
   }
 
   set_port(port) {
-    console.log(port);
     this.port = port;
     this.port.onMessage.addListener(this.message_listener);
     this.on_port_change_callback();
     this.on_port_change_callback = () => {};
-  }
-
-  execute_internal_command(name, params, callback) {
-    this.commands[name] = callback;
-    this.port.postMessage({ name: name, params: params });
   }
 
   execute_command(name, params, callback) {

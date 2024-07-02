@@ -29,11 +29,11 @@ class ConnectorExtension {
       })
   }
 
-  send_message_with_response_timeout(message) {
+  send_message_with_response_timeout(message, timeout = 10000) {
     return new Promise((resolve, reject) => {
       const timeoutId = setTimeout(() => {
         return reject({ status: "unable_to_reach_extension" });
-      }, 5000);
+      }, timeout);
       try {
         chrome.runtime.sendMessage(
           this.editorExtensionId,

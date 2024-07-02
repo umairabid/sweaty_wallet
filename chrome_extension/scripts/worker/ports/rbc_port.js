@@ -4,8 +4,8 @@ class RbcPort {
     this.commands = {
       ping: () => {},
       pull_accounts: () => {},
-      pull_tranactions_credit_card: () => {},
-      pull_tranactions_deposit_account: () => {},
+      pull_transactions_credit_card: () => {},
+      pull_trasnactions_deposit_account: () => {},
     };
   }
 
@@ -38,7 +38,7 @@ class RbcPort {
   pull_transactions(params) {
     return new Promise((resolve) => {
       this.execute_command(
-        `pull_tranactions_${params.type}`,
+        `pull_transactions_${params.type}`,
         {
           encrypted_identifier: params.encrypted_identifier,
           identifier: params.identifier,
