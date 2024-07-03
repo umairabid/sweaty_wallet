@@ -25,9 +25,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :accounts, only: %i[] do
+  resources :accounts, only: %i[index] do
     collection do
       post :import
     end
   end
+
+  resources :transactions, only: %i[index]
 end
