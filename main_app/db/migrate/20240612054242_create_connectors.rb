@@ -7,7 +7,7 @@ class CreateConnectors < ActiveRecord::Migration[7.1]
       t.integer :auth_type, null: false, index: true
       t.string :username
       t.string :password
-      t.references :user
+      t.references :user, null: false, index: true, foreign_key: {on_delete: :cascade}
       t.timestamps
     end
   end

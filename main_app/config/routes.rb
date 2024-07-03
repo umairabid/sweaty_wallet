@@ -24,4 +24,10 @@ Rails.application.routes.draw do
       get '/direct/new' => 'connectors#new_direct', as: :new_direct
     end
   end
+
+  resources :accounts, only: %i[] do
+    collection do
+      post :import
+    end
+  end
 end

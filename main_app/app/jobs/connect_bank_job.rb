@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class ConnectBankJob < ApplicationJob
   queue_as :default
 

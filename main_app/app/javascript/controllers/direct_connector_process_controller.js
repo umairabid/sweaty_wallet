@@ -6,7 +6,6 @@ export default class extends Controller {
     const form = document.getElementById("new_connector_form");
     form.classList.add("hidden");
     const sub = this.get_subscription();
-    console.log(sub);
   }
 
   get_subscription() {

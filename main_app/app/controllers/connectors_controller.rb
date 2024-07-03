@@ -52,10 +52,8 @@ class ConnectorsController < ApplicationController
   def set_connector
     raise NotFound unless valid_bank?
 
-    @connector = Connector.find_by(bank: bank,
-                                   user: current_user) || Connector.new(
-      user: current_user, bank: bank,
-    )
+    @connector = Connector.find_by(bank: bank, user: current_user) ||
+                 Connector.new(user: current_user, bank: bank)
   end
 
   def valid_bank?

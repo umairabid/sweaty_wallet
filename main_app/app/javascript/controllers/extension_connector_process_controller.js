@@ -6,26 +6,37 @@ export default class extends Controller {
   connect() {
     this.handle_success = this.handle_success.bind(this);
     this.handle_error = this.handle_error.bind(this);
-    this.ping_extension = this.ping_extension.bind(this);
-    this.connect_with_bank = this.connect_with_bank.bind(this);
-    this.pull_accounts = this.pull_accounts.bind(this);
-    this.pull_transactions = this.pull_transactions.bind(this);
-
     this.get_modal().show();
-    this.extension = new ConnectorExtension(this.element.dataset.extension_id);
-    this.pull_bank();
-  }
-
-  pull_bank() {
+    this.extension = new ConnectorExtension({
+      extension_id: this.element.dataset.extension_id,
+      bank: this.element.dataset.bank,
+      handle_success: this.handle_success,
+      handle_error: this.handle_error,
+    });
     this.progress_spinner().classList.remove("hidden");
     this.error_messages_alert().classList.add("hidden");
     this.extension
-      .is_connected()
-      .then(this.ping_extension)
-      .then(this.connect_with_bank)
-      .then(this.pull_accounts)
-      .then(this.pull_transactions)
-      .catch((err) => {});
+      .pull_bank()
+      .then((data) => {
+        console.log(data);
+        return fetch("/accounts/import", {
+          method: "POST",
+          body: JSON.stringify({
+            bank: this.element.dataset.bank,
+            accounts: data
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+      })
+      .then((res) => {
+        new Response(res.body).json().then((body) => {
+          console.log(body);
+        });
+        return { status: "pulled_transactions" };
+      })
+      .then(this.handle_success);
   }
 
   handle_success(data) {
@@ -43,93 +54,6 @@ export default class extends Controller {
     handle_message("progress-message");
     handle_message("error-message", data.status);
     throw data;
-  }
-
-  connect_with_bank() {
-    return this.extension
-      .send_message_with_response_timeout({
-        message: "ping",
-        bank: this.element.dataset.bank,
-      })
-      .then(this.handle_success)
-      .catch((data) => {
-        if (
-          data.status == "message_failed" ||
-          data.status == "unable_to_reach_extension"
-        ) {
-          this.handle_error({
-            status: `${this.element.dataset.bank}_not_found`,
-          });
-        }
-      });
-  }
-
-  pull_accounts() {
-    return this.extension
-      .send_message_with_response_timeout({
-        message: `pull_accounts`,
-        bank: this.element.dataset.bank,
-      })
-      .then(this.handle_success)
-      .catch(this.handle_error);
-  }
-
-  ping_extension() {
-    return this.extension
-      .ping()
-      .then(this.handle_success)
-      .catch(this.handle_error);
-  }
-
-  pull_transactions(response) {
-    const transactions = {};
-    const accounts_with_transactions = response.accounts.filter((a) =>
-      ["credit_card", "deposit_account"].includes(a.type)
-    );
-    const promises = accounts_with_transactions.map((a) => {
-      const message = {
-        message: `pull_transactions`,
-        bank: this.element.dataset.bank,
-        params: {
-          type: a.type,
-          identifier: a.external_id,
-          encrypted_identifier: a.encrypted_external_id,
-        }
-      };
-      return this.extension.send_message_with_response_timeout.bind(
-        this.extension,
-        message
-      );
-    });
-    let promiseChain = Promise.resolve(); // Start with a resolved promise
-    promises.forEach((promise) => {
-      promiseChain = promiseChain.then(() => {
-        return this.wrap_promise_in_delay(promise, 10000).then((res) => {
-          transactions[res.identifier] = res.transactions;
-        })
-      });
-    });
-
-    return promiseChain
-      .then(() => {
-        return { status: "pulled_transactions" };
-      })
-      .then(this.handle_success)
-      .catch(this.handle_error);
-  }
-
-  wrap_promise_in_delay(promise, delayTime) {
-    return new Promise((resolve, reject) => {
-      promise()
-        .then((result) => {
-          this.delay(delayTime).then(() => resolve(result)); // Schedule next execution after delay
-        })
-        .catch((error) => reject(error)); // Propagate errors
-    });
-  }
-
-  delay(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   progress_spinner() {
