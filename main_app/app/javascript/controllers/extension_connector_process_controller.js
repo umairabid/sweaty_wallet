@@ -1,6 +1,6 @@
-import { Controller } from "@hotwired/stimulus";
-import ConnectorExtension from "lib/connector_extension";
-import handle_message from "lib/handle_message";
+import { Controller } from '@hotwired/stimulus';
+import ConnectorExtension from 'lib/connector_extension';
+import handle_message from 'lib/handle_message';
 
 export default class extends Controller {
   connect() {
@@ -13,28 +13,28 @@ export default class extends Controller {
       handle_success: this.handle_success,
       handle_error: this.handle_error,
     });
-    this.progress_spinner().classList.remove("hidden");
-    this.error_messages_alert().classList.add("hidden");
+    this.progress_spinner().classList.remove('hidden');
+    this.error_messages_alert().classList.add('hidden');
     this.extension
       .pull_bank()
       .then((data) => {
         console.log(data);
-        return fetch("/accounts/import", {
-          method: "POST",
+        return fetch('/accounts/import', {
+          method: 'POST',
           body: JSON.stringify({
             bank: this.element.dataset.bank,
-            accounts: data
+            accounts: data,
           }),
           headers: {
-            'Content-Type': 'application/json'
-          }
+            'Content-Type': 'application/json',
+          },
         });
       })
       .then((res) => {
         new Response(res.body).json().then((body) => {
           console.log(body);
         });
-        return { status: "pulled_transactions" };
+        return { status: 'pulled_transactions' };
       })
       .then(this.handle_success);
   }
@@ -42,26 +42,26 @@ export default class extends Controller {
   handle_success(data) {
     return new Promise((resolve) => {
       setTimeout(() => {
-        handle_message("progress-message", data.status);
+        handle_message('progress-message', data.status);
         return resolve(data);
       }, 1000);
     });
   }
 
   handle_error(data) {
-    this.progress_spinner().classList.add("hidden");
-    this.error_messages_alert().classList.remove("hidden");
-    handle_message("progress-message");
-    handle_message("error-message", data.status);
+    this.progress_spinner().classList.add('hidden');
+    this.error_messages_alert().classList.remove('hidden');
+    handle_message('progress-message');
+    handle_message('error-message', data.status);
     throw data;
   }
 
   progress_spinner() {
-    return document.getElementById("progress-spinner");
+    return document.getElementById('progress-spinner');
   }
 
   error_messages_alert() {
-    return document.getElementById("error-messages");
+    return document.getElementById('error-messages');
   }
 
   get_modal() {
@@ -76,13 +76,13 @@ export default class extends Controller {
   }
 
   create_modal() {
-    const $targetEl = document.getElementById("new_connector");
+    const $targetEl = document.getElementById('new_connector');
 
     // options with default values
     const options = {
-      placement: "bottom-right",
-      backdrop: "dynamic",
-      backdropClasses: "bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40",
+      placement: 'bottom-right',
+      backdrop: 'dynamic',
+      backdropClasses: 'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
       closable: true,
       onHide: () => {},
       onShow: () => {},
@@ -91,7 +91,7 @@ export default class extends Controller {
 
     // instance options object
     const instanceOptions = {
-      id: "connector-modal",
+      id: 'connector-modal',
       override: true,
     };
 

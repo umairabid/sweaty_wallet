@@ -1,5 +1,5 @@
-import RbcPort from "./ports/rbc_port.js";
-import TdPort from "./ports/td_port.js";
+import RbcPort from './ports/rbc_port';
+import TdPort from './ports/td_port';
 
 class Ports {
   constructor() {
@@ -9,15 +9,16 @@ class Ports {
   }
 
   connect() {
-    var that = this;
-    chrome.runtime.onConnect.addListener(function (port) {
+    const that = this;
+
+    chrome.runtime.onConnect.addListener((port) => {
       that.port_listener(port);
     });
   }
 
   port_listener(port) {
-    if (port.name == "rbc_port") this.rbc_port.set_port(port);
-    if (port.name == "td_port") this.td_port.set_port(port);
+    if (port.name === 'rbc_port') this.rbc_port.set_port(port);
+    if (port.name === 'td_port') this.td_port.set_port(port);
   }
 
   get_rbc_port() {
@@ -29,4 +30,4 @@ class Ports {
   }
 }
 
-export default Ports
+export default Ports;

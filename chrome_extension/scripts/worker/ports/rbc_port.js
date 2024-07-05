@@ -12,12 +12,12 @@ class RbcPort {
   ping() {
     return new Promise((resolve) => {
       if (!this.port) {
-        return resolve({ status: "rbc_not_found" });
+        return resolve({ status: 'rbc_not_found' });
       }
 
-      this.execute_command("ping", {}, (response) => {
+      this.execute_command('ping', {}, (response) => {
         if (response.received) {
-          resolve({ success: true, status: "found_rbc" });
+          resolve({ success: true, status: 'found_rbc' });
         }
       });
     });
@@ -25,13 +25,7 @@ class RbcPort {
 
   pull_accounts() {
     return new Promise((resolve) => {
-      this.execute_command("pull_accounts", {}, (response) => {
-        return resolve({
-          success: true,
-          status: "pulled_accounts",
-          accounts: response,
-        });
-      });
+      this.execute_command('pull_accounts', {}, (response) => resolve({ success: true, status: 'pulled_accounts', accounts: response }));
     });
   }
 
@@ -50,7 +44,7 @@ class RbcPort {
             identifier: params.identifier,
             transactions: response,
           });
-        }
+        },
       );
     });
   }
@@ -64,11 +58,11 @@ class RbcPort {
     if (!name || !this.commands[name]) return;
 
     this.commands[name] = callback;
-    this.port.postMessage({ name: name, params: params });
+    this.port.postMessage({ name, params });
   }
 
   message_listener(message) {
-    const name = message.name;
+    const { name } = message;
     if (!name || !this.commands[name]) return;
 
     this.commands[name](message.params);

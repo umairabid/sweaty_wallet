@@ -1,4 +1,4 @@
-import Ports from "./ports.js";
+import Ports from './ports';
 
 class MessageController {
   constructor() {
@@ -8,31 +8,32 @@ class MessageController {
   }
 
   listener(request, sender, sendResponse) {
-    console.log(request);
-    const bank = request.bank;
-    const message = request.message;
+    const { bank } = request;
+    const { message } = request;
 
     let handler = null;
 
     if (bank) {
       const port = this.get_bank_port(bank);
-      handler = port[message].bind(port)
+      handler = port[message].bind(port);
     } else {
-      handler = this[message].bind(this)
+      handler = this[message].bind(this);
     }
 
-    handler(request.params)
-      .then(res => sendResponse(res))
+    handler(request.params).then((res) => sendResponse(res));
   }
 
   get_bank_port(bank) {
-    if (bank == 'rbc') return this.ports.get_rbc_port();
-    if (bank == 'td') return this.ports.get_td_port();
+    if (bank === 'rbc') return this.ports.get_rbc_port();
+    if (bank === 'td') return this.ports.get_td_port();
+
+    return null;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   ping() {
-    return Promise.resolve({ success: true })
+    return Promise.resolve({ success: true });
   }
 }
 
-export default MessageController
+export default MessageController;

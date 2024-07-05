@@ -1,5 +1,3 @@
-const Modal = Flowbite.default.Modal;
+const { Modal } = Flowbite.default;
 
-export {
-  Modal
-}
+export { Modal };

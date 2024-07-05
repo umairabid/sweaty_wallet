@@ -1,25 +1,30 @@
+import docReady from '../utils/docReady';
+
+const TD_NEW_FRONTEND_URL = 'https://easyweb.td.com/ui';
+const TD_OLD_FRONTEND_URL = 'https://easyweb.td.com/waw';
+const TD_CREDIT_CARD_URL = 'https://easyweb.td.com/waw/webui';
+
 function onTabLoad() {
-  const port = chrome.runtime.connect({ name: "td_port" });
+  const port = chrome.runtime.connect({ name: 'td_port' });
   const current_url = window.location.href;
-  const is_new_frontend = current_url.startsWith("https://easyweb.td.com/ui");
-  const is_old_frontend = current_url.startsWith("https://easyweb.td.com/waw");
-  const is_credit_card = current_url.startsWith(
-    "https://easyweb.td.com/waw/webui"
-  );
+
+  const is_new_frontend = current_url.startsWith(TD_NEW_FRONTEND_URL);
+  const is_old_frontend = current_url.startsWith(TD_OLD_FRONTEND_URL);
+  const is_credit_card = current_url.startsWith(TD_CREDIT_CARD_URL);
 
   if (is_credit_card) {
-    port.postMessage({ name: "redirect_to_credit_card_url" });
+    port.postMessage({ name: 'redirect_to_credit_card_url' });
   } else if (is_new_frontend) {
-    port.postMessage({ name: "redirect_to_new_frontend_url" });
+    port.postMessage({ name: 'redirect_to_new_frontend_url' });
   } else if (is_old_frontend) {
-    port.postMessage({ name: "redirect_to_old_frontend_url" });
+    port.postMessage({ name: 'redirect_to_old_frontend_url' });
   }
 
   function getAccounType(productGroupType) {
-    if (productGroupType == "BANKING") return "deposit_account";
-    if (productGroupType == "CREDIT") return "credit_card";
-    if (productGroupType == "LOAN_MORTGAGE") return "mortgage";
-    return "unknow_account";
+    if (productGroupType === 'BANKING') return 'deposit_account';
+    if (productGroupType === 'CREDIT') return 'credit_card';
+    if (productGroupType === 'LOAN_MORTGAGE') return 'mortgage';
+    return 'unknow_account';
   }
 
   function extract_accounts_from_profile_groups(profile_groups) {
@@ -31,7 +36,7 @@ function onTabLoad() {
         const td_accounts = product_group.accounts || [];
         td_accounts.forEach((account) => {
           accounts.push({
-            type: type,
+            type,
             external_id: account.accountKey,
             encrypted_external_id: account.accountIdentifier,
             account_name: account.accountDesc,
@@ -53,42 +58,42 @@ function onTabLoad() {
       external_account_id: account_id,
       description: transaction.transactionDesc,
       date: transaction.transactionDt,
-      type: is_debit ? "debit" : "credit",
+      type: is_debit ? 'debit' : 'credit',
       amount: is_debit ? transaction.debit.amt : transaction.credit.amt,
     };
   }
 
+  function reqCreditCardListener(accountId) {
+    const response = JSON.parse(this.responseText);
+    const mapTransactionFunc = mapTransaction.bind(null, accountId);
+    const transactions = response.transactions.posted.map(mapTransactionFunc);
+    return transactions;
+  }
+
   function creditCardTransactionPromise(accountId, cycle) {
     return new Promise((resolve) => {
-      function reqListener() {
-        const response = JSON.parse(this.responseText);
-        const mapTransactionFunc = mapTransaction.bind(null, accountId);
-        const transactions =
-          response.transactions.posted.map(mapTransactionFunc);
-        return resolve(transactions);
-      }
-
       const req = new XMLHttpRequest();
-      req.open(
-        "GET",
-        `https://easyweb.td.com/waw/api/account/creditcard/transactions?accountKey=${accountId}&cycleId=${cycle}`
-      );
-      req.addEventListener("load", reqListener);
+      req.open('GET', `https://easyweb.td.com/waw/api/account/creditcard/transactions?accountKey=${accountId}&cycleId=${cycle}`);
+
+      req.addEventListener('load', () => {
+        const result = reqCreditCardListener(accountId);
+        resolve(result);
+      });
+
       req.send();
     });
   }
 
   function parse_description(text) {
-    if (text.indexOf("\nView more") !== -1) {
-      return text.split("\nView more")[0].replace("View more", "").trim();
-    } else {
-      return text;
+    if (text.indexOf('\nView more') !== -1) {
+      return text.split('\nView more')[0].replace('View more', '').trim();
     }
+    return text;
   }
 
   function parse_transaction(row, external_account_id) {
-    const tds = row.querySelectorAll("td");
-    if (tds.length == 0) return null;
+    const tds = row.querySelectorAll('td');
+    if (tds.length === 0) return null;
 
     const date = tds[0] && tds[0].innerText.trim();
     const description = tds[1] && tds[1].innerText.trim();
@@ -98,21 +103,17 @@ function onTabLoad() {
 
     if (!date || (!debit && !credit && !balance)) return null;
 
-    const type = debit ? "debit" : "credit";
+    const type = debit ? 'debit' : 'credit';
     const amount = debit || credit;
     const parsed_description = parse_description(description);
 
     return {
-      external_id:
-        `${date}-${parsed_description}-${type}-${amount}-${balance}`.replace(
-          / /g,
-          ""
-        ),
-      external_account_id: external_account_id,
+      external_id: `${date}-${parsed_description}-${type}-${amount}-${balance}`.replace(/ /g, ''),
+      external_account_id,
       description: parsed_description,
-      date: date,
-      type: type,
-      amount: amount,
+      date,
+      type,
+      amount,
     };
   }
 
@@ -126,39 +127,38 @@ function onTabLoad() {
     return transactions;
   }
 
-  port.onMessage.addListener(function (msg) {
-    if (msg.name == "ping") {
+  function reqListener(msg) {
+    const response = JSON.parse(this.responseText);
+    const profile_groups = response.financialSummaries.personalSummary.profileGroups;
+
+    port.postMessage({
+      name: msg.name,
+      params: extract_accounts_from_profile_groups(profile_groups),
+    });
+  }
+
+  port.onMessage.addListener((msg) => {
+    if (msg.name === 'ping') {
       port.postMessage({ name: msg.name, params: { received: true } });
-    } else if (msg.name == "redirect_to_new_frontend_url") {
+    } else if (msg.name === 'redirect_to_new_frontend_url') {
       window.location.href = msg.params.url;
-    } else if (msg.name == "redirect_to_old_frontend_url") {
+    } else if (msg.name === 'redirect_to_old_frontend_url') {
       window.location.href = msg.params.url;
-    } else if (msg.name == "redirect_to_credit_card_url") {
+    } else if (msg.name === 'redirect_to_credit_card_url') {
       window.location.href = msg.params.url;
-    } else if (msg.name == "pull_accounts") {
-      function reqListener() {
-        const response = JSON.parse(this.responseText);
-        const profile_groups =
-          response.financialSummaries.personalSummary.profileGroups;
-
-        port.postMessage({
-          name: msg.name,
-          params: extract_accounts_from_profile_groups(profile_groups),
-        });
-      }
-
+    } else if (msg.name === 'pull_accounts') {
       const req = new XMLHttpRequest();
-      req.open("GET", `https://easyweb.td.com/ms/uainq/v1/accounts/summary`);
-      req.setRequestHeader("TraceabilityID", crypto.randomUUID());
-      req.setRequestHeader("Messageid", crypto.randomUUID());
-      req.setRequestHeader("Originating-App-Name", "RWUI-uf-fs");
-      req.setRequestHeader("Originating-App-Version-Num", "1.5.34");
-      req.setRequestHeader("TimeStamp", new Date().getTime());
-      req.setRequestHeader("Originating-Channel-Name", "EWP");
-      req.setRequestHeader("Accept-Secondary-Language", "fr_CA");
-      req.addEventListener("load", reqListener);
+      req.open('GET', 'https://easyweb.td.com/ms/uainq/v1/accounts/summary');
+      req.setRequestHeader('TraceabilityID', crypto.randomUUID());
+      req.setRequestHeader('Messageid', crypto.randomUUID());
+      req.setRequestHeader('Originating-App-Name', 'RWUI-uf-fs');
+      req.setRequestHeader('Originating-App-Version-Num', '1.5.34');
+      req.setRequestHeader('TimeStamp', new Date().getTime());
+      req.setRequestHeader('Originating-Channel-Name', 'EWP');
+      req.setRequestHeader('Accept-Secondary-Language', 'fr_CA');
+      req.addEventListener('load', reqListener(msg));
       req.send();
-    } else if (msg.name == "pull_transactions_credit_card") {
+    } else if (msg.name === 'pull_transactions_credit_card') {
       const promises = [
         creditCardTransactionPromise(msg.params.identifier, 0),
         creditCardTransactionPromise(msg.params.identifier, 1),
@@ -170,29 +170,14 @@ function onTabLoad() {
           params: res.flat(),
         });
       });
-    } else if (msg.name == "pull_transactions_deposit_account") {
-      const transaction_rows = document.querySelectorAll(
-        "#tabcontent1 #content1 table tr"
-      );
+    } else if (msg.name === 'pull_transactions_deposit_account') {
+      const transaction_rows = document.querySelectorAll('#tabcontent1 #content1 table tr');
       port.postMessage({
         name: msg.name,
         params: parse_transactions(transaction_rows, msg.params.identifier),
       });
     }
   });
-}
-
-function docReady(fn) {
-  // see if DOM is already available
-  if (
-    document.readyState === "complete" ||
-    document.readyState === "interactive"
-  ) {
-    // call on next available tick
-    setTimeout(fn, 1);
-  } else {
-    document.addEventListener("DOMContentLoaded", fn);
-  }
 }
 
 docReady(onTabLoad);

@@ -1,5 +1,5 @@
-import { Controller } from "@hotwired/stimulus";
-import { Modal } from "../flowbite_modules";
+import { Controller } from '@hotwired/stimulus';
+import { Modal } from '../flowbite_modules';
 
 export default class extends Controller {
   connect() {
@@ -18,27 +18,26 @@ export default class extends Controller {
   }
 
   create_modal() {
-    const $targetEl = document.getElementById("new_connector");
+    const $targetEl = document.getElementById('new_connector');
 
     // options with default values
     const options = {
-      placement: "bottom-right",
-      backdrop: "dynamic",
-      backdropClasses: "bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40",
+      placement: 'bottom-right',
+      backdrop: 'dynamic',
+      backdropClasses: 'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
       closable: true,
       onHide: () => {
-        console.log("modal is hidden");
+        console.log('modal is hidden');
       },
-      onShow: () => {
-      },
+      onShow: () => {},
       onToggle: () => {
-        console.log("modal has been toggled");
+        console.log('modal has been toggled');
       },
     };
 
     // instance options object
     const instanceOptions = {
-      id: "connector-modal",
+      id: 'connector-modal',
       override: true,
     };
 

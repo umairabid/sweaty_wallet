@@ -16,20 +16,17 @@ class ConnectorExtension {
       .then(this.connect_with_bank)
       .then(this.pull_accounts)
       .then(this.pull_transactions)
-      .catch((err) => {});
+      .catch(() => {});
   }
 
   connect_with_bank() {
     return this.send_message_with_response_timeout({
-      message: "ping",
+      message: 'ping',
       bank: this.bank,
     })
       .then(this.handle_success)
       .catch((data) => {
-        if (
-          data.status == "message_failed" ||
-          data.status == "unable_to_reach_extension"
-        ) {
+        if (data.status === 'message_failed' || data.status === 'unable_to_reach_extension') {
           this.handle_error({
             status: `${this.bank}_not_found`,
           });
@@ -39,7 +36,7 @@ class ConnectorExtension {
 
   pull_accounts() {
     return this.send_message_with_response_timeout({
-      message: `pull_accounts`,
+      message: 'pull_accounts',
       bank: this.bank,
     })
       .then(this.handle_success)
@@ -52,12 +49,10 @@ class ConnectorExtension {
 
   pull_transactions(response) {
     const transactions = {};
-    const accounts_with_transactions = response.accounts.filter((a) =>
-      ["credit_card", "deposit_account"].includes(a.type)
-    );
+    const accounts_with_transactions = response.accounts.filter((a) => ['credit_card', 'deposit_account'].includes(a.type));
     const promises = accounts_with_transactions.map((a) => {
       const message = {
-        message: `pull_transactions`,
+        message: 'pull_transactions',
         bank: this.bank,
         params: {
           type: a.type,
@@ -69,20 +64,21 @@ class ConnectorExtension {
     });
     let promiseChain = Promise.resolve(); // Start with a resolved promise
     promises.forEach((promise) => {
-      promiseChain = promiseChain.then(() => {
-        return this.wrap_promise_in_delay(promise, 10000).then((res) => {
+      promiseChain = promiseChain.then(() =>
+        this.wrap_promise_in_delay(promise, 10000).then((res) => {
           transactions[res.identifier] = res.transactions;
-        });
-      });
+        }),
+      );
     });
 
     return promiseChain
-      .then(() => {
-        return response.accounts.map((account) => {
-          account.transactions = transactions[account.external_id] || [];
-          return account;
-        });
-      })
+      .then(() =>
+        response.accounts.map((account) => {
+          const finalAccount = { ...account };
+          finalAccount.transactions = transactions[account.external_id] || [];
+          return finalAccount;
+        }),
+      )
       .catch(this.handle_error);
   }
 
@@ -103,47 +99,38 @@ class ConnectorExtension {
   is_connected() {
     return new Promise((resolve, reject) => {
       if (!chrome) {
-        return reject({ status: "chrome_unavailable" });
+        return reject({ status: 'chrome_unavailable' });
       }
 
       if (!chrome.runtime) {
-        return reject({ status: "no_accessible_extension" });
+        return reject({ status: 'no_accessible_extension' });
       }
 
-      return resolve({ status: "runtime_found" });
+      return resolve({ status: 'runtime_found' });
     });
   }
 
   ping() {
-    return this.send_message_with_response_timeout({ message: "ping" })
-      .then((res) => {
-        return { status: "installed" };
-      })
+    return this.send_message_with_response_timeout({ message: 'ping' })
+      .then(() => ({ status: 'installed' }))
       .catch((res) => {
-        if (
-          res.status == "unable_to_reach_extension" ||
-          res.status == "message_failed"
-        )
-          throw { status: "not_installed" };
+        if (res.status === 'unable_to_reach_extension' || res.status === 'message_failed') throw { status: 'not_installed' };
       });
   }
 
   send_message_with_response_timeout(message, timeout = 20000) {
     return new Promise((resolve, reject) => {
-      const timeoutId = setTimeout(() => {
-        return reject({ status: "unable_to_reach_extension" });
-      }, timeout);
+      const timeoutId = setTimeout(() => reject({ status: 'unable_to_reach_extension' }), timeout);
       try {
         chrome.runtime.sendMessage(this.extension_id, message, (response) => {
           clearTimeout(timeoutId);
           if (response.success) {
             return resolve(response);
-          } else {
-            return reject({ status: "message_failed" });
           }
+          return reject({ status: 'message_failed' });
         });
       } catch (err) {
-        return reject({ status: "unable_to_reach_extension" });
+        return reject({ status: 'unable_to_reach_extension' });
       }
     });
   }
