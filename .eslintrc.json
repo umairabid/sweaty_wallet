@@ -19,7 +19,9 @@
     "no-promise-executor-return": "off",
     "no-plusplus": "off",
     "no-throw-literal": "off",
-    "prefer-promise-reject-errors": "off"
+    "prefer-promise-reject-errors": "off",
+    "quotes": "off",
+    "semi": "off"
   },
   "overrides": [
     {
