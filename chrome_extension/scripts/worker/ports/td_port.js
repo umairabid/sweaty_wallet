@@ -1,7 +1,7 @@
 class TdPort {
   constructor() {
-    this.message_listener = this.message_listener.bind(this);
-    this.on_port_change_callback = () => {};
+    this.message_listener = this.message_listener.bind(this)
+    this.on_port_change_callback = () => {}
     this.commands = {
       ping: () => {},
       redirect_to_new_frontend_url: () => {},
@@ -11,47 +11,42 @@ class TdPort {
       pull_transactions_credit_card: () => {},
       load_three_month_transactions: () => {},
       pull_transactions_deposit_account: () => {},
-    };
+    }
   }
 
   ping() {
     return new Promise((resolve) => {
       if (!this.port) {
-        return resolve({ status: "td_not_found" });
+        return resolve({ status: "td_not_found" })
       }
 
       this.execute_command("ping", {}, (response) => {
         if (response.received) {
-          resolve({ success: true, status: "td_found" });
+          resolve({ success: true, status: "td_found" })
         }
-      });
-    });
+      })
+    })
   }
 
   pull_accounts() {
     return new Promise((resolve) => {
-      this.execute_command(
-        "redirect_to_new_frontend_url",
-        { url: "https://easyweb.td.com/ui/ew/fs?fsType=PFS" },
-        () => {
-          this.execute_command("pull_accounts", {}, (res) => {
-            resolve({
-              success: true,
-              status: "pulled_accounts",
-              accounts: res,
-            });
-          });
-        }
-      );
-    });
+      this.execute_command("redirect_to_new_frontend_url", { url: "https://easyweb.td.com/ui/ew/fs?fsType=PFS" }, () => {
+        this.execute_command("pull_accounts", {}, (res) => {
+          resolve({
+            success: true,
+            status: "pulled_accounts",
+            accounts: res,
+          })
+        })
+      })
+    })
   }
 
   pull_transactions(params) {
-    if (params.type == "credit_card") {
-      return this.pull_transactions_credit_card(params);
-    } else {
-      return this.pull_transactions_deposit_account(params);
+    if (params.type === "credit_card") {
+      return this.pull_transactions_credit_card(params)
     }
+    return this.pull_transactions_deposit_account(params)
   }
 
   pull_transactions_credit_card(params) {
@@ -63,51 +58,39 @@ class TdPort {
         },
         () => {
           setTimeout(() => {
-            this.execute_command(
-              "pull_transactions_credit_card",
-              params,
-              (res) => {
-                resolve({
-                  success: true,
-                  identifier: params.identifier,
-                  status: "pulled_transactions_credit_card",
-                  transactions: res,
-                });
-              }
-            );
-          }, 5000);
-        }
-      );
-    });
+            this.execute_command("pull_transactions_credit_card", params, (res) => {
+              resolve({
+                success: true,
+                identifier: params.identifier,
+                status: "pulled_transactions_credit_card",
+                transactions: res,
+              })
+            })
+          }, 5000)
+        },
+      )
+    })
   }
 
   pull_transactions_deposit_account(params) {
     return new Promise((resolve) => {
-      this.execute_command(
-        "redirect_to_old_frontend_url",
-        { url: this.deposit_account_url_three_month(params.identifier) },
-        () => {
-          setTimeout(() => {
-            this.execute_command(
-              "pull_transactions_deposit_account",
-              params,
-              (res) => {
-                resolve({
-                  success: true,
-                  status: "pulled_transactions_deposit_account",
-                  identifier: params.identifier,
-                  transactions: res,
-                });
-              }
-            );
-          }, 3000);
-        }
-      );
-    });
+      this.execute_command("redirect_to_old_frontend_url", { url: this.deposit_account_url_three_month(params.identifier) }, () => {
+        setTimeout(() => {
+          this.execute_command("pull_transactions_deposit_account", params, (res) => {
+            resolve({
+              success: true,
+              status: "pulled_transactions_deposit_account",
+              identifier: params.identifier,
+              transactions: res,
+            })
+          })
+        }, 3000)
+      })
+    })
   }
 
   account_url(account_id) {
-    return `https://easyweb.td.com/waw/ezw/servlet/TransferInFromNorthStarServlet?ezwTargetRoute=servlet%2Fca.tdbank.banking.servlet.AccountDetailsServlet&accountIdentifier=${account_id}`;
+    return `https://easyweb.td.com/waw/ezw/servlet/TransferInFromNorthStarServlet?ezwTargetRoute=servlet%2Fca.tdbank.banking.servlet.AccountDetailsServlet&accountIdentifier=${account_id}`
   }
 
   deposit_account_url_three_month(account_id) {
@@ -115,26 +98,26 @@ class TdPort {
   }
 
   set_port(port) {
-    this.port = port;
-    this.port.onMessage.addListener(this.message_listener);
-    this.on_port_change_callback();
-    this.on_port_change_callback = () => {};
+    this.port = port
+    this.port.onMessage.addListener(this.message_listener)
+    this.on_port_change_callback()
+    this.on_port_change_callback = () => {}
   }
 
   execute_command(name, params, callback) {
-    if (!name || !this.commands[name]) return;
+    if (!name || !this.commands[name]) return
 
-    this.commands[name] = callback;
-    this.port.postMessage({ name: name, params: params });
+    this.commands[name] = callback
+    this.port.postMessage({ name, params })
   }
 
   message_listener(message) {
-    const name = message.name;
-    if (!name || !this.commands[name]) return;
+    const { name } = message
+    if (!name || !this.commands[name]) return
 
-    this.commands[name](message.params);
-    this.commands[name] = () => {};
+    this.commands[name](message.params)
+    this.commands[name] = () => {}
   }
 }
 
-export default TdPort;
+export default TdPort

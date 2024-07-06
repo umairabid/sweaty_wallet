@@ -1,4 +1,4 @@
-import MessageController from './message_controller.js';
+import MessageController from "./message_controller"
 
-new MessageController();
-
+// eslint-disable-next-line no-new
+new MessageController()

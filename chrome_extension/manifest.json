@@ -25,7 +25,5 @@
     "type": "module"
   },
   "permissions": ["webRequest", "scripting", "activeTab"],
-  "host_permissions": [
-    "https://easyweb.td.com/*"
-  ]
+  "host_permissions": ["https://easyweb.td.com/*"]
 }
