@@ -1,4 +1,4 @@
-import Ports from "./ports"
+import Ports from "./ports.js"
 
 class MessageController {
   constructor() {

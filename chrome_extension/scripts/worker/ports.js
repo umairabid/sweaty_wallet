@@ -1,5 +1,5 @@
-import RbcPort from "./ports/rbc_port"
-import TdPort from "./ports/td_port"
+import RbcPort from "./ports/rbc_port.js"
+import TdPort from "./ports/td_port.js"
 
 class Ports {
   constructor() {
