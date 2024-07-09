@@ -1,0 +1,8 @@
+{
+  "name": "sweaty_wallet_chrome_extension",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build_td": "esbuild ./scripts/tabs/td/td.js --bundle --outfile=./builds/td.js"
+  }
+}

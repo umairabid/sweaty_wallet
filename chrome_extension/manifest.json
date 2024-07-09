@@ -13,7 +13,7 @@
       "matches": ["https://www1.royalbank.com/sgw1/olb/index-en/*"]
     },
     {
-      "js": ["scripts/tabs/td.js"],
+      "js": ["builds/td.js"],
       "matches": ["https://easyweb.td.com/*"]
     }
   ],

@@ -7,6 +7,7 @@ class TdPort {
       redirect_to_new_frontend_url: () => {},
       redirect_to_old_frontend_url: () => {},
       redirect_to_credit_card_url: () => {},
+      redirect_to_deposit_acc_url: () => {},
       pull_accounts: () => {},
       pull_transactions_credit_card: () => {},
       load_three_month_transactions: () => {},
@@ -74,7 +75,7 @@ class TdPort {
 
   pull_transactions_deposit_account(params) {
     return new Promise((resolve) => {
-      this.execute_command("redirect_to_old_frontend_url", { url: this.deposit_account_url_three_month(params.identifier) }, () => {
+      this.execute_command("redirect_to_deposit_acc_url", { url: this.account_url(params.encrypted_identifier) }, () => {
         setTimeout(() => {
           this.execute_command("pull_transactions_deposit_account", params, (res) => {
             resolve({
@@ -91,10 +92,6 @@ class TdPort {
 
   account_url(account_id) {
     return `https://easyweb.td.com/waw/ezw/servlet/TransferInFromNorthStarServlet?ezwTargetRoute=servlet%2Fca.tdbank.banking.servlet.AccountDetailsServlet&accountIdentifier=${account_id}`
-  }
-
-  deposit_account_url_three_month(account_id) {
-    return `https://easyweb.td.com/waw/ezw/servlet/ca.tdbank.banking.servlet.AccountDetailsServlet?selectedAccount=${account_id}&period=L120&filter=f1&reverse=&xptype=PRXP&requestedPage=0&sortBy=date&sortByOrder=&fromjsp=activity`
   }
 
   set_port(port) {
