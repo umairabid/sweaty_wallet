@@ -23,7 +23,7 @@ class TdPort {
 
       this.execute_command("ping", {}, (response) => {
         if (response.received) {
-          resolve({ success: true, status: "td_found" })
+          resolve({ success: true, status: "found_bank" })
         }
       })
     })
@@ -75,16 +75,34 @@ class TdPort {
 
   pull_transactions_deposit_account(params) {
     return new Promise((resolve) => {
-      this.execute_command("redirect_to_deposit_acc_url", { url: this.account_url(params.encrypted_identifier) }, () => {
+      console.log('init redirect')
+      this.execute_command("redirect_to_deposit_acc_url", { url: this.account_url(params.encrypted_identifier) }, (response) => {
+        console.log(response)
         setTimeout(() => {
-          this.execute_command("pull_transactions_deposit_account", params, (res) => {
-            resolve({
-              success: true,
-              status: "pulled_transactions_deposit_account",
-              identifier: params.identifier,
-              transactions: res,
+          if (response.url.startsWith("https://easyweb.td.com/ui/ew/da")) {
+            this.execute_command("pull_transactions_deposit_account", params, (res) => {
+              resolve({
+                success: true,
+                status: "pulled_transactions_deposit_account",
+                identifier: params.identifier,
+                transactions: res,
+              })
             })
-          })
+          } else {
+            this.execute_command("redirect_to_deposit_acc_url", { url: this.deposit_account_url_three_month(params.identifier) }, (response) => {
+              setTimeout(() => {
+                this.execute_command("pull_transactions_deposit_account", params, (res) => {
+                  console.log(res)
+                  resolve({
+                    success: true,
+                    status: "pulled_transactions_deposit_account",
+                    identifier: params.identifier,
+                    transactions: res,
+                  })
+                })
+              }, 3000)
+            })
+          }
         }, 3000)
       })
     })
@@ -92,6 +110,10 @@ class TdPort {
 
   account_url(account_id) {
     return `https://easyweb.td.com/waw/ezw/servlet/TransferInFromNorthStarServlet?ezwTargetRoute=servlet%2Fca.tdbank.banking.servlet.AccountDetailsServlet&accountIdentifier=${account_id}`
+  }
+
+  deposit_account_url_three_month(account_id) {
+    return `https://easyweb.td.com/waw/ezw/servlet/ca.tdbank.banking.servlet.AccountDetailsServlet?selectedAccount=${account_id}&period=L120&filter=f1&reverse=&xptype=PRXP&requestedPage=0&sortBy=date&sortByOrder=&fromjsp=activity`
   }
 
   set_port(port) {

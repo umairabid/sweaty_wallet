@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_02_214724) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_10_102727) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -141,7 +141,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_02_214724) do
     t.bigint "account_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "secondary_external_id"
+    t.jsonb "external_object", default: {}
     t.index ["account_id"], name: "index_transactions_on_account_id"
+    t.index ["secondary_external_id"], name: "index_transactions_on_secondary_external_id"
   end
 
   create_table "users", force: :cascade do |t|

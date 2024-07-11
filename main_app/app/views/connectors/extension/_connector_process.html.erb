@@ -29,16 +29,17 @@
         <div id="progress-messages">
           <div class="flex justify-center align-items-center progress-message text-sm" id="initiating">Connecting with extension</div>
           <div class="flex justify-center align-items-center progress-message text-sm hidden" id="installed">Connected with extension, connecting to Bank</div>
-          <div class="flex justify-center align-items-center progress-message text-sm hidden" id="found_rbc">We are connected to Bank, pulling your accounts</div>
+          <div class="flex justify-center align-items-center progress-message text-sm hidden" id="found_bank">We are connected to Bank, pulling your accounts</div>
           <div class="flex justify-center align-items-center progress-message text-sm hidden" id="pulled_accounts">We have pulled your accounts, pulling transactions</div>
-          <div class="flex justify-center align-items-center progress-message text-sm hidden" id="pulled_transactions">We have pulled your transactions</div>
+          <div class="flex justify-center align-items-center progress-message text-sm hidden" id="pulled_transactions">We have pulled your transactions, syncing your data</div>
         </div>
         <div id="error-messages" class="p-4 text-sm text-red-800 rounded-lg bg-red-50 hidden" role="alert">
           <div class="error-message font-medium" id="chrome_unavailable">We need chrome browser to connect.</div>
           <div class="error-message font-medium" id="no_accessible_extension">We could not reach any extension, have you installed our extension?</div>
           <div class="error-message font-medium" id="unable_to_reach_extension">We could not reach our extension, check if it is active?</div>
-          <div class="error-message font-medium" id="message_failed">We could not reach our extension, check if it is active?</div>
-          <div class="error-message font-medium" id="rbc_not_found">We could not connected with Bank tab, if you are connected please refresh</div>
+          <div class="error-message font-medium" id="bank_not_found">We could not connected with Bank tab, if you are connected please refresh</div>
+          <div class="error-message font-medium" id="pull_accounts_fail">Unable to pull accounts</div>
+          <div class="error-message font-medium" id="pull_transactions_fail">Unable to pull transactions</div>
         </div>
       </div>
       <!-- Modal footer -->

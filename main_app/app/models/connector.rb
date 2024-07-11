@@ -1,6 +1,11 @@
 class Connector < ApplicationRecord
-  BANK_NAMES = { rbc: 'Royal Bank of Canada', td: 'TD Bank' }.with_indifferent_access
-  enum bank: { rbc: 1, td: 2 }
+  BANK_NAMES = {
+    rbc: 'Royal Bank of Canada',
+    td: 'TD Bank',
+    walmart_mc: 'Walmart Master Card'
+  }.with_indifferent_access
+
+  enum bank: { rbc: 1, td: 2, walmart_mc: 3 }
   enum auth_type: { persisted: 1, transient: 2 }, _prefix: :auth_type
   enum status: { connecting: 1, failed: 2, connected: 3 }, _prefix: :status
   enum auth_method: { extension: 1, direct: 2 }, _prefix: :auth_method
