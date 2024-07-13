@@ -15,6 +15,10 @@
     {
       "js": ["builds/td.js"],
       "matches": ["https://easyweb.td.com/*"]
+    },
+    {
+      "js": ["scripts/tabs/walmart_mc.js"],
+      "matches": ["https://www.walmartrewardsmc.ca/app/*"]
     }
   ],
   "externally_connectable": {

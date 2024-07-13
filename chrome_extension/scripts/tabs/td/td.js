@@ -1,6 +1,6 @@
 import docReady from "../../utils/docReady"
 import pullAccounts from "./pull_accounts"
-import pullDepositAccount from "./pull_deposit_account"
+import { pullDepositAccountFromApi, pullDepositAccountFromPage } from "./pull_deposit_account"
 import pullCreditCardAccount from "./pull_credit_card_account"
 
 const TD_NEW_FRONTEND_URL = "https://easyweb.td.com/ui"
@@ -19,8 +19,8 @@ function onTabLoad() {
 
   if (is_credit_card) {
     port.postMessage({ name: "redirect_to_credit_card_url" })
-  } else if (is_deposite_acc_url) {
-    port.postMessage({ name: "redirect_to_deposit_acc_url" })
+  } else if (is_deposite_acc_url || is_old_frontend) {
+    port.postMessage({ name: "redirect_to_deposit_acc_url", params: { url: current_url } })
   } else if (is_new_frontend) {
     port.postMessage({ name: "redirect_to_new_frontend_url" })
   } else if (is_old_frontend) {
@@ -45,9 +45,16 @@ function onTabLoad() {
         port.postMessage(res)
       })
     } else if (msg.name === "pull_transactions_deposit_account") {
-      pullDepositAccount(msg).then((res) => {
-        port.postMessage(res)
-      })
+      if (is_deposite_acc_url) {
+        pullDepositAccountFromApi(msg).then((res) => {
+          port.postMessage(res)
+        })
+      } else {
+        pullDepositAccountFromPage(msg).then((res) => {
+          port.postMessage(res)
+        })
+      }
+      
     }
   })
 }

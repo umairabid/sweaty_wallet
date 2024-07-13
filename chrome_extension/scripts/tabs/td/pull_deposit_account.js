@@ -52,11 +52,67 @@ function makeRequest(msg) {
   })
 }
 
-export default function pullDepositAccount(msg) {
+function parse_description(text) {
+  if (text.indexOf("\nView more") !== -1) {
+    return text.split("\nView more")[0].replace("View more", "").trim()
+  }
+  return text
+}
+
+function parse_transaction(row, external_account_id) {
+  const tds = row.querySelectorAll("td")
+  if (tds.length === 0) return null
+
+  const date = tds[0] && tds[0].innerText.trim()
+  const description = tds[1] && tds[1].innerText.trim()
+  const debit = tds[2] && tds[2].innerText.trim()
+  const credit = tds[3] && tds[3].innerText.trim()
+  const balance = tds[4] && tds[4].innerText.trim()
+
+  if (!date || (!debit && !credit && !balance)) return null
+
+  const type = debit ? "debit" : "credit"
+  const amount = debit || credit
+  const parsed_description = parse_description(description)
+
+  return {
+    external_id: `${date}-${parsed_description}-${type}-${amount}-${balance}`.replace(/ /g, ""),
+    secondary_external_id: `${date}-${parsed_description}-${type}-${amount}-${balance}`.replace(/ /g, ""),
+    external_account_id,
+    description: parsed_description,
+    date,
+    type,
+    amount
+  }
+}
+
+function parse_transactions(transaction_rows, external_account_id) {
+  const transactions = []
+  for (let i = 0; i < transaction_rows.length; i++) {
+    const row = transaction_rows[i]
+    const transaction = parse_transaction(row, external_account_id)
+    if (transaction) transactions.push(transaction)
+  }
+  return transactions
+}
+
+export function pullDepositAccountFromApi(msg) {
   return makeRequest(msg).then((res) => {
     return {
       name: msg.name,
       params: res,
     }
+  })
+}
+
+export function pullDepositAccountFromPage(msg) {
+  console.log(msg)
+  return new Promise((resolve) => {
+    const transaction_rows = document.querySelectorAll("#tabcontent1 #content1 table tr")
+    const transactions = parse_transactions(transaction_rows, msg.params.identifier)
+    resolve({
+      name: msg.name,
+      params: transactions,
+    })
   })
 }

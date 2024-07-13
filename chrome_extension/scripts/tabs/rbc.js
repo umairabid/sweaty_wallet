@@ -37,7 +37,7 @@ function mapTransaction(account_id, transaction) {
   const description = transaction.description.join(" | ")
 
   return {
-    external_id: `${date}-${description}-${transaction.amount}-${transaction.type}-${transaction.transactionCode}`,
+    external_id: `${date}-${description}-${transaction.amount}-${transaction.creditDebitIndicator}-${transaction.transactionCode}`,
     external_account_id: account_id,
     description: transaction.description.join(" | "),
     date: transaction.bookingDate || transaction.postedDate,

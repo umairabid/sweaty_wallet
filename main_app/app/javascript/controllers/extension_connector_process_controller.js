@@ -17,35 +17,34 @@ export default class extends Controller {
     this.error_messages_alert().classList.add("hidden")
     this.extension
       .pull_bank()
-      .then((data) => {
-        console.log(data)
+      .then((res) => {
+        if (!res.success) {
+          return res
+        }
         return fetch("/accounts/import", {
           method: "POST",
           body: JSON.stringify({
             bank: this.element.dataset.bank,
-            accounts: data,
+            accounts: res.final_accounts,
           }),
           headers: {
             "Content-Type": "application/json",
           },
+        }).then((res) => {
+          return new Response(res.body).json().then((body) => {
+            if (body.job_id) {
+              return { success: true, status: "synced_accounts" }
+            } else {
+              return { success: false, status: "sync_failed" }
+            }
+          })
         })
       })
-      .then((res) => {
-        new Response(res.body).json().then((body) => {
-          console.log(body)
-        })
-        return { status: "pulled_transactions" }
-      })
-      .then(this.handle_success)
+      .then((res) => this.handle_sync(res))
   }
 
   handle_success(data) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        handle_message("progress-message", data.status)
-        return resolve(data)
-      }, 1000)
-    })
+    handle_message("progress-message", data.status)
   }
 
   handle_error(data) {
@@ -53,7 +52,14 @@ export default class extends Controller {
     this.error_messages_alert().classList.remove("hidden")
     handle_message("progress-message")
     handle_message("error-message", data.status)
-    throw data
+  }
+
+  handle_sync(data) {
+    if (data.success) {
+      this.close_modal()
+    } else {
+      this.handle_error(data)
+    }
   }
 
   progress_spinner() {

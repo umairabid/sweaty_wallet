@@ -1,18 +1,17 @@
-class RbcPort {
+class WalmartMcPort {
   constructor() {
     this.message_listener = this.message_listener.bind(this)
     this.commands = {
       ping: () => {},
       pull_accounts: () => {},
-      pull_transactions_credit_card: () => {},
-      pull_transactions_deposit_account: () => {},
+      pull_transactions_credit_card: () => {}
     }
   }
 
   ping() {
     return new Promise((resolve) => {
       if (!this.port) {
-        return resolve({ status: "rbc_not_found" })
+        return resolve({ status: "walmart_mc_not_found" })
       }
 
       this.execute_command("ping", {}, (response) => {
@@ -70,4 +69,4 @@ class RbcPort {
   }
 }
 
-export default RbcPort
+export default WalmartMcPort
