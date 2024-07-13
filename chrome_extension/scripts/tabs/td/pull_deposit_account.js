@@ -15,11 +15,13 @@ function mapTransaction(account_id, transaction) {
   const is_debit = !!transaction.withdrawalAmt
   return {
     external_id: transaction.transactionId,
+    secondary_external_id: '',
     external_account_id: account_id,
     description: transaction.description,
     date: transaction.date,
     type: is_debit ? "debit" : "credit",
     amount: is_debit ? transaction.withdrawalAmt : transaction.depositAmt,
+    external_object: transaction
   }
 }
 
@@ -74,15 +76,17 @@ function parse_transaction(row, external_account_id) {
   const type = debit ? "debit" : "credit"
   const amount = debit || credit
   const parsed_description = parse_description(description)
+  const secondary_external_id = `${date}-${parsed_description}-${type}-${amount}-${balance}`.replace(/ /g, "")
 
   return {
-    external_id: `${date}-${parsed_description}-${type}-${amount}-${balance}`.replace(/ /g, ""),
-    secondary_external_id: `${date}-${parsed_description}-${type}-${amount}-${balance}`.replace(/ /g, ""),
+    external_id: secondary_external_id.replace(/ /g, ""),
+    secondary_external_id: secondary_external_id,
     external_account_id,
     description: parsed_description,
     date,
     type,
-    amount
+    amount,
+    external_object: { balance: balance }
   }
 }
 
@@ -106,7 +110,6 @@ export function pullDepositAccountFromApi(msg) {
 }
 
 export function pullDepositAccountFromPage(msg) {
-  console.log(msg)
   return new Promise((resolve) => {
     const transaction_rows = document.querySelectorAll("#tabcontent1 #content1 table tr")
     const transactions = parse_transactions(transaction_rows, msg.params.identifier)

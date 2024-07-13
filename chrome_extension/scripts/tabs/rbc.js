@@ -35,14 +35,18 @@ function mapRbcAccount(type, account) {
 function mapTransaction(account_id, transaction) {
   const date = transaction.bookingDate || transaction.postedDate
   const description = transaction.description.join(" | ")
+  const secondary_external_id = `${date}-${description}-${transaction.amount}-${transaction.creditDebitIndicator}
+    -${transaction.runningBalance || transaction.transactionCode}`.replace(/ /g, "")
 
   return {
-    external_id: `${date}-${description}-${transaction.amount}-${transaction.creditDebitIndicator}-${transaction.transactionCode}`,
+    external_id: transaction.transactionId || secondary_external_id,
+    secondary_external_id: secondary_external_id,
     external_account_id: account_id,
     description: transaction.description.join(" | "),
     date: transaction.bookingDate || transaction.postedDate,
     type: transaction.creditDebitIndicator,
     amount: transaction.amount,
+    external_object: transaction
   }
 }
 

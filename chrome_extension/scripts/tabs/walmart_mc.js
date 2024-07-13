@@ -16,11 +16,13 @@ function creditCardTransactionPromise(account_id, customer_id, cycle_date) {
         const is_debit = amount > 0
         return {
           external_id: t.referenceNumber,
+          secondary_external_id: '',
           external_account_id: account_id,
           description: t.merchant.name,
           date: t.date,
           type: is_debit ? "debit" : "credit",
           amount: amount,
+          external_object: t
         }
       })
       resolve(transactions)

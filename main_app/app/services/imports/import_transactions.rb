@@ -16,24 +16,34 @@ class Imports::ImportTransactions
 
   def new_transaction_params
     @t_params
-      .select { |t| !existing_transactions[t[:external_id]] }
+      .select do |t|
+      !existing_transactions_by_external_id[t[:external_id]] &&
+        !existing_transactions_by_secondary_external_id[t[:secondary_external_id]]
+    end
       .map do |t|
-        {
-          external_id: t[:external_id],
-          secondary_external_id: t[:secondary_external_id],
-          description: t[:description],
-          date: t[:date],
-          is_credit: t[:type] == 'credit',
-          amount: t[:amount].class == String ? t[:amount].tr(",", "").to_d : t[:amount],
-          external_object: t[:external_object]
-        }
+      {
+        external_id: t[:external_id],
+        secondary_external_id: t[:secondary_external_id],
+        description: t[:description],
+        date: t[:date],
+        is_credit: t[:type] == "credit",
+        amount: t[:amount].class == String ? t[:amount].tr(",", "").to_d : t[:amount],
+        external_object: t[:external_object],
+      }
     end
   end
 
-  def existing_transactions
-    existing_transactions ||= begin
-      external_ids = @t_params.map { |t| t[:external_id] }
-      @account.transactions.where(external_id: external_ids).index_by(&:external_id)
-    end
+  def existing_transactions_by_external_id
+    @existing_transactions_by_external_id ||= begin
+        external_ids = @t_params.map { |t| t[:external_id] }
+        @account.transactions.where(external_id: external_ids).index_by(&:external_id)
+      end
+  end
+
+  def existing_transactions_by_secondary_external_id
+    @existing_transactions_by_secondary_external_id ||= begin
+        secondary_external_ids = @t_params.map { |t| t[:secondary_external_id] }
+        @account.transactions.where(secondary_external_id: secondary_external_ids).index_by(&:secondary_external_id)
+      end
   end
 end

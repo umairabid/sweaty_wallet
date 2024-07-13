@@ -1,12 +1,21 @@
 function mapTransaction(account_id, transaction) {
   const is_debit = !!transaction.debit
+  const date = transaction.postedDt
+  const type = is_debit ? "debit" : "credit"
+  const amount = is_debit ? transaction.debit.amt : transaction.credit.amt
+  const description = transaction.transactionDesc
+  const balance = transaction.balance.amt
+  const secondary_external_id = `${date}-${description}-${type}-${amount}-${balance}`.replace(/ /g, "")
+
   return {
     external_id: transaction.transactionId,
+    secondary_external_id: secondary_external_id,
     external_account_id: account_id,
-    description: transaction.transactionDesc,
-    date: transaction.transactionDt,
-    type: is_debit ? "debit" : "credit",
-    amount: is_debit ? transaction.debit.amt : transaction.credit.amt,
+    description: description,
+    date: date,
+    type: type,
+    amount: amount,
+    external_object: transaction,
   }
 }
 
@@ -18,7 +27,6 @@ function creditCardTransactionPromise(accountId, cycle) {
       const transactions = response.transactions.posted.map(mapTransactionFunc)
       resolve(transactions)
     }
-    
 
     const req = new XMLHttpRequest()
     req.open("GET", `https://easyweb.td.com/waw/api/account/creditcard/transactions?accountKey=${accountId}&cycleId=${cycle}`)
