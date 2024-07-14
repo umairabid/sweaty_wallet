@@ -1,29 +1,22 @@
-# Sweaty Wallet
+# MainApp
 
-A budgeting app that helps keep individuals keep track of their expenses and helps them make informed financial decisions.
+App is developed on Ruby and Rails in its full stack form. The stack includes
 
-## Mission Statement
+- `postgres` for database
+- `devise` for user management and authentication
+- `ferrum` for running a headless browser
+- `mailcatcher` for catching emails locally
+- `good_job` for ActiveJob adapter
+- `hotwire` for frontend
+- `tailwind` for css
 
-Modern world is built on consumption, it may have its advantages but spending money one doesn't have always eventually only result in stress. We believe money not spent on productive asset or neccessity is money wasted. We aim to reduce the waste.
+## Development
 
-## Vision
-
-- Provide full financial picture by aggregating accounts and assets in one place
-- Help individuals see trends in their spending habits
-- Use AI to create plans for reducing debts and save big
-- Educate and Empower masses to take control of their finances and help them see impact of spending
-
-## Technical Stuff
-
-The respository intends to includes all the individual apps for sweaty wallet. As of now it contains two
-
-### `main_app`
-
-- Main app built with ruby on rails
-- Full stack app
-- Uses hotwire, stimulus and turbo for frontend
-- Uses `postgres` for database
-
-### `chrome_extension`
-
-- Contains connectors to fetch, scrape bank accounts and transactions
+- Install `ruby '3.3.1'`
+- Install `rails '7.1.3'`
+- Install `postgres@16`
+- Clone repo
+- Run `db:setup`, to setup the database and create user `user@example.com/123456`
+- Setup extension
+- If you are using ubuntu and want to setup browser for headless scraping run `./bin/install-chromium-ubuntu`
+- Run the server with `./bin/dev`

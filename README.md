@@ -4,7 +4,7 @@ A budgeting app that helps keep individuals keep track of their expenses and hel
 
 ## Mission Statement
 
-Modern world is built on consumption, it may have its advantages but spending money one doesn't have always eventually only result in stress. We believe money not spent on productive asset or neccessity is money wasted. We aim to reduce the waste.
+Todays world is built on consumption; it may have its advantages but spending money you do not have will always eventually result in added stress. We believe money not spent productively or on necessity is money wasted. Our passion is to help you reduce waste, helping you on the path to financial freedom.
 
 ## Vision
 
