@@ -17,6 +17,6 @@ App is developed on Ruby and Rails in its full stack form. The stack includes
 - Install `postgres@16`
 - Clone repo
 - Run `db:setup`, to setup the database and create user `user@example.com/123456`
-- Setup extension
+- [Setup extension](https://github.com/umairabid/sweaty_wallet/blob/main/chrome_extension/README.md)
 - If you are using ubuntu and want to setup browser for headless scraping run `./bin/install-chromium-ubuntu`
 - Run the server with `./bin/dev`
