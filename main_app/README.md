@@ -1,23 +1,29 @@
-# README
+# Sweaty Wallet
 
-This README would normally document whatever steps are necessary to get the application up and running.
+A budgeting app that helps keep individuals keep track of their expenses and helps them make informed financial decisions.
 
-Things you may want to cover:
+## Mission Statement
 
-- Ruby version
+Modern world is built on consumption, it may have its advantages but spending money one doesn't have always eventually only result in stress. We believe money not spent on productive asset or neccessity is money wasted. We aim to reduce the waste.
 
-- System dependencies
+## Vision
 
-- Configuration
+- Provide full financial picture by aggregating accounts and assets in one place
+- Help individuals see trends in their spending habits
+- Use AI to create plans for reducing debts and save big
+- Educate and Empower masses to take control of their finances and help them see impact of spending
 
-- Database creation
+## Technical Stuff
 
-- Database initialization
+The respository intends to includes all the individual apps for sweaty wallet. As of now it contains two
 
-- How to run the test suite
+### `main_app`
 
-- Services (job queues, cache servers, search engines, etc.)
+- Main app built with ruby on rails
+- Full stack app
+- Uses hotwire, stimulus and turbo for frontend
+- Uses `postgres` for database
 
-- Deployment instructions
+### `chrome_extension`
 
-- ...
+- Contains connectors to fetch, scrape bank accounts and transactions
