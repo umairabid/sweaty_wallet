@@ -16,30 +16,7 @@ export default class extends Controller {
     this.progress_spinner().classList.remove("hidden")
     this.error_messages_alert().classList.add("hidden")
     this.extension
-      .pull_bank()
-      .then((res) => {
-        if (!res.success) {
-          return res
-        }
-        return fetch("/accounts/import", {
-          method: "POST",
-          body: JSON.stringify({
-            bank: this.element.dataset.bank,
-            accounts: res.final_accounts,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }).then((res) => {
-          return new Response(res.body).json().then((body) => {
-            if (body.job_id) {
-              return { success: true, status: "synced_accounts" }
-            } else {
-              return { success: false, status: "sync_failed" }
-            }
-          })
-        })
-      })
+      .pull_bank(this.element.dataset.bank)
       .then((res) => this.handle_sync(res))
   }
 
@@ -55,6 +32,7 @@ export default class extends Controller {
   }
 
   handle_sync(data) {
+    console.log(data)
     if (data.success) {
       this.close_modal()
     } else {

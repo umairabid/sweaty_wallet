@@ -10,17 +10,41 @@ class ConnectorExtension {
     this.pull_transactions = this.pull_transactions.bind(this)
   }
 
-  pull_bank() {
+  pull_bank(bank) {
     return this.is_connected()
       .then(this.ping_extension)
       .then(this.connect_with_bank)
       .then(this.pull_accounts)
       .then(this.pull_transactions)
+      .then((res) => {
+        if (!res.success) {
+          return res
+        }
+        return fetch("/accounts/import", {
+          method: "POST",
+          body: JSON.stringify({
+            bank: bank,
+            accounts: res.final_accounts,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          return new Response(res.body).json().then((body) => {
+            if (body.job_id) {
+              return { success: true, status: "synced_accounts" }
+            } else {
+              return { success: false, status: "sync_failed" }
+            }
+          })
+        })
+      })
       .catch(() => {})
   }
 
   is_connected() {
-    this.handle_success({ success: true, status: 'initiating' })
+    this.handle_success({ success: true, status: "initiating" })
     return new Promise((resolve, reject) => {
       if (!chrome) {
         return reject({ success: false, status: "chrome_unavailable" })
@@ -40,7 +64,7 @@ class ConnectorExtension {
     if (res.success) {
       return this.send_message_with_response_timeout({ message: "ping" }).then((res) => {
         if (res.success) {
-          this.handle_success({ success: true, status: 'installed' })
+          this.handle_success({ success: true, status: "installed" })
           return res
         } else {
           return { success: false, status: "unable_to_reach_extension" }
