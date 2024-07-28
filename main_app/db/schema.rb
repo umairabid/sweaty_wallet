@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_10_102727) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_26_124346) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,6 +26,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_10_102727) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["connector_id"], name: "index_accounts_on_connector_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.integer "parent_category_id"
+    t.string "name", null: false
+    t.string "code", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["parent_category_id"], name: "index_categories_on_parent_category_id"
+    t.index ["user_id"], name: "index_categories_on_user_id"
   end
 
   create_table "connectors", force: :cascade do |t|
@@ -170,6 +181,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_10_102727) do
   end
 
   add_foreign_key "accounts", "connectors", on_delete: :cascade
+  add_foreign_key "categories", "users"
   add_foreign_key "connectors", "users", on_delete: :cascade
   add_foreign_key "transactions", "accounts", on_delete: :cascade
 end
