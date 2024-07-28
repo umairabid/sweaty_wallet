@@ -58,7 +58,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: <%= ENV.fetch("POSTGRES_DB") { 'sweaty_development_test' } %>
+  database: <%= ENV.fetch("POSTGRES_DB") { 'sweaty_wallet_test' } %>
   username: <%= ENV.fetch("POSTGRES_USER") { 'postgres' } %>
   password: <%= ENV.fetch("POSTGRES_PASSWORD") { 'postgres' } %>
   host: <%= ENV.fetch("DATABASE_URL") { 'localhost' } %>
