@@ -33,8 +33,10 @@ jobs:
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
         with:
-          bundler-cache: false
+          bundler-cache: true
       # Add or replace database setup steps here
+      - name: Install dependencies
+        run: bundle install
       - name: Set up database schema
         run: bin/rails db:schema:load
       # Add or replace test runners here
