@@ -7,7 +7,7 @@ describe Category, type: :class do
   describe "save" do
     context "when creating category" do
       it "automatically sets the code" do
-        expect(subject.label).to eq("personal_expenses")
+        expect(subject.code).to eq("personal_expenses")
       end
     end
 
