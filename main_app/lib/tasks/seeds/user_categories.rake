@@ -1,5 +1,6 @@
 require "factory_bot_rails"
 
+# invoke like <rake seeds:user_categories[3]> where 3 is used id
 namespace :seeds do
   desc "Seed user categories"
   task :user_categories, [:user_id] => :environment do |t, args|
