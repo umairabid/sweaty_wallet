@@ -1,3 +1,5 @@
+require "factory_bot_rails"
+
 namespace :seeds do
   desc "Seed user categories"
   task :user_categories, [:user_id] => :environment do |t, args|
