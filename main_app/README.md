@@ -24,4 +24,5 @@ App is developed on Ruby and Rails in its full stack form. The stack includes
 ### Rake Tasks
 
 `rake "seeds:new_test_user[email, password]"` => creates users and seeds dummy accounts and transactions
+
 `rake seeds:user_categories[user_id]` => seeds basic categories for user with user_id12 
