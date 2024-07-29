@@ -20,3 +20,9 @@ App is developed on Ruby and Rails in its full stack form. The stack includes
 - [Setup extension](https://github.com/umairabid/sweaty_wallet/blob/main/chrome_extension/README.md)
 - If you are using ubuntu and want to setup browser for headless scraping run `./bin/install-chromium-ubuntu`
 - Run the server with `./bin/dev`
+
+### Rake Tasks
+
+`rake "seeds:new_test_user[email, password]"` => creates users and seeds dummy accounts and transactions
+
+`rake seeds:user_categories[user_id]` => seeds basic categories for user with user_id12 
