@@ -8,6 +8,7 @@ namespace :seeds do
     connector = FactoryBot.create(:connector, user: user)
     deposit_account = FactoryBot.create(:account, connector: connector)
     credit_card = FactoryBot.create(:account,
+                                    name: "Credit Card Account",
                                     connector: connector,
                                     account_type: "credit_card",
                                     external_id: "credit_card_external_id",
