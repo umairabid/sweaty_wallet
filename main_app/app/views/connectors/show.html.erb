@@ -11,13 +11,13 @@
         <li>
           <div class="flex items-center">
             <%= render "icons/arrow-right" %>
-            <a href="#" class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-primary-500">Pages</a>
+            <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500" aria-current="page">Connectors</span>
           </div>
         </li>
         <li>
           <div class="flex items-center">
             <%= render "icons/arrow-right" %>
-            <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500" aria-current="page">Playground</span>
+            <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500" aria-current="page"><%= @bank_name %></span>
           </div>
         </li>
       </ol>
