@@ -1,7 +1,7 @@
 <div 
   id="new_connector"
-  data-action="direct_connector_process:close_modal@window->new_direct_connector#close_modal"
-  data-controller="new_direct_connector"
+  data-action="connectors--direct_connector_process:close_modal@window->connectors--new_direct_connector#close_modal"
+  data-controller="connectors--new_direct_connector"
   tabindex="-1" 
   aria-hidden="true"
   class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -14,7 +14,7 @@
           <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
             Connect with <%= @bank_name %>
           </h3>
-          <button type="button" data-action="click->new_direct_connector#close_modal" class="text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+          <button type="button" data-action="click->connectors--new_direct_connector#close_modal" class="text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
             <%= render "icons/cross" %>
             <span class="sr-only">Close modal</span>
           </button>
@@ -50,7 +50,7 @@
         </div>
         <!-- Modal footer -->
         <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b justify-end justify-items-center">
-          <button data-action="click->new_direct_connector#close_modal" type="button" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 ">Decline</button>
+          <button data-action="click->connectors--new_direct_connector#close_modal" type="button" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 ">Decline</button>
           <%= f.submit "Connect", class: 'cursor-pointer ms-3 text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center' %>
         </div>
       <% end %>
