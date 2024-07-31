@@ -18,7 +18,7 @@ class ConnectorsController < ApplicationController
         render turbo_stream: turbo_stream.replace(:new_connector, template: "connectors/new_extension")
       end
 
-      format.html { render :new_direct }
+      format.html { render :new_extension }
     end
   end
 
