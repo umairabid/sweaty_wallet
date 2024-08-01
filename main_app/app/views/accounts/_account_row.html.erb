@@ -1,4 +1,8 @@
-<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" id="account-row-<%= account.id %>">
+<tr 
+data-controller="accounts--row"
+data-account_id="<%= account.id %>"
+class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" 
+id="account-row-<%= account.id %>">
   <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
     <%= account.name %>
   </td>
@@ -13,13 +17,13 @@
   </td>
   <td>
     <!-- drawer init and toggle -->
-    <button class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 mb-2" type="button" data-drawer-target="drawer-account-form-<%= account.id %>" data-drawer-show="drawer-account-form-<%= account.id %>" data-drawer-placement="right" aria-controls="drawer-account-form-<%= account.id %>">
+    <button class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 mb-2" type="button" data-action="click->accounts--row#open_drawer">
       Update
     </button>
     <!-- drawer component -->
-    <div id="drawer-account-form-<%= account.id %>" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80" tabindex="-1" aria-labelledby="drawer-right-label">
+    <div id="drawer-account-form-<%= account.id %>" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80">
       <h5 id="drawer-label" class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase">Update Account</h5>
-      <button type="button" data-drawer-hide="drawer-account-form-<%= account.id %>" aria-controls="drawer-account-form-<%= account.id %>" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center" >
+      <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center" >
         <%= render "icons/cross" %>
         <span class="sr-only">Close menu</span>
       </button>
