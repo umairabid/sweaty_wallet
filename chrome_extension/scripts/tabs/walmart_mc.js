@@ -29,10 +29,11 @@ function creditCardTransactionPromise(account_id, customer_id, cycle_date) {
     }
 
     const req = new XMLHttpRequest()
-    req.open(
-      "GET",
-      `https://www.walmartrewardsmc.ca/issuing/digital/account/${account_id}/customer/${customer_id}/activity?cycleStartDate=${cycle_date}`,
-    )
+    let url = `https://www.walmartrewardsmc.ca/issuing/digital/account/${account_id}/customer/${customer_id}/activity`
+    if (cycle_date) {
+      url = `${url}?cycleStartDate=${cycle_date}`
+    }
+    req.open("GET", url)
     req.addEventListener("load", reqCreditCardListener)
     req.send()
   })
@@ -60,12 +61,14 @@ port.onMessage.addListener((msg) => {
   if (msg.name === "pull_transactions_credit_card") {
     const account = JSON.parse(sessionStorage.getItem("FAIRSTONE")).user.accounts.find((acc) => acc.accountId === msg.params.identifier)
     const promises = [
+      creditCardTransactionPromise(msg.params.identifier, account.customer.customerId),
       creditCardTransactionPromise(msg.params.identifier, account.customer.customerId, account.cycleDates[0]),
       creditCardTransactionPromise(msg.params.identifier, account.customer.customerId, account.cycleDates[1]),
       creditCardTransactionPromise(msg.params.identifier, account.customer.customerId, account.cycleDates[2]),
     ]
 
     return Promise.all(promises).then((res) => {
+      console.log(res.flat())
       port.postMessage({
         name: msg.name,
         params: res.flat(),

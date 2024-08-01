@@ -42,7 +42,7 @@ class Imports::ImportTransactions
 
   def existing_transactions_by_secondary_external_id
     @existing_transactions_by_secondary_external_id ||= begin
-        secondary_external_ids = @t_params.map { |t| t[:secondary_external_id] }
+        secondary_external_ids = @t_params.map { |t| t[:secondary_external_id] }.compact!
         @account.transactions.where(secondary_external_id: secondary_external_ids).index_by(&:secondary_external_id)
       end
   end
