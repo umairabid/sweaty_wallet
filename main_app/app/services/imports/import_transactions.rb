@@ -21,13 +21,15 @@ class Imports::ImportTransactions
         !existing_transactions_by_secondary_external_id[t[:secondary_external_id]]
     end
       .map do |t|
+      amount = t[:amount].class == String ? t[:amount].tr(",", "").to_d : t[:amount]
+
       {
         external_id: t[:external_id],
         secondary_external_id: t[:secondary_external_id],
         description: t[:description],
         date: t[:date],
         is_credit: t[:type].downcase == "credit",
-        amount: t[:amount].class == String ? t[:amount].tr(",", "").to_d : t[:amount],
+        amount: amount < 0 ? amount.abs : amount,
         external_object: t[:external_object],
       }
     end

@@ -1,5 +1,6 @@
 class TransactionsController < ApplicationController
   def index
-    @transactions = current_user.transactions.order(date: :desc).preload(account: [:connector])
+    scope = current_user.transactions.preload(account: [:connector])
+    @transactions = set_page_and_extract_portion_from scope
   end
 end
