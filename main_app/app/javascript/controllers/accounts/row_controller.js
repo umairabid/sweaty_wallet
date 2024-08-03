@@ -5,6 +5,7 @@ export default class extends Controller {
     const backdrop = document.getElementsByClassName('drawer-backdrop')[0]
     if (backdrop) {
       backdrop.remove()
+      document.getElementsByTagName('body')[0].classList.toggle('overflow-hidden')
     }
   }
 
