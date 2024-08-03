@@ -17,7 +17,6 @@ class AccountsController < ApplicationController
   def update
     @account.update!(account_params)
     @account.reload
-    puts @account.inspect
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
@@ -32,14 +31,6 @@ class AccountsController < ApplicationController
   end
 
   private
-
-  def bank_options
-    current_user.connectors.map { |c| [Connector::BANK_NAMES[c.bank], c.id] }
-  end
-
-  def account_types
-    Account::ACCOUNT_TYPE_LABELS.map { |k, v| [v, k] }
-  end
 
   def set_account
     @account = current_user.accounts.find(params["id"])

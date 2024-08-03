@@ -7,4 +7,5 @@ class User < ApplicationRecord
   has_many :connectors
   has_many :accounts, through: :connectors
   has_many :transactions, through: :accounts
+  has_many :categories
 end
