@@ -1,4 +1,6 @@
 class AccountsController < ApplicationController
+  include UserSelects
+
   skip_before_action :verify_authenticity_token, only: %i[import]
   before_action :set_account, only: %i[update]
 
@@ -25,8 +27,7 @@ class AccountsController < ApplicationController
           locals: { account: @account, bank_options: bank_options, account_types: account_types },
         )
       end
-
-      format.html { render :new_extension }
+      format.html { render html: "" }
     end
   end
 

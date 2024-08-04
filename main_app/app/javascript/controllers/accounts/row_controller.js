@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import create_drawer from "../../lib/create_drawer"
 
 export default class extends Controller {
   connect() {
@@ -13,36 +14,13 @@ export default class extends Controller {
     this.get_drawer().show()
   }
 
+  close_drawer() {
+    this.get_drawer().hide()
+  }
+
   get_drawer() {
     if (this.drawer) return this.drawer
-    const $targetEl = document.getElementById(`drawer-account-form-${this.account_id()}`)
-
-    // options with default values
-    const options = {
-      placement: "right",
-      backdrop: true,
-      bodyScrolling: false,
-      edge: false,
-      edgeOffset: "",
-      backdropClasses: "drawer-backdrop bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-30",
-      onHide: () => {
-        console.log("drawer is hidden")
-      },
-      onShow: () => {
-        console.log("drawer is shown")
-      },
-      onToggle: () => {
-        console.log("drawer has been toggled")
-      },
-    }
-
-    // instance options object
-    const instanceOptions = {
-      id: `drawer-account-form-${this.account_id()}`,
-      override: true,
-    }
-
-    this.drawer = new Drawer($targetEl, options, instanceOptions);
+    this.drawer = create_drawer(`drawer-account-form-${this.account_id()}`)
     return this.drawer
   }
 

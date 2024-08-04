@@ -23,7 +23,7 @@ id="account-row-<%= account.id %>">
     <!-- drawer component -->
     <div id="drawer-account-form-<%= account.id %>" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80">
       <h5 id="drawer-label" class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase">Update Account</h5>
-      <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center" >
+      <button data-action="click->accounts--row#close_drawer" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center" >
         <%= render "icons/cross" %>
         <span class="sr-only">Close menu</span>
       </button>

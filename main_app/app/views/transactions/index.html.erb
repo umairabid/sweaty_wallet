@@ -1,24 +1,48 @@
-<div id="transactions-page">
+<div id="transactions-page" data-controller="transactions--index">
   <div class="block items-center justify-between border-b border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800 sm:flex">
     <div class="mb-1 w-full">
       <div class="mb-4">
         <%= render 'helpers/breadcrumbs', crumbs: [['Transactions']] %>
-        <h1 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Your Transactions</h1>
+        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl">Your Transactions</h1>
       </div>
       <div class="sm:flex">
         <div class="mb-3 hidden items-center dark:divide-gray-700 sm:mb-0 sm:flex sm:divide-gray-100">
-          <form class="lg:pr-3">
-            <label class="text-sm font-medium text-gray-900 dark:text-gray-300 sr-only" for="transactions-search">Search</label>
-            <div class="relative mt-1 lg:w-64 xl:w-96">
-              <div class="flex">
-                <div class="relative w-full">
-                  <input class="block w-full border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 rounded-lg p-2.5 text-sm" id="transactions-search" name="q" placeholder="Search for transactions">
-                </div>
+          <%= form_for :filter, url: transactions_path, method: :get do |f| %>
+            <%= f.text_field :query, value: params[:filter][:query], placeholder: 'Search for transactions', class: 'block w-full border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 rounded-lg p-2.5 text-sm' %>
+            <div id="advance-search-drawer"  class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80">
+              <h5 id="drawer-label" class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase">Search Transactions</h5>
+              <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center" >
+                <%= render "icons/cross" %>
+                <span class="sr-only">Close menu</span>
+              </button>
+              <div class="mb-6">
+                <%= f.label :time_range, 'Time Range', class: 'block mb-2 text-sm font-medium text-gray-900' %>
+                <%= f.select :time_range, options_for_select(@time_ranges, params[:filter][:time_range]), {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+              </div>
+              <div class="mb-6">
+                <%= f.label :account_type, 'Account Type', class: 'block mb-2 text-sm font-medium text-gray-900' %>
+                <%= f.select :account_type, options_for_select(@account_types, params[:filter][:account_type]), {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+              </div>
+              <div class="mb-6">
+                <%= f.label :bank, 'Bank', class: 'block mb-2 text-sm font-medium text-gray-900' %>
+                <%= f.select :bank, options_for_select(@banks, params[:filter][:bank]), {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+              </div>
+              <div class="mb-6">
+                <%= f.label :type, 'Type', class: 'block mb-2 text-sm font-medium text-gray-900' %>
+                <%= f.select :type, options_for_select(@types, params[:filter][:type]), {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+              </div>
+              <div class="mb-6">
+                <%= f.label :categories, 'Category', class: 'block mb-2 text-sm font-medium text-gray-900' %>
+                <%= f.select :categories, options_for_select(@categories, params[:filter][:categories]), {}, multiple: true, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+              </div>
+              <div class="flex items-center justify-end">
+                <button type="button" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 ">Decline</button>
+                <%= f.submit "Apply", class: 'cursor-pointer ms-3 text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center' %>
               </div>
             </div>
-          </form>
+          <% end %>
           <div class="mt-3 flex space-x-1 pl-0 sm:mt-0 sm:pl-2">
-            <button class="inline-flex cursor-pointer justify-center rounded p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-900">
+            <button data-action="click->transactions--index#open_search" class="inline-flex cursor-pointer justify-center rounded p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-900">
               <span class="sr-only">Configure</span>
               <%= render 'icons/gear' %>
             </button>
@@ -66,7 +90,7 @@
             <td class="px-6 py-4">
               <%= transaction.date %>
             </td>
-            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
               <%= transaction.description %>
             </td>
             <td class="px-6 py-4">
