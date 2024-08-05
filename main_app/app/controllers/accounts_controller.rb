@@ -1,8 +1,7 @@
 class AccountsController < ApplicationController
-  include UserSelects
-
   skip_before_action :verify_authenticity_token, only: %i[import]
   before_action :set_account, only: %i[update]
+  before_action :set_selects, only: %i[index update]
 
   def import
     parameters = params.slice(:accounts, :bank).to_unsafe_hash
@@ -11,8 +10,6 @@ class AccountsController < ApplicationController
   end
 
   def index
-    @bank_options = bank_options
-    @account_types = account_types
     @accounts = current_user.accounts.preload(:connector)
   end
 
@@ -24,7 +21,7 @@ class AccountsController < ApplicationController
         render turbo_stream: turbo_stream.replace(
           "account-row-#{@account.id}",
           partial: "accounts/account_row",
-          locals: { account: @account, bank_options: bank_options, account_types: account_types },
+          locals: { account: @account, bank_options: @bank_options, account_types: @account_types },
         )
       end
       format.html { render html: "" }
@@ -39,5 +36,10 @@ class AccountsController < ApplicationController
 
   def account_params
     params.require(:account).permit(:name, :nick_name)
+  end
+
+  def set_selects
+    @bank_options = current_user.connectors.map { |c| [Connector::BANK_NAMES[c.bank], c.id] }
+    @account_types = Account::ACCOUNT_TYPE_LABELS.map { |k, v| [v, k] }
   end
 end

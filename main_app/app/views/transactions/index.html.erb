@@ -8,7 +8,8 @@
       <div class="sm:flex">
         <div class="mb-3 hidden items-center dark:divide-gray-700 sm:mb-0 sm:flex sm:divide-gray-100">
           <%= form_for :filter, url: transactions_path, method: :get do |f| %>
-            <%= f.text_field :query, value: params[:filter][:query], placeholder: 'Search for transactions', class: 'block w-full border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 rounded-lg p-2.5 text-sm' %>
+            <%= f.text_field :query, placeholder: 'Search for transactions', class: 'block w-full border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 rounded-lg p-2.5 text-sm' %>
+            <input type="hidden" name="page" value="1">
             <div id="advance-search-drawer"  class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80">
               <h5 id="drawer-label" class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase">Search Transactions</h5>
               <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center" >
@@ -17,23 +18,27 @@
               </button>
               <div class="mb-6">
                 <%= f.label :time_range, 'Time Range', class: 'block mb-2 text-sm font-medium text-gray-900' %>
-                <%= f.select :time_range, options_for_select(@time_ranges, params[:filter][:time_range]), {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+                <%= f.select :time_range, @filter.selects[:time_ranges], {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
               </div>
               <div class="mb-6">
                 <%= f.label :account_type, 'Account Type', class: 'block mb-2 text-sm font-medium text-gray-900' %>
-                <%= f.select :account_type, options_for_select(@account_types, params[:filter][:account_type]), {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+                <%= f.select :account_type, @filter.selects[:account_types], {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+              </div>
+              <div class="mb-6">
+                <%= f.label :account_id, 'Account', class: 'block mb-2 text-sm font-medium text-gray-900' %>
+                <%= f.select :account_id, @filter.selects[:accounts], {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
               </div>
               <div class="mb-6">
                 <%= f.label :bank, 'Bank', class: 'block mb-2 text-sm font-medium text-gray-900' %>
-                <%= f.select :bank, options_for_select(@banks, params[:filter][:bank]), {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+                <%= f.select :bank, @filter.selects[:banks], {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
               </div>
               <div class="mb-6">
                 <%= f.label :type, 'Type', class: 'block mb-2 text-sm font-medium text-gray-900' %>
-                <%= f.select :type, options_for_select(@types, params[:filter][:type]), {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+                <%= f.select :type,@filter.selects[:types], {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
               </div>
               <div class="mb-6">
                 <%= f.label :categories, 'Category', class: 'block mb-2 text-sm font-medium text-gray-900' %>
-                <%= f.select :categories, options_for_select(@categories, params[:filter][:categories]), {}, multiple: true, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+                <%= f.select :categories, @filter.selects[:categories], {}, multiple: true, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
               </div>
               <div class="flex items-center justify-end">
                 <button type="button" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 ">Decline</button>
@@ -80,6 +85,9 @@
             Type
           </th>
           <th scope="col" class="px-6 py-3">
+            Account
+          </th>
+          <th scope="col" class="px-6 py-3">
             Bank
           </th>
         </tr>
@@ -100,7 +108,10 @@
               <%= transaction.is_credit ? 'Credit' : 'Debit' %>
             </td>
             <td class="px-6 py-4">
-              <%= transaction.account.connector.bank %>
+              <%= transaction.account.nick_name || transaction.account.name %>
+            </td>
+            <td class="px-6 py-4">
+              <%= Connector::BANK_NAMES[transaction.account.connector.bank] %>
             </td>
           </tr>
         <% end %>
@@ -113,7 +124,7 @@
           Previous
         </button>
       <% else %>
-        <a href="<%= transactions_path(page: @page.next_param - 2) %>" class="flex items-center justify-center px-4 h-10 me-3 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700">
+        <a href="<%= transactions_path(page: @page.next_param - 2, filter: params[:filter]&.to_unsafe_hash) %>" class="flex items-center justify-center px-4 h-10 me-3 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700">
           <%= render 'icons/pointer-left' %>
           Previous
         </a>
@@ -124,7 +135,7 @@
           <%= render 'icons/pointer-right' %>
         </button>
       <% else %>
-        <a href="<%= transactions_path(page: @page.next_param) %>" class="flex items-center justify-center px-4 h-10 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700">
+        <a href="<%= transactions_path(page: @page.next_param, filter: params[:filter]&.to_unsafe_hash) %>" class="flex items-center justify-center px-4 h-10 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700">
           Next
           <%= render 'icons/pointer-right' %>
         </a>

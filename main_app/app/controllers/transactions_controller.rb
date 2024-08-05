@@ -1,21 +1,19 @@
 class TransactionsController < ApplicationController
-  include UserSelects
-
-  before_action :set_filter_options, only: %i[index]
+  before_action :set_filter, only: %i[index]
+  before_action :set_repository, only: %i[index]
 
   def index
-    puts params[:filter].inspect
-    scope = current_user.transactions.order(date: :desc).preload(account: [:connector])
+    scope = @repo.fetch_by_filters @filter
     @transactions = set_page_and_extract_portion_from scope
   end
 
   private
 
-  def set_filter_options
-    @banks = [["Select Bank", ""]] + bank_options
-    @categories = [["Select Category", ""]] + categories
-    @account_types = [["Select Account", ""]] + account_types
-    @time_ranges = [["Select Duration", ""], ["Last Month", 1], ["Last Two Months", 2], ["Last Three Months", 3]]
-    @types = [["Select Type", ""], ["Credit", "credit"], ["Debit", "debit"]]
+  def set_filter
+    @filter = TransactionFilter.new(current_user, params[:filter] || {})
+  end
+
+  def set_repository
+    @repo = TransactionsRepository.new(current_user.transactions)
   end
 end
