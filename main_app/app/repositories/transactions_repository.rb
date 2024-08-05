@@ -27,6 +27,10 @@ class TransactionsRepository
       scope = scope.where(account_id: filter.account_id)
     end
 
+    if filter.has? :account_type
+      scope = scope.where(account: { account_type: filter.account_type })
+    end
+
     scope = scope.order(date: :desc).preload(account: :connector)
   end
 end
