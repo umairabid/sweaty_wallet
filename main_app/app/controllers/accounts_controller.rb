@@ -39,7 +39,8 @@ class AccountsController < ApplicationController
   end
 
   def set_selects
-    @bank_options = current_user.connectors.map { |c| [Connector::BANK_NAMES[c.bank], c.id] }
-    @account_types = Account::ACCOUNT_TYPE_LABELS.map { |k, v| [v, k] }
+    selects = current_user_repo.fetch_referencables
+    @bank_options = selects[:banks]
+    @account_types = selects[:account_types]
   end
 end

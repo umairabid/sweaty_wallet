@@ -2,22 +2,7 @@
   <div class="block items-center justify-between border-b border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800 sm:flex">
     <div class="mb-1 w-full">
       <div class="mb-4">
-        <nav class="flex mb-5" aria-label="Breadcrumb">
-          <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
-            <li class="inline-flex items-center">
-              <a href="/" class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-500">
-                <%= render "icons/home" %>
-                Home
-              </a>
-            </li>
-            <li>
-              <div class="flex items-center">
-                <%= render "icons/arrow-right" %>
-                <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500" aria-current="page">Accounts</span>
-              </div>
-            </li>
-          </ol>
-        </nav>
+         <%= render 'helpers/breadcrumbs', crumbs: [['Accounts']] %>
         <h1 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Your Accounts</h1>
       </div>
     </div>

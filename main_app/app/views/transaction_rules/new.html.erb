@@ -1,0 +1,30 @@
+<div id="transaction-rules-new-page" data-controller="transaction_rules--new">
+  <div class="block items-center justify-between border-b border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800 sm:flex">
+    <div class="mb-1 w-full">
+      <div class="mb-4">
+        <%= render 'helpers/breadcrumbs', crumbs: [['Transaction Rules', transaction_rules_path],['Add New']] %>
+        <h1 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Add New Transaction Rule</h1>
+      </div>
+      <p class="text-sm mt-4">Rules help you to categorize transactions</p>
+    </div>
+  </div>
+  <div class="px-4 py-6 flex justify-center min-h-screen">
+    <div class="w-1/2 p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+      <%= form_with(method: 'POST', model: TransactionRule.new, url: transaction_rules_path) do |f| %>
+        <div class="mb-6">
+          <%= f.label :name, 'Rule Name', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+          <%= f.text_field :name, autofocus: true, autocomplete: "name", placeholder: 'Enter Rule Name', class: 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5' %>
+        </div>
+        <div class="mb-6">
+          <%= f.label :category_id, 'Target Category', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+          <%= f.select :category_id, @user_references[:categories], {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+        </div>
+        <div class="flex items-center justify-end">
+          <%= f.submit "Create", class: 'cursor-pointer ms-3 text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center' %>
+        </div>
+      <% end %>
+      <h1 class="text-lg">Rule Conditions</h1>
+      <p class="text-sm">Create rules to add conditions</p>
+    </div>
+  </div>
+</div>

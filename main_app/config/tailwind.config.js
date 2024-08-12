@@ -13,6 +13,9 @@ module.exports = {
     'rounded-l-lg',
     'rounded-r-lg',
     'bg-gray-200',
+    'bg-blue-100',
+    'bg-green-100',
+    'bg-pink-100',
     'grid-cols-4',
     'grid-cols-7',
     'h-6',
@@ -22,6 +25,9 @@ module.exports = {
     'shadow-lg',
     'bg-opacity-50',
     'dark:bg-opacity-80',
+    'my-2',
+    'pr-2',
+    'pb-0'
   ],
   theme: {
     extend: {

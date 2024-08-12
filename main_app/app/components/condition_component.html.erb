@@ -1,0 +1,34 @@
+<%- if @condition.type != :group %>
+  <div class="w-full flex bg-blue-100" condition>
+    <%- if @condition.join_by.present? %>
+      <div class="p-2 uppercase bg-green-100"><%= @condition.join_by %></div>
+    <%- end %>
+    <div class="p-2">
+      When
+      <%= @condition.type.to_s.humanize %>
+      <%= @config[:join_with] %>
+      <%- if @condition.type == :category %>
+        <%= categories_by_id[@condition.value] %>
+      <%- elsif @condition.type == :tags %>
+        <%= @condition.value.join(',') %>
+      <%- else %>
+        <%= @condition.value %>
+      <%- end %>
+    </div>
+    <!--<%- if @config[:input_type] == 'text' %>
+    <input type="text" placeholder="<%= @config[:placeholder] %>" />
+  <%- elsif @config[:input_type] == 'dropdown' %>
+    <%= select_tag(@condition[:type], options_for_select(@references[@config[:referencable]]), {}) %>
+  <%- end%>-->
+  </div>
+  <%= render(ConditionComponent.with_collection(@condition.edges, references: @references)) %>
+<%- else %>
+  <div class="w-full flex p-2 bg-pink-100 pb-0" conditon>
+    <%- if @condition.join_by.present? %>
+      <div class="pr-2 py-2 uppercase"><%= @condition.join_by %></div>
+    <%- end %>
+    <div class="flex-1">
+      <%= render(ConditionsComponent.new(conditions: @condition.value, references: @references)) %>
+    </div>
+  </div>
+<%- end %>

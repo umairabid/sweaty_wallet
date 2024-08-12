@@ -32,4 +32,5 @@ Rails.application.routes.draw do
   end
 
   resources :transactions, only: %i[index]
+  resources :transaction_rules
 end
