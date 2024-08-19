@@ -13,6 +13,7 @@ module.exports = {
     'rounded-l-lg',
     'rounded-r-lg',
     'bg-gray-200',
+    'bg-red-400',
     'bg-blue-100',
     'bg-green-100',
     'bg-pink-100',

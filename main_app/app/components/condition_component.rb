@@ -2,27 +2,27 @@ class ConditionComponent < ViewComponent::Base
   with_collection_parameter :condition
 
   CONDITION_TYPES = {
-    category: {
+    category_id: {
       join_with: "is",
-      input_type: "dropdown",
-      referencable: :categories,
     },
     tags: {
-      placeholder: "Enter comma separated tags",
       join_with: "contains",
-      input_type: "text",
     },
     transaction_type: {
       join_with: "is",
-      input_type: "dropdown",
-      referencable: :transaction_types,
     },
+    group: {},
   }
 
   def initialize(condition:, references:)
     @condition = condition
+    puts @condition.inspect
     @references = references
-    @config = CONDITION_TYPES.dig(@condition.type)
+    @config = CONDITION_TYPES.dig(@condition["type"].to_sym) if @condition.present?
+  end
+
+  def render?
+    return @condition.present?
   end
 
   def categories_by_id

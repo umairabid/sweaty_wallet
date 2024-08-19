@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   private
 
   def layout
-    devise_controller? ? "slim" : "applicatio n"
+    devise_controller? ? "slim" : "application"
   end
 
   def authenticate_user!

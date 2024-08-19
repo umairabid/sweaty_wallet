@@ -1,6 +1,6 @@
 class TransactionRulesController < ApplicationController
   before_action :set_user_references, only: %i[edit update new]
-  before_action :set_rule, only: %i[update edit]
+  before_action :set_rule, only: %i[update edit conditions]
 
   def index
   end
@@ -20,7 +20,15 @@ class TransactionRulesController < ApplicationController
   def update
   end
 
+  def conditions
+    TransactionRules::PersistCondition.call(@transaction_rule, condition_params)
+  end
+
   private
+
+  def condition_params
+    params.require(:condition).permit(:type, :category_id, :transaction_type, :tags, :group_id, :join_by)
+  end
 
   def rule_params
     params.require(:transaction_rule).permit(:name, :category_id, :conditions)

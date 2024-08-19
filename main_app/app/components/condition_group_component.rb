@@ -1,9 +1,13 @@
-class ConditionsComponent < ViewComponent::Base
+class ConditionGroupComponent < ViewComponent::Base
   Condition = Struct.new(:join_by, :type, :value, :edges)
 
-  def initialize(conditions:, references:)
+  CONDITION_TYPE_OPTIONS = [["Select Condition", ""]] + ConditionComponent::CONDITION_TYPES.keys.map { |k| [k.to_s.humanize, k] }
+
+  def initialize(group:, references:)
     @references = references
-    @conditions = conditions
+    @group = group || {}
+    @new_condition = {}
+    @group_id = @group["id"] || 0
   end
 
   def test_conditions
@@ -17,7 +21,7 @@ class ConditionsComponent < ViewComponent::Base
     ])
   end
 
-  def render?
-    @conditions.present?
+  def should_join_next_condition?
+    (@group.dig("conditions") || []).size > 0
   end
 end

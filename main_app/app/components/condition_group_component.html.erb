@@ -1,0 +1,53 @@
+<div
+  data-group_id="<%= @group_id %>"
+  data-controller="transaction_rules--condition_group_component">
+  <div class="text-gray-900 text-sm w-full rounded-lg overflow-hidden">
+    <%= render(ConditionComponent.with_collection(@group['conditions'] || [], references: @references)) %>
+  </div>
+  <%= form_for(:condition, method: :post, url: conditions_transaction_rule_path, id: "conditions-group-form-#{@group_id}", class: 'hidden my-2') do |f| %>
+    <%- if should_join_next_condition? %>
+      <%= 
+        f.select :join_by, [['AND', 'and'], ['OR', 'or']],
+        { selected: 'or' },
+        class: 'bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg'
+      %>
+    <%- end %>
+    <%= 
+      f.select :type, CONDITION_TYPE_OPTIONS, {}, 
+      class: 'bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg', 
+      data: { action: 'change->transaction_rules--condition_group_component#display_value_field' }
+    %>
+    <%= 
+      f.select :category_id, @references[:categories], {}, 
+      class: 'hidden condition-value bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg',
+      data: { action: 'change->transaction_rules--condition_group_component#validate_value' }
+    %>
+    <%= 
+      f.select :transaction_type, @references[:transaction_types], {}, 
+      class: 'hidden condition-value bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg',
+      data: { action: 'change->transaction_rules--condition_group_component#validate_value' }
+    %>
+    <%= 
+      f.text_field :tags, autofocus: true, autocomplete: "tags", placeholder: 'Enter Comma Separated Tags', 
+      class: 'hidden condition-value bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg',
+      data: { action: 'input->transaction_rules--condition_group_component#validate_value' }
+    %>
+    <%= f.hidden_field :group_id, value: @group.dig('id') %>
+    <%= 
+      f.submit "Save",
+      id: "save-condition-#{ @group_id }",
+      class: 'hidden cursor-pointer ms-3 text-white bg-blue-700 font-sm rounded-lg text-xs px-4 py-2 text-center' 
+    %>
+    <%= 
+      f.button "Dismiss", type: 'button', data: {action: "click->transaction_rules--condition_group_component#dismiss_form"},
+      id: "dismiss-condition-#{ @group_id }",
+      class: 'cursor-pointer ms-3 text-white bg-red-400 font-sm rounded-lg text-xs px-4 py-2 text-center' 
+    %>
+  <% end %>
+  <button
+    id="conditions-group-button-<%= @group_id %>"
+    data-action="click->transaction_rules--condition_group_component#add_rule"
+    class='cursor-pointer text-white bg-blue-700 font-sm text-xs rounded-lg text-sm px-4 py-2 text-center my-2'>
+    Add
+  </button>
+</div>
