@@ -19,10 +19,11 @@ export default class extends Controller {
     }
     this.value_type = e.target.value
     if (this.value_type !== "group") {
-      const elem = document.getElementById(`condition_${this.value_type}`)
+      const form = document.getElementById(`conditions-group-form-${this.group_id}`)
+      const elem = form.querySelector(`#condition_${this.value_type}`)
       elem.classList.toggle("hidden")
     } else {
-      document.getElementById("save-condition").classList.remove("hidden")
+      document.getElementById(`save-condition-${this.group_id}`).classList.remove("hidden")
     }
   }
 

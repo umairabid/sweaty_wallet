@@ -1,0 +1,58 @@
+<div id="accounts-page">
+  <div class="block items-center justify-between border-b border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800 sm:flex">
+    <div class="mb-1 w-full">
+      <div class="mb-4">
+        <%= render 'helpers/breadcrumbs', crumbs: [['Transaction Rules']] %>
+        <h1 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Your Rules</h1>
+      </div>
+      <div class="sm:flex">
+        <div class="mb-3 hidden items-center dark:divide-gray-700 sm:mb-0 sm:flex sm:divide-gray-100">
+          <%= form_for :filter, url: transactions_path, method: :get do |f| %>
+            <%= f.text_field :query, placeholder: 'Search for Rules', class: 'block w-full border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 rounded-lg p-2.5 text-sm' %>
+          <% end %>
+        </div>
+        <div class="ml-auto flex items-center space-x-2 sm:space-x-3">
+          <a class="text-white bg-primary-700 hover:bg-primary-800 p-0 font-medium rounded-lg" href="<%= new_transaction_rule_path() %>">
+            <span class="flex items-center rounded-md text-sm px-3 py-2">
+              <div class="flex items-center gap-x-3"><%= render 'icons/plus' %> Add Rule</div>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="relative overflow-x-auto">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" class="px-6 py-3">
+            Name
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Target Category
+          </th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @transaction_rules.each do |rule| %>
+          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <td class="px-6 py-4">
+              <%= rule.name %>
+            </td>
+            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+              <%= rule.category.name %>
+            </td>
+            <td class="px-6 py-4">
+              <%= 
+                link_to('Manage', 
+                edit_transaction_rule_path(id: rule.id), 
+                class: 'text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 mb-2')
+              %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
