@@ -16,13 +16,12 @@ class ConditionComponent < ViewComponent::Base
 
   def initialize(condition:, references:)
     @condition = condition
-    puts @condition.inspect
     @references = references
     @config = CONDITION_TYPES.dig(@condition["type"].to_sym) if @condition.present?
   end
 
   def render?
-    return @condition.present?
+    @condition.present?
   end
 
   def categories_by_id

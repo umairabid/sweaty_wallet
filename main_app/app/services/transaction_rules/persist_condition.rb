@@ -47,12 +47,14 @@ class TransactionRules::PersistCondition
 
   def find_group(group = nil)
     group ||= @transaction_rule.conditions
+    return nil if group["type"] != 'group'
     return group if group["id"] == @group_id
 
     conditions = group.dig("conditions") || []
-    conditions.find do |c|
-      c["type"] == "group" && find_group(c)
+    groups = conditions.map do |c|
+      find_group(c)
     end
+    groups.compact.first
   end
 
   def params_to_condition(params)
