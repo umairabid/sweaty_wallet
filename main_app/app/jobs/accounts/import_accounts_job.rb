@@ -8,7 +8,7 @@ class Accounts::ImportAccountsJob < ApplicationJob
     end
     GoodJob::Batch.enqueue(on_finish: Accounts::ImportAccountsCallbackJob, user: user, bank: params[:bank]) do
       params[:accounts].each do |account_params|
-        Accounts::ImportAccountsCallbackJob.perform_later(connector, account_params)
+        Accounts::ImportAccountJob.perform_later(connector, account_params)
       end
     end
   end
