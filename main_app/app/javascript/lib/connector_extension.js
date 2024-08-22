@@ -147,9 +147,12 @@ class ConnectorExtension {
       return promiseChain
         .then(() => {
           const final_accounts = res.accounts.map((account) => {
-            const final_account = { ...account }
-            final_account.transactions = transactions[account.external_id] || []
-            return final_account
+            return { 
+              ...account,
+              transactions: transactions[account.external_id],
+              account_type: account.type,
+              name: account.account_name
+            }
           })
           const trans_res = { success: true, status: "pulled_transactions", final_accounts: final_accounts }
           this.handle_success(trans_res)

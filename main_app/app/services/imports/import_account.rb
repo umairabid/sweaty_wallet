@@ -8,7 +8,7 @@ class Imports::ImportAccount
 
   def call
     persist!
-    Imports::ImportTransactions.call(account, @params[:transactions])
+    Imports::ImportTransactions.call(account, @params[:transactions] || [])
   end
 
   def persist!
@@ -25,13 +25,13 @@ class Imports::ImportAccount
 
   def create_params
     @create_params ||= {
-      account_type: @params[:type],
+      account_type: @params[:account_type],
       balance: @params[:balance].class == String ? @params[:balance].tr(",", "").to_d : @params[:balance],
       currency: @params[:currency],
       is_active: @params[:is_active],
       nick_name: @params[:nick_name],
       external_id: @params[:external_id],
-      name: @params[:account_name],
+      name: @params[:name],
     }
   end
 
