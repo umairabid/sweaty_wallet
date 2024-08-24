@@ -31,7 +31,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :transactions, only: %i[index]
+  resources :transactions, only: %i[index] do
+    collection do
+      get :export
+    end
+  end
   resources :transaction_rules do
     member do
       post :conditions

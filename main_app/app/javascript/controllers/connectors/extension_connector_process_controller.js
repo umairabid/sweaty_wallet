@@ -1,6 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 import ConnectorExtension from "lib/connector_extension"
 import handle_message from "lib/handle_message"
+import create_modal from "lib/create_modal"
 
 export default class extends Controller {
   connect() {
@@ -60,25 +61,6 @@ export default class extends Controller {
   }
 
   create_modal() {
-    const $targetEl = document.getElementById("new_connector")
-
-    // options with default values
-    const options = {
-      placement: "bottom-right",
-      backdrop: "dynamic",
-      backdropClasses: "bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40",
-      closable: true,
-      onHide: () => {},
-      onShow: () => {},
-      onToggle: () => {},
-    }
-
-    // instance options object
-    const instanceOptions = {
-      id: "connector-modal",
-      override: true,
-    }
-
-    return new Modal($targetEl, options, instanceOptions)
+    return create_modal("new_connector")
   }
 }

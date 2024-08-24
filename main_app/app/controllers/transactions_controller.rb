@@ -7,6 +7,19 @@ class TransactionsController < ApplicationController
     @transactions = set_page_and_extract_portion_from scope
   end
 
+  def export
+    job = Transactions::ExportJob.perform_later(current_user)
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          :background_processing_modal,
+          partial: "helpers/background_processing_modal",
+          locals: { job_id: job.job_id },
+        )
+      end
+    end
+  end
+
   private
 
   def set_filter
