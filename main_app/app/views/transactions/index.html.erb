@@ -59,7 +59,7 @@
               <div class="flex items-center gap-x-3"><%= render 'icons/plus' %> Add Transaction</div>
             </span>
           </button>
-          <a href="<%= export_transactions_path() %>" data-turbo-stream class="text-gray-900 bg-white border border-gray-200 hover:bg-gray-100 hover:text-blue-700 disabled:hover:bg-white p-0 font-medium rounded-lg" type="button">
+          <a href="<%= export_transactions_path(filter: (params[:filter] ? params[:filter].to_unsafe_h : {})) %>" data-turbo-stream class="text-gray-900 bg-white border border-gray-200 hover:bg-gray-100 hover:text-blue-700 disabled:hover:bg-white p-0 font-medium rounded-lg" type="button">
             <span class="flex items-center rounded-md text-sm px-3 py-2">
               <div class="flex items-center gap-x-3"><%= render 'icons/export' %> Export</div>
             </span>

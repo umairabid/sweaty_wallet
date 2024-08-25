@@ -121,7 +121,7 @@ namespace :seeds do
       "Reversed service fee",
       "PAYMENT - THANK YOU",
     ]
-    (10001..10080).each do |i|
+    (10001..10750).each do |i|
       FactoryBot.create(:transaction,
                         account: credit_card,
                         external_id: i,
@@ -129,7 +129,7 @@ namespace :seeds do
                         date: dates.sample,
                         is_credit: false)
     end
-    (10081..10100).each do |i|
+    (10751..11000).each do |i|
       FactoryBot.create(:transaction,
                         account: credit_card,
                         external_id: i,
@@ -137,7 +137,7 @@ namespace :seeds do
                         date: dates.sample,
                         is_credit: true)
     end
-    (10001..10030).each do |i|
+    (10001..10400).each do |i|
       FactoryBot.create(:transaction,
                         account: deposit_account,
                         external_id: i,
@@ -145,7 +145,7 @@ namespace :seeds do
                         date: dates.sample,
                         is_credit: false)
     end
-    (10031..10045).each do |i|
+    (10401..10600).each do |i|
       FactoryBot.create(:transaction,
                         account: deposit_account,
                         external_id: i,

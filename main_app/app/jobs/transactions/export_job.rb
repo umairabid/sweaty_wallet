@@ -1,7 +1,7 @@
 class Transactions::ExportJob < ApplicationJob
   queue_as :default
 
-  def perform(user)
+  def perform(user, filters: {})
     sleep(5)
     broadcast ({ status: "success" })
     sleep(10)

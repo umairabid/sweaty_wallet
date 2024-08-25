@@ -8,7 +8,7 @@ class TransactionsController < ApplicationController
   end
 
   def export
-    job = Transactions::ExportJob.perform_later(current_user)
+    job = Transactions::ExportJob.perform_later(current_user, filters: params[:filter])
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
