@@ -5,7 +5,6 @@ import consumer from "channels/consumer"
 
 export default class extends Controller {
   connect() {
-    this.get_modal().show()
     this.channel = this.create_channel()
     console.log(this.channel)
   }
@@ -28,8 +27,30 @@ export default class extends Controller {
         job_id: this.element.dataset.job_id
       }, {
       received: (data) => {
-        console.log(data)
+        if (data.status == 'processing') {
+          this.status_message().innerHTML = data.html
+        } else if (data.status == 'success') {
+          this.progress_message().innerHTML = 'Success!'
+          this.progress_spinner().classList.add('hidden')
+          this.status_message().innerHTML = data.html
+        }
       }
     })
+  }
+
+  close_modal() {
+    this.get_modal().hide()
+  }
+
+  progress_spinner() {
+    return document.getElementById("progress-spinner")
+  }
+
+  progress_message() {
+    return document.getElementById("progress-message")
+  }
+
+  status_message() {
+    return document.getElementById("status-message")
   }
 }

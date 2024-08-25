@@ -21,13 +21,14 @@
             <span class="sr-only">Loading...</span>
           </div>
         </div>
-        <div id="progress-messages">
-          <div class="flex justify-center align-items-center progress-message text-sm">We are working on your request</div>
+        <div class="text-sm">
+          <div class="flex justify-center align-items-center" id="progress-message">We are working on your request</div>
+          <div class="flex justify-center align-items-center" id="status-message"></span>
         </div>
       </div>
       <!-- Modal footer -->
       <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b justify-end justify-items-center">
-        <button data-action="click->connectors--extension_connector_process#close_modal" type="button" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 ">Decline</button>
+        <button data-action="click->helpers--background_processing_modal#close_modal" disabled data-action="click->connectors--extension_connector_process#close_modal" type="button" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 ">Decline</button>
       </div>
     </div>
   </div>
