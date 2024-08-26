@@ -12,6 +12,8 @@ module Exportable
   def call
     temp_csv = Tempfile.new(["export-file", ".csv"])
     total_record = @base_scope.count
+    return nil if total_record.zero?
+    
     processed_records = 0
 
     CSV.open(temp_csv.path, "wb") do |csv|
@@ -27,7 +29,10 @@ module Exportable
   end
 
   def row(record)
-    columns.map { |key, value| record.public_send(value.to_sym) }
+    columns.map do |key, value|
+      path = value.split(".")
+      path.inject(record) { |obj, method| obj.send(method) }
+    end
   end
 
   def channel_name

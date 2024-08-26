@@ -4,7 +4,7 @@ RSpec.describe Transactions::ExportJob, type: :job do
   let(:user) { create(:user) }
   let(:connector) { create(:connector, user: user) }
   let(:account) { create(:account, connector: connector) }
-  let(:transaction) { create(:transaction, account: account) }
+  let!(:transaction) { create(:transaction, account: account) }
 
   let(:transaction_filter) { double(TransactionFilter) }
   let(:transactions_repository) { double(TransactionsRepository) }

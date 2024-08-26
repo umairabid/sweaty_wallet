@@ -1,12 +1,12 @@
 import { Controller } from "@hotwired/stimulus"
 
-import create_modal from "../../lib/create_modal"
 import consumer from "channels/consumer"
+import create_modal from "../../lib/create_modal"
 
 export default class extends Controller {
   connect() {
     this.channel = this.create_channel()
-    console.log(this.channel)
+    this.get_modal().show()
   }
 
   get_modal() {
@@ -22,20 +22,22 @@ export default class extends Controller {
 
   create_channel() {
     return consumer.subscriptions.create(
-      { 
+      {
         channel: "BackgroundProcessChannel",
-        job_id: this.element.dataset.job_id
-      }, {
-      received: (data) => {
-        if (data.status == 'processing') {
-          this.status_message().innerHTML = data.html
-        } else if (data.status == 'success') {
-          this.progress_message().innerHTML = 'Success!'
-          this.progress_spinner().classList.add('hidden')
-          this.status_message().innerHTML = data.html
-        }
-      }
-    })
+        job_id: this.element.dataset.job_id,
+      },
+      {
+        received: (data) => {
+          if (data.status === "processing") {
+            this.status_message().innerHTML = data.html
+          } else if (data.status === "success") {
+            this.progress_message().innerHTML = "Success!"
+            this.progress_spinner().classList.add("hidden")
+            this.status_message().innerHTML = data.html
+          }
+        },
+      },
+    )
   }
 
   close_modal() {
