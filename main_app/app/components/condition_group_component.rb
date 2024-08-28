@@ -3,22 +3,21 @@ class ConditionGroupComponent < ViewComponent::Base
 
   CONDITION_TYPE_OPTIONS = [["Select Condition", ""]] + ConditionComponent::CONDITION_TYPES.keys.map { |k| [k.to_s.humanize, k] }
 
-  def initialize(group:, references:)
+  def initialize(group:, references:, level: 0)
     @references = references
     @group = group || {}
     @new_condition = {}
     @group_id = @group["id"] || 0
+    @level = level
   end
 
-  def test_conditions
-    Condition.new(nil, :category, 26, [
-      Condition.new("and", :category, 27, []),
-      Condition.new("or", :group, Condition.new(
-        nil, :tags, ["transfer"], [
-          Condition.new("and", :transaction_type, "credit", []),
-        ]
-      ), []),
-    ])
+  def condition_options
+    all_conditions = ConditionComponent::CONDITION_TYPES.keys.map { |k| [k.to_s.humanize, k] }
+    if @group["id"].blank? || @level > 0
+      puts @group.inspect
+      all_conditions = all_conditions.select { |k| k[1] != :group }
+    end
+    [["Select Condition", ""]] + all_conditions
   end
 
   def should_join_next_condition?
