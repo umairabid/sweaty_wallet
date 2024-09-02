@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :transaction do
-    external_id { "transaction_external_id" }
+    external_id { SecureRandom.uuid }
     secondary_external_id { "secondary_transaction_external_id" }
     description { "Transction description" }
     date { Date.new }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_24_222703) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_02_032440) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -193,7 +193,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_24_222703) do
     t.datetime "updated_at", null: false
     t.string "secondary_external_id"
     t.jsonb "external_object", default: {}
+    t.bigint "category_id"
     t.index ["account_id"], name: "index_transactions_on_account_id"
+    t.index ["category_id"], name: "index_transactions_on_category_id"
     t.index ["secondary_external_id"], name: "index_transactions_on_secondary_external_id"
   end
 
@@ -227,4 +229,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_24_222703) do
   add_foreign_key "transaction_rules", "categories"
   add_foreign_key "transaction_rules", "users"
   add_foreign_key "transactions", "accounts", on_delete: :cascade
+  add_foreign_key "transactions", "categories", on_delete: :nullify
 end

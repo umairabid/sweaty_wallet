@@ -1,5 +1,6 @@
 class Category < ApplicationRecord
   belongs_to :user
+  has_many :transactions, dependent: :destroy
 
   before_create :set_code
   before_update :restore_code

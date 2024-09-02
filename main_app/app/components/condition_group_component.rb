@@ -14,7 +14,6 @@ class ConditionGroupComponent < ViewComponent::Base
   def condition_options
     all_conditions = ConditionComponent::CONDITION_TYPES.keys.map { |k| [k.to_s.humanize, k] }
     if @group["id"].blank? || @level > 0
-      puts @group.inspect
       all_conditions = all_conditions.select { |k| k[1] != :group }
     end
     [["Select Condition", ""]] + all_conditions
