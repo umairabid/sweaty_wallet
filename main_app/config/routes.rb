@@ -36,9 +36,14 @@ Rails.application.routes.draw do
       get :export
     end
   end
+
   resources :transaction_rules do
     member do
       post :conditions
     end
+  end
+
+  namespace :settings do
+    resources :categories
   end
 end

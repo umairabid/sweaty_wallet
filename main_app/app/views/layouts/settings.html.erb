@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SweatyWallet</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= javascript_importmap_tags %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+  <meta name="turbo-cache-control" content="no-cache">
+</head>
+
+<body>
+<%= render "layouts/nav" %>
+<div class="flex pt-16 overflow-hidden bg-gray-50 dark:bg-gray-900">
+  <%= render "layouts/settings_sidebar" %>
+  <div id="main-content" class="relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900">
+    <main>
+      <%= yield %>
+    </main>
+  </div>
+</div>
+</body>
+</html>

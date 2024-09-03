@@ -3,6 +3,10 @@ class CurrentUserRepository
     @base_scope = base_scope
   end
 
+  def fetch_categories
+    @base_scope.categories.where.not(parent_category_id: nil).preload(:parent_category)
+  end
+
   # returns data references by various forms
   def fetch_referencables
     {

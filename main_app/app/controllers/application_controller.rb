@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   private
 
   def layout
+    puts params.inspect
     devise_controller? ? "slim" : "application"
   end
 

@@ -8,14 +8,14 @@ namespace :seeds do
       "Income" => [
         "Salary", "Business Income", "Investements", "Other Income",
       ],
-      "Personal Expenses" => [
+      "Expenses" => [
         "Housing", "Utilities", "Food", "Shopping", "Personal Care", "Healthcare",
         "Insurance", "Entertainment", "Education", "Gifts", "Cash Withdrawals", "Fees and Charges",
       ],
       "Finance" => [
         "Loan Payments", "Credit Card Payments", "Car Payment", "Other Debt Payment",
       ],
-      "Transfers" => [],
+      "Transfers" => ['Other Transfer'],
     }
 
     user = User.find args[:user_id]
