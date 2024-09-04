@@ -1,0 +1,11 @@
+<div
+  data-controller="settings--categories--new"
+  id="new_category_form"
+  class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80">
+  <h5 id="drawer-label" class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase">Add New Category</h5>
+  <button data-action="click->settings--categories--new#close_drawer" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center" >
+    <%= render "icons/cross" %>
+    <span class="sr-only">Close menu</span>
+  </button>
+  <%= render "settings/categories/category_form", parent_categories: parent_categories, model: model %>
+</div>
