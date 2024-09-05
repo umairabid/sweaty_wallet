@@ -4,6 +4,7 @@ class Transactions::Export
 
   def columns
     {
+      date: "date",
       external_id: "external_id",
       description: "description",
       amount: "amount",
