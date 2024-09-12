@@ -45,5 +45,6 @@ Rails.application.routes.draw do
 
   namespace :settings do
     resources :categories
+    resources :account
   end
 end

@@ -1,8 +1,23 @@
 class Settings::CategoriesController < ApplicationController
-  layout 'settings'
+  layout "settings"
 
   def index
-    @categories = current_user_repo.fetch_categories
+    @parent_categories = current_user_repo.fetch_referencables[:parent_categories]
+    @categories = current_user_repo.fetch_categories.order(updated_at: :desc)
+  end
+
+  def create
+    raise "Category name cannot be blank" if category_params[:name].blank?
+    raise "Parent category cannot be blank" if category_params[:parent_category_id].blank?
+
+    current_user.categories.create!(category_params)
+    redirect_to settings_categories_path
+  end
+
+  def update
+    @category = current_user.categories.find(params[:id])
+    @category.update!(category_params)
+    redirect_to settings_categories_path
   end
 
   def new
@@ -12,10 +27,16 @@ class Settings::CategoriesController < ApplicationController
         render turbo_stream: turbo_stream.replace(
           "new_category_form",
           template: "settings/categories/new",
-          locals: { parent_categories: @parent_categories, model: Category.new }
+          locals: { parent_categories: @parent_categories, model: Category.new },
         )
       end
       format.html { render html: "" }
     end
+  end
+
+  private
+
+  def category_params
+    params.require(:category).permit(:name, :parent_category_id)
   end
 end

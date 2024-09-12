@@ -31,19 +31,15 @@
         <th scope="col" class="px-6 py-3">
           Parent Category
         </th>
+        <th scope="col" class="px-6 py-3">
+          Code
+        </th>
         <th></th>
       </tr>
       </thead>
       <tbody>
       <% @categories.each do |c| %>
-        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-          <td class="px-6 py-4">
-            <%= c.name %>
-          </td>
-          <td class="px-6 py-4">
-            <%= c.parent_category.name %>
-          </td>
-        </tr>
+        <%= render('settings/categories/category_row', c: c, parent_categories: @parent_categories) %>
       <% end %>
       </tbody>
     </table>
