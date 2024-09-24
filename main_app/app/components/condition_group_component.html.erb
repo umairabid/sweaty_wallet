@@ -2,7 +2,13 @@
   data-group_id="<%= @group_id %>"
   data-controller="transaction_rules--condition_group_component">
   <div class="text-gray-900 text-sm w-full rounded-lg overflow-hidden">
-    <%= render(ConditionComponent.with_collection(@group['conditions'] || [], references: @references)) %>
+    <%- (@group['conditions'] || []).each_with_index do |condition, index| %>
+      <%= render(ConditionComponent.new(
+        group_id: @group['id'],
+        index: index,
+        condition: condition, 
+        references: @references)) %>
+    <%- end %>
   </div>
   <%= form_for(:condition, method: :post, url: conditions_transaction_rule_path, id: "conditions-group-form-#{@group_id}", class: 'hidden my-2') do |f| %>
     <%- if should_join_next_condition? %>

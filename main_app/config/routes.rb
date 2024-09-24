@@ -40,6 +40,8 @@ Rails.application.routes.draw do
   resources :transaction_rules do
     member do
       post :conditions
+      get :preview
+      delete :delete_condition
     end
   end
 

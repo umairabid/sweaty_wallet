@@ -14,9 +14,11 @@ class ConditionComponent < ViewComponent::Base
     group: {},
   }
 
-  def initialize(condition:, references:)
+  def initialize(group_id:, index:, condition:, references:)
     @condition = condition
     @references = references
+    @group_id = group_id
+    @index = index
     @config = CONDITION_TYPES.dig(@condition["type"].to_sym) if @condition.present?
   end
 

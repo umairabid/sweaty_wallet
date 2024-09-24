@@ -44,7 +44,7 @@ class TransactionRules::ApplyRule
     when "tags"
       tags = value.split(",").map(&:strip)
       conditions = tags.map do |tag|
-        @arel_table[:description].matches("%#{tag}%", nil, true)
+        @arel_table[:description].matches("%#{tag}%", nil)
       end
       conditions.reduce { |acc, condition| acc.and(condition) }
     when "type"

@@ -1,0 +1,72 @@
+<div id="transaction-rules-preview" data-controller="transaction_rules--preview">
+  <div class="block items-center justify-between border-b border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800 sm:flex">
+    <div class="mb-1 w-full">
+      <div class="mb-4">
+        <%= render 'helpers/breadcrumbs', crumbs: [['Transaction Rules', transaction_rules_path],['Apply']] %>
+        <h1 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Apply Transaction Rule</h1>
+      </div>
+      <p class="text-sm mt-4">Rules help you to categorize transactions</p>
+    </div>
+  </div>
+  <div class="px-4 py-6 flex items-center flex-col">
+    <div class="w-1/2 p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
+      <div class="mb-4"> Selet Rule to Apply </div>
+      <%= select_tag(
+        'rule', 
+        options_for_select(@transaction_rules, selected: params[:id]),
+        id: 'transaction_rule_dropdown',
+        class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
+      ) %>
+    </div>
+    <div class="mt-6 w-1/2 p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th scope="col" class="px-6 py-3">
+              Date
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Description
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Amount
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Type
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Account
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Bank
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @transactions.each do |transaction| %>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <td class="px-6 py-4">
+                <%= transaction.date %>
+              </td>
+              <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                <%= transaction.description %>
+              </td>
+              <td class="px-6 py-4">
+                <%= transaction.amount %>
+              </td>
+              <td class="px-6 py-4">
+                <%= transaction.is_credit ? 'Credit' : 'Debit' %>
+              </td>
+              <td class="px-6 py-4">
+                <%= transaction.account.nick_name || transaction.account.name %>
+              </td>
+              <td class="px-6 py-4">
+                <%= Connector::BANK_NAMES[transaction.account.connector.bank] %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
