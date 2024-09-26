@@ -4,7 +4,7 @@ class TransactionsRepository
   end
 
   def fetch_by_filters(filter)
-    scope = @base_scope.joins(account: :connector)
+    scope = @base_scope.joins(account: :connector).preload(:category)
     if filter.has? :query
       scope = scope.where("description ilike ?", "%#{filter.query}%")
     end
@@ -29,6 +29,15 @@ class TransactionsRepository
 
     if filter.has? :account_type
       scope = scope.where(account: { account_type: filter.account_type })
+    end
+
+    if filter.has? :categories
+      categories = filter.categories.select { |id| id.to_i > 0 }
+      puts categories.inspect
+      if filter.categories.any? { |id| id == "-1" }
+        categories << nil
+      end
+      scope = scope.where(category_id: categories) unless categories.empty?
     end
 
     scope = scope.order(date: :desc).preload(account: :connector)

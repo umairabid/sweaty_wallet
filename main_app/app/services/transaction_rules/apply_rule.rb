@@ -11,6 +11,7 @@ class TransactionRules::ApplyRule
   end
 
   def apply
+    @base_scope.where(@scope).update_all(category_id: @rule.category_id)
   end
 
   private

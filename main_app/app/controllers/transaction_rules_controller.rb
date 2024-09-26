@@ -1,6 +1,6 @@
 class TransactionRulesController < ApplicationController
   before_action :set_user_references, only: %i[edit update new conditions]
-  before_action :set_rule, only: %i[update edit conditions destroy preview delete_condition]
+  before_action :set_rule, only: %i[update edit conditions destroy preview delete_condition apply]
 
   def index
     @transaction_rules = current_user.transaction_rules.preload(:category)
@@ -43,9 +43,13 @@ class TransactionRulesController < ApplicationController
   end
 
   def preview
-    @transactions = applier.preview
     @transaction_rules = current_user_repo.fetch_transaction_rules.map { |r| [r.name, r.id] }
     @transactions = applier.preview
+  end
+
+  def apply
+    applier.apply
+    redirect_to preview_transaction_rule_path(id: @transaction_rule.id)
   end
 
   def delete_condition

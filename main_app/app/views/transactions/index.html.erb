@@ -79,6 +79,9 @@
             Description
           </th>
           <th scope="col" class="px-6 py-3">
+            Category
+          </th>
+          <th scope="col" class="px-6 py-3">
             Amount
           </th>
           <th scope="col" class="px-6 py-3">
@@ -100,6 +103,9 @@
             </td>
             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
               <%= transaction.description %>
+            </td>
+            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+              <%= transaction.category&.name || 'Uncategorized' %>
             </td>
             <td class="px-6 py-4">
               <%= transaction.amount %>

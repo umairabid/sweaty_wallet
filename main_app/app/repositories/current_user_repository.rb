@@ -20,7 +20,7 @@ class CurrentUserRepository
     {
       banks: [["Select Bank", ""]] +
              @base_scope.connectors.map { |c| [Connector::BANK_NAMES[c.bank], c.id] },
-      categories: [["Select Category", ""]] +
+      categories: [["Select Category", ""]] + [["Uncategorized", "-1"]] +
                   fetch_categories.map { |c| [c.name, c.id] },
       account_types: [["Select Account Type", ""]] +
                      Account::FILTERABLE_ACCOUT_TYPES.map { |v| [Account::ACCOUNT_TYPE_LABELS[v], v] },

@@ -1,21 +1,21 @@
-require "factory_bot_rails"
-
-# invoke like <rake seeds:user_categories[3]> where 3 is used id
+# invoke like <rake seeds:user_categories[3]> where 3 is user id
 namespace :seeds do
   desc "Seed user categories"
   task :user_categories, [:user_id] => :environment do |t, args|
     categories = {
       "Income" => [
-        "Salary", "Business Income", "Investements", "Other Income",
+        "Salary", "Business Income", "Investments", "Other Income",
       ],
       "Expenses" => [
-        "Housing", "Utilities", "Food", "Shopping", "Personal Care", "Healthcare",
-        "Insurance", "Entertainment", "Education", "Gifts", "Cash Withdrawals", "Fees and Charges",
+        "Housing", "Utilities", "Groceries", "Shopping", "Personal Care", "Healthcare",
+        "Insurance", "Entertainment", "Education", "Gifts", "Miscellaneous",
       ],
-      "Finance" => [
-        "Loan Payments", "Credit Card Payments", "Car Payment", "Other Debt Payment",
+      "Transfers" => [
+        "Between Accounts", "Peer-to-Peer Transfers", "Credit Card Payments", "Investments",
       ],
-      "Transfers" => ['Other Transfer'],
+      "Financial Obligations" => [
+        "Loan Payments", "Credit Card Debt", "Car Payment", "Other Debt Payment",
+      ],
     }
 
     user = User.find args[:user_id]
