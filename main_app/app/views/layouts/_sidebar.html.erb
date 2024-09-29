@@ -71,6 +71,9 @@
               <li>
                 <%= link_to('Add Rule', new_transaction_rule_path(), class: 'flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group') %>
               </li>
+              <li>
+                <%= link_to('Apply Rule', preview_transaction_rule_path(id: TransactionRule.last.id), class: 'flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group') %>
+              </li>
             </ul>
           </li>
         </ul>

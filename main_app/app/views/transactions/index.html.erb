@@ -93,33 +93,12 @@
           <th scope="col" class="px-6 py-3">
             Bank
           </th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         <% @transactions.each do |transaction| %>
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <td class="px-6 py-4">
-              <%= transaction.date %>
-            </td>
-            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-              <%= transaction.description %>
-            </td>
-            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-              <%= transaction.category&.name || 'Uncategorized' %>
-            </td>
-            <td class="px-6 py-4">
-              <%= transaction.amount %>
-            </td>
-            <td class="px-6 py-4">
-              <%= transaction.is_credit ? 'Credit' : 'Debit' %>
-            </td>
-            <td class="px-6 py-4">
-              <%= transaction.account.nick_name || transaction.account.name %>
-            </td>
-            <td class="px-6 py-4">
-              <%= Connector::BANK_NAMES[transaction.account.connector.bank] %>
-            </td>
-          </tr>
+          <%= render('transactions/transaction_row', transaction: transaction, references: @user_references) %>
         <% end %>
       </tbody>
     </table>

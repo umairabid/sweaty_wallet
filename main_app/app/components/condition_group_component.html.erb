@@ -38,6 +38,16 @@
       class: 'hidden condition-value bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg',
       data: { action: 'input->transaction_rules--condition_group_component#validate_value' }
     %>
+    <%= 
+      f.text_field :amount, autofocus: true, autocomplete: "amount", placeholder: 'Enter Amount', 
+      class: 'hidden condition-value bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg',
+      data: { action: 'input->transaction_rules--condition_group_component#validate_value' }
+    %>
+    <%= 
+      f.select :bank_account_id, @references[:accounts], {}, 
+      class: 'hidden condition-value bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg',
+      data: { action: 'change->transaction_rules--condition_group_component#validate_value' }
+    %>
     <%= f.hidden_field :group_id, value: @group.dig('id') %>
     <%= 
       f.submit "Save",

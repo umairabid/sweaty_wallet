@@ -1,9 +1,9 @@
 <%- if @condition['type'] != 'group' %>
-  <div class="w-full flex bg-blue-100 p-4" condition>
+  <div class="w-full flex bg-blue-100 p-2" condition>
     <%- if @condition['join_by'].present? %>
       <div class="p-2 uppercase bg-green-100"><%= @condition['join_by'] %></div>
     <%- end %>
-    <div>
+    <div class="p-2">
       When
       <%= @condition['type'].to_s.humanize %>
       <%= @config[:join_with] %>

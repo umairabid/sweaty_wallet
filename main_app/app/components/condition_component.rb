@@ -11,6 +11,12 @@ class ConditionComponent < ViewComponent::Base
     transaction_type: {
       join_with: "is",
     },
+    bank_account_id: {
+      join_with: "is",
+    },
+    amount: {
+      join_with: "is",
+    },
     group: {},
   }
 

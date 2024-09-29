@@ -31,7 +31,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :transactions, only: %i[index] do
+  resources :transactions, only: %i[index update edit] do
     collection do
       get :export
     end

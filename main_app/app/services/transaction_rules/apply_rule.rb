@@ -48,8 +48,12 @@ class TransactionRules::ApplyRule
         @arel_table[:description].matches("%#{tag}%", nil)
       end
       conditions.reduce { |acc, condition| acc.and(condition) }
-    when "type"
+    when "transaction_type"
       @arel_table[:is_credit].eq(value == "credit")
+    when "bank_account_id"
+      @arel_table[:account_id].eq(value)
+    when "amount"
+      @arel_table[:amount].eq(value)
     else
       raise "Unsupported condition type: #{column}"
     end

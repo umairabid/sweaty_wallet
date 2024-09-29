@@ -19,6 +19,8 @@ class TransactionRulesController < ApplicationController
   end
 
   def update
+    @transaction_rule.update!(rule_params)
+    redirect_to edit_transaction_rule_path(id: @transaction_rule.id)
   end
 
   def destroy
@@ -60,11 +62,18 @@ class TransactionRulesController < ApplicationController
   private
 
   def condition_params
-    params.require(:condition).permit(:type, :category_id, :transaction_type, :tags, :group_id, :join_by)
+    params.require(:condition).permit(:type,
+                                      :category_id,
+                                      :transaction_type,
+                                      :tags,
+                                      :group_id,
+                                      :join_by,
+                                      :bank_account_id,
+                                      :amount)
   end
 
   def rule_params
-    params.require(:transaction_rule).permit(:name, :category_id, :conditions)
+    params.require(:transaction_rule).permit(:name, :category_id)
   end
 
   def set_rule

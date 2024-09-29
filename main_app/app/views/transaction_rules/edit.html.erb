@@ -10,7 +10,7 @@
   </div>
   <div class="px-4 py-6 flex justify-center min-h-screen">
     <div class="w-1/2 p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
-      <%= form_with(method: 'POST', model: @transaction_rule, url: transaction_rule_path(id: params[:id])) do |f| %>
+      <%= form_with(model: @transaction_rule, url: transaction_rule_path(id: params[:id])) do |f| %>
         <div class="mb-6">
           <%= f.label :name, 'Rule Name', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
           <%= f.text_field :name, autofocus: true, autocomplete: "name", placeholder: 'Enter Rule Name', class: 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5' %>

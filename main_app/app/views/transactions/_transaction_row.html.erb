@@ -1,0 +1,66 @@
+<tr
+  id="transaction_row_<%= transaction.id %>"
+  data-controller="transactions--row"
+  data-transaction_id="<%= transaction.id %>"
+  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+  <td class="px-6 py-4">
+    <%= transaction.date %>
+  </td>
+  <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+    <%= transaction.description %>
+  </td>
+  <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+    <%= transaction.category&.name || 'Uncategorized' %>
+  </td>
+  <td class="px-6 py-4">
+    <%= transaction.amount %>
+  </td>
+  <td class="px-6 py-4">
+    <%= transaction.is_credit ? 'Credit' : 'Debit' %>
+  </td>
+  <td class="px-6 py-4">
+    <%= transaction.account.nick_name || transaction.account.name %>
+  </td>
+  <td class="px-6 py-4">
+    <%= Connector::BANK_NAMES[transaction.account.connector.bank] %>
+  </td>
+  <td>
+    <button class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 mb-2" type="button" data-action="click->transactions--row#open_drawer">
+      Update
+    </button>
+    <!-- drawer component -->
+    <div id="drawer-transaction-form-<%= transaction.id %>" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80">
+      <h5 id="drawer-label" class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase">Update Transaction</h5>
+      <button data-action="click->transactions--row#close_edit_drawer" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center" >
+        <%= render "icons/cross" %>
+        <span class="sr-only">Close menu</span>
+      </button>
+      <%= form_with(method: 'PUT', model: transaction, url: transaction_url(id: transaction.id)) do |f| %>
+        <div class="mb-6">
+          <%= f.label :date, 'Date', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+          <%= f.date_field :date, autofocus: true, autocomplete: "date", class: 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5' %>
+        </div>
+        <div class="mb-6">
+          <%= f.label :description, 'Description', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+          <%= f.text_field :description, autofocus: true, autocomplete: "description", class: 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5' %>
+        </div>
+        <div class="mb-6">
+          <%= f.label :category_id, 'Category', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+          <%= f.select :category_id, references[:categories], {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+        </div>
+        <div class="mb-6">
+          <%= f.label :account_id, 'Account', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+          <%= f.select :account_id, references[:accounts], {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+        </div>
+        <div class="mb-6">
+          <%= f.check_box :is_credit, autofocus: true, class: 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5' %>
+          <%= f.label :is_credit, 'Is Credit?', class: 'mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+        </div>
+        <div class="flex items-center justify-end">
+          <button type="button" data-action="click->transactions--row#close_edit_drawer" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 ">Decline</button>
+          <%= f.submit "Update", class: 'cursor-pointer ms-3 text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center' %>
+        </div>
+      <% end %>
+    </div>
+  </td>
+</tr>
