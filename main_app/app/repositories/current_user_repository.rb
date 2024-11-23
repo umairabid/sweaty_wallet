@@ -4,7 +4,7 @@ class CurrentUserRepository
   end
 
   def fetch_categories
-    @base_scope.categories.where.not(parent_category_id: nil).preload(:parent_category)
+    @base_scope.categories.where.not(parent_category_id: nil).order(name: :asc).preload(:parent_category)
   end
 
   def fetch_parent_categories
@@ -12,7 +12,7 @@ class CurrentUserRepository
   end
 
   def fetch_transaction_rules
-    @base_scope.transaction_rules
+    @base_scope.transaction_rules.order(name: :asc)
   end
 
   # returns data references by various forms

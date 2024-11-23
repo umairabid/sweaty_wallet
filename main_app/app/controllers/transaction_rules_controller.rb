@@ -16,6 +16,7 @@ class TransactionRulesController < ApplicationController
   end
 
   def edit
+    @transaction_rules = current_user_repo.fetch_transaction_rules.map { |r| [r.name, r.id] }
   end
 
   def update

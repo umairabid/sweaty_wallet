@@ -3,18 +3,28 @@ import create_drawer from "../../lib/create_drawer"
 
 export default class extends Controller {
   connect() {
-    this.init_transaction_form_drawer()
+    const backdrop = document.getElementsByClassName('drawer-backdrop')[0]
+    if (backdrop) {
+      backdrop.remove()
+      document.getElementsByTagName('body')[0].classList.toggle('overflow-hidden')
+    }
   }
 
   open_drawer() {
-    this.form_drawer.show()
+    this.get_drawer().show()
   }
 
   close_edit_drawer() {
-    this.form_drawer.hide()
+    this.get_drawer().hide()
   }
 
-  init_transaction_form_drawer() {
-    this.form_drawer = create_drawer(`drawer-transaction-form-${this.element.dataset.transaction_id}`)
+  get_drawer() {
+    if (this.drawer) return this.drawer
+    this.drawer = create_drawer(`drawer-transaction-form-${this.transaction_id()}`)
+    return this.drawer
+  }
+
+  transaction_id() {
+    return this.element.dataset.transaction_id
   }
 }

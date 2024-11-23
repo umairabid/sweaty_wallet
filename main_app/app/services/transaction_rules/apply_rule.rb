@@ -7,11 +7,12 @@ class TransactionRules::ApplyRule
   end
 
   def preview
-    @base_scope.where(@scope)
+    @category_scope = @base_scope.where.not(category_id: @rule.category_id).or(@base_scope.where(category_id: nil))
+    @base_scope.where(@scope).merge(@category_scope)
   end
 
   def apply
-    @base_scope.where(@scope).update_all(category_id: @rule.category_id)
+    preview.where(@scope).update_all(category_id: @rule.category_id)
   end
 
   private
