@@ -87,5 +87,6 @@ test:
 production:
   <<: *default
   database: sweaty_wallet_production
-  username: sweaty_wallet
-  password: <%= ENV["SWEATY_WALLET_DATABASE_PASSWORD"] %>
+  username: <%= ENV.fetch("POSTGRES_USER") %>
+  password: <%= ENV.fetch("POSTGRES_PASSWORD") %>
+  host: <%= ENV.fetch("POSTGRES_HOST") %>
