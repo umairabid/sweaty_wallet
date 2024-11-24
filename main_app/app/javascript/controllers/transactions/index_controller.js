@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import create_drawer from "../../lib/create_drawer"
+import create_drawer from "lib/create_drawer"
 
 export default class extends Controller {
   connect() {

@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 import consumer from "channels/consumer"
-import create_modal from "../../lib/create_modal"
+import create_modal from "lib/create_modal"
 
 export default class extends Controller {
   connect() {
