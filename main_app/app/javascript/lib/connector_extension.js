@@ -181,6 +181,7 @@ class ConnectorExtension {
   }
 
   send_message_with_response_timeout(message, timeout = 20000) {
+    console.log(message)
     return new Promise((resolve, reject) => {
       const timeoutId = setTimeout(() => reject({ status: "unable_to_reach_extension" }), timeout)
       try {
