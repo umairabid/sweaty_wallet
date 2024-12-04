@@ -185,6 +185,7 @@ class ConnectorExtension {
     return new Promise((resolve, reject) => {
       const timeoutId = setTimeout(() => reject({ status: "unable_to_reach_extension" }), timeout)
       try {
+        console.log(this.extension_id)
         chrome.runtime.sendMessage(this.extension_id, message, (response) => {
           clearTimeout(timeoutId)
           if (response.success) {
