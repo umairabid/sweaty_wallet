@@ -68,7 +68,6 @@ port.onMessage.addListener((msg) => {
     ]
 
     return Promise.all(promises).then((res) => {
-      console.log(res.flat())
       port.postMessage({
         name: msg.name,
         params: res.flat(),

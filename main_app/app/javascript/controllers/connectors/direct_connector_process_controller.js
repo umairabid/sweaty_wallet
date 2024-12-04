@@ -21,7 +21,6 @@ export default class extends Controller {
         },
 
         received(data) {
-          console.log(data.status)
           if (data.status) {
             const elements = document.getElementsByClassName("progress-message")
             for (let i = 0; i < elements.length; i++) {

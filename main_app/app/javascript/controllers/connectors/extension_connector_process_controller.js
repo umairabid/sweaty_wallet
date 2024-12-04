@@ -33,7 +33,6 @@ export default class extends Controller {
   }
 
   handle_sync(data) {
-    console.log(data)
     if (data.success) {
       this.close_modal()
     } else {

@@ -8,7 +8,6 @@ class MessageController {
   }
 
   listener(request, sender, sendResponse) {
-    console.log(request)
     const { bank } = request
     const { message } = request
 

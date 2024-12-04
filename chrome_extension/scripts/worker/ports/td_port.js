@@ -75,9 +75,7 @@ class TdPort {
 
   pull_transactions_deposit_account(params) {
     return new Promise((resolve) => {
-      console.log('init redirect')
       this.execute_command("redirect_to_deposit_acc_url", { url: this.account_url(params.encrypted_identifier) }, (response) => {
-        console.log(response)
         setTimeout(() => {
           if (response.url.startsWith("https://easyweb.td.com/ui/ew/da")) {
             this.execute_command("pull_transactions_deposit_account", params, (res) => {
@@ -92,7 +90,6 @@ class TdPort {
             this.execute_command("redirect_to_deposit_acc_url", { url: this.deposit_account_url_three_month(params.identifier) }, (response) => {
               setTimeout(() => {
                 this.execute_command("pull_transactions_deposit_account", params, (res) => {
-                  console.log(res)
                   resolve({
                     success: true,
                     status: "pulled_transactions_deposit_account",
