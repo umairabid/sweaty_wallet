@@ -2,17 +2,16 @@ class TransactionRules::ApplyRule
   def initialize(rule)
     @rule = rule
     @arel_table = Transaction.arel_table
-    @scope = build_group_query(@rule.conditions)
-    @base_scope = @rule.user.transactions
+    @rules_scope = build_group_query(@rule.conditions)
+    @category_scope = @arel_table.grouping(@arel_table[:category_id].not_eq(@rule.category_id).or(@arel_table[:category_id].eq(nil)))
   end
 
   def preview
-    @category_scope = @base_scope.where.not(category_id: @rule.category_id).or(@base_scope.where(category_id: nil))
-    @base_scope.where(@scope).merge(@category_scope)
+    @rule.user.transactions.where((@category_scope).and(@rules_scope))
   end
 
   def apply
-    preview.where(@scope).update_all(category_id: @rule.category_id)
+    preview.update_all(category_id: @rule.category_id)
   end
 
   private

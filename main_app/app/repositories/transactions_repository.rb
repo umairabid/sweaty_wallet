@@ -33,7 +33,6 @@ class TransactionsRepository
 
     if filter.has? :categories
       categories = filter.categories.select { |id| id.to_i > 0 }
-      puts categories.inspect
       if filter.categories.any? { |id| id == "-1" }
         categories << nil
       end

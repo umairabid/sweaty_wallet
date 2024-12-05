@@ -35,7 +35,7 @@ RSpec.describe TransactionRules::ApplyRule do
              "join_by" => "or",
              "conditions" => [
               { "type" => "tags", "value" => "jamal, kamal", "join_by" => nil },
-              { "type" => "type", "value" => "credit", "join_by" => "and" },
+              { "type" => "transaction_type", "value" => "credit", "join_by" => "and" },
             ] },
           ],
         },
