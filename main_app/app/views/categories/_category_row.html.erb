@@ -1,5 +1,5 @@
 <tr
-  data-controller="settings--categories--row"
+  data-controller="categories--row"
   data-category_id="<%= c.id %>"
   class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
   <td class="px-6 py-4">
@@ -12,21 +12,21 @@
     <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"><%= c.code %></span>
   </td>
   <td>
-    <button class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 mb-2" type="button" data-action="click->settings--categories--row#open_drawer">
+    <button class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 mb-2" type="button" data-action="click->categories--row#open_drawer">
       Update
     </button>
     <div
       id="category_form_<%= c.id %>"
       class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80">
       <h5 id="drawer-label" class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase">Update Category</h5>
-      <button data-action="click->settings--categories--row#close_drawer" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center" >
+      <button data-action="click->categories--row#close_drawer" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center" >
         <%= render "icons/cross" %>
         <span class="sr-only">Close menu</span>
       </button>
-      <%= form_with(model: c, url: settings_category_url(id: c.id)) do |f| %>
-        <%= render "settings/categories/category_form", parent_categories: parent_categories, f: f %>
+      <%= form_with(model: c, url: category_url(id: c.id)) do |f| %>
+        <%= render "categories/category_form", parent_categories: parent_categories, f: f %>
         <div class="flex items-center justify-end">
-          <button type="button" data-action="click->settings--categories--row#close_drawer" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 ">Decline</button>
+          <button type="button" data-action="click->categories--row#close_drawer" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 ">Decline</button>
           <%= f.submit "Save", class: 'cursor-pointer ms-3 text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center' %>
         </div>
       <% end %>

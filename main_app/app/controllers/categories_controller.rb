@@ -1,4 +1,4 @@
-class Settings::CategoriesController < ApplicationController
+class CategoriesController < ApplicationController
   layout "settings"
 
   def index
@@ -11,13 +11,13 @@ class Settings::CategoriesController < ApplicationController
     raise "Parent category cannot be blank" if category_params[:parent_category_id].blank?
 
     current_user.categories.create!(category_params)
-    redirect_to settings_categories_path
+    redirect_to categories_path
   end
 
   def update
     @category = current_user.categories.find(params[:id])
     @category.update!(category_params)
-    redirect_to settings_categories_path
+    redirect_to categories_path
   end
 
   def new
@@ -26,7 +26,7 @@ class Settings::CategoriesController < ApplicationController
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
           "new_category_form",
-          template: "settings/categories/new",
+          template: "categories/new",
           locals: { parent_categories: @parent_categories, model: Category.new },
         )
       end

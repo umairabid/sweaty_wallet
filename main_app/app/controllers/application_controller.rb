@@ -1,6 +1,16 @@
 class ApplicationController < ActionController::Base
+  authorize_resource class: false
+
   layout :layout
-  before_action :authenticate_user!
+  before_action :authenticate_user! # Devise authentication
+
+  rescue_from CanCan::AccessDenied do |exception|
+    if user_signed_in?
+      redirect_to root_path, alert: exception.message
+    else
+      redirect_to new_user_session_path, alert: exception.message
+    end
+  end
 
   def current_user_repo
     @current_user_repo ||= CurrentUserRepository.new(current_user)
@@ -14,17 +24,5 @@ class ApplicationController < ActionController::Base
 
   def layout
     devise_controller? ? "slim" : "application"
-  end
-
-  def authenticate_user!
-    return if devise_controller?
-
-    if user_signed_in?
-      super
-    else
-      redirect_to login_path, notice: "if you want to add a notice"
-      ## if you want render 404 page
-      ## render :file => File.join(Rails.root, 'public/404'), :formats => [:html], :status => 404, :layout => false
-    end
   end
 end

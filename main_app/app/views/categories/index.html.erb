@@ -12,7 +12,7 @@
           <% end %>-->
         </div>
         <div class="ml-auto flex items-center space-x-2 sm:space-x-3">
-          <a class="text-white bg-primary-700 hover:bg-primary-800 p-0 font-medium rounded-lg" data-turbo-stream href="<%= new_settings_category_path %>">
+          <a class="text-white bg-primary-700 hover:bg-primary-800 p-0 font-medium rounded-lg" data-turbo-stream href="<%= new_category_path %>">
             <span class="flex items-center rounded-md text-sm px-3 py-2">
               <div class="flex items-center gap-x-3"><%= render 'icons/plus' %> Add Category</div>
             </span>
@@ -39,7 +39,7 @@
       </thead>
       <tbody>
       <% @categories.each do |c| %>
-        <%= render('settings/categories/category_row', c: c, parent_categories: @parent_categories) %>
+        <%= render('categories/category_row', c: c, parent_categories: @parent_categories) %>
       <% end %>
       </tbody>
     </table>
