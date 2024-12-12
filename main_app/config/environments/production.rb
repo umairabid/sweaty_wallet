@@ -100,7 +100,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: "sweatywallet.ca" }
   config.action_mailer.smtp_settings = {
     address: "smtppro.zohocloud.ca",
-    port: 465,
+    port: 587,
     domain: "sweatywallet.ca",
     user_name: "umairac90@gmail.com",
     password: Rails.application.credentials.smtp_password,
