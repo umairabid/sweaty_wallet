@@ -102,7 +102,7 @@ Rails.application.configure do
     address: "smtp.zohocloud.ca",
     port: 587,
     domain: "sweatywallet.ca",
-    user_name: "info@sweatywallet.ca",
+    user_name: "umairac90@gmail.com",
     password: Rails.application.credentials.smtp_password,
     authentication: "plain",
     enable_starttls_auto: true,
