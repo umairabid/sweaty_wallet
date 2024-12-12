@@ -98,4 +98,13 @@ Rails.application.configure do
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
   #
   config.action_mailer.default_url_options = { host: "sweatywallet.ca" }
+  config.action_mailer.smtp_settings = {
+    address: "smtp.zohocloud.ca",
+    port: 587,
+    domain: "sweatywallet.ca",
+    user_name: "info@sweatywallet.ca",
+    password: Rails.application.credentials.smtp_password,
+    authentication: "plain",
+    enable_starttls_auto: true,
+  }
 end
