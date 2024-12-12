@@ -104,7 +104,7 @@ Rails.application.configure do
     domain: "sweatywallet.ca",
     user_name: "umairac90@gmail.com",
     password: Rails.application.credentials.smtp_password,
-    authentication: "required",
+    authentication: "plain",
     enable_starttls_auto: true,
   }
 end
