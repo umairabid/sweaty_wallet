@@ -11,13 +11,18 @@
   <div class="px-4 py-6 flex items-center flex-col">
     <div class="w-1/2 p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
       <div class="mb-4"> Selet Rule to Apply </div>
-      <div class="flex justify-between">
-         <%= select_tag(
+      <%= select_tag(
           'rule', 
           options_for_select(@transaction_rules, selected: params[:id]),
           id: 'transaction_rule_dropdown',
-          class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 w-4/5'
+          class: 'block mb-4 w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5'
         ) %>
+      <div class="flex justify-end">
+        <%= 
+          link_to('Next', 
+          next_transaction_rule_path(id: params[:id]),
+          class: 'text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-10 py-2.5 mr-4')
+        %>
         <%= 
           link_to('Apply', 
           apply_transaction_rule_path(id: params[:id]),

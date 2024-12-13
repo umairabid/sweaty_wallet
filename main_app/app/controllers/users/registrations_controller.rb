@@ -1,5 +1,5 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-  layout "settings", only: [:edit]
+  layout "application", only: [:edit]
 
   protected
 

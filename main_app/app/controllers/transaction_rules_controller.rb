@@ -1,6 +1,6 @@
 class TransactionRulesController < ApplicationController
   before_action :set_user_references, only: %i[edit update new conditions]
-  before_action :set_rule, only: %i[update edit conditions destroy preview delete_condition apply]
+  before_action :set_rule, only: %i[update edit conditions destroy preview delete_condition apply next]
 
   def index
     @transaction_rules = current_user.transaction_rules.preload(:category)
@@ -52,12 +52,21 @@ class TransactionRulesController < ApplicationController
 
   def apply
     applier.apply
-    redirect_to preview_transaction_rule_path(id: @transaction_rule.id)
+    redirect_to next_transaction_rule_path(id: @transaction_rule.id)
   end
 
   def delete_condition
     TransactionRules::DeleteCondition.call(@transaction_rule, params.slice(:index, :group_id))
     redirect_to edit_transaction_rule_path(id: @transaction_rule.id)
+  end
+
+  def next
+    rule = TransactionRules::NextRule.call(@transaction_rule)
+    if rule
+      redirect_to preview_transaction_rule_path(id: rule.id)
+    else
+      redirect_to preview_transaction_rule_path(id: @transaction_rule.id)
+    end
   end
 
   private

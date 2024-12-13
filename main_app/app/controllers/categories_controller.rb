@@ -1,6 +1,4 @@
 class CategoriesController < ApplicationController
-  layout "settings"
-
   def index
     @parent_categories = current_user_repo.fetch_referencables[:parent_categories]
     @categories = current_user_repo.fetch_categories.order(updated_at: :desc)

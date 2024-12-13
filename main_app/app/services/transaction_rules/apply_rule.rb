@@ -6,6 +6,10 @@ class TransactionRules::ApplyRule
     @category_scope = @arel_table.grouping(@arel_table[:category_id].not_eq(@rule.category_id).or(@arel_table[:category_id].eq(nil)))
   end
 
+  def preview_count
+    preview.count
+  end
+
   def preview
     @rule.user.transactions.where((@category_scope).and(@rules_scope))
   end
