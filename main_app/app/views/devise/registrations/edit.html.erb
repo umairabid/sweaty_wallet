@@ -24,6 +24,14 @@
           </div>
         <% end %>
         <div class="mb-4">
+          <%= f.label :avatar, 'Your Profile Picture', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+          <%= f.file_field :avatar %>
+        </div>
+        <div class="mb-4">
+          <%= f.label :name, 'Your Name', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+          <%= f.text_field :name, autofocus: true, class: 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5'  %>
+        </div>
+        <div class="mb-4">
           <%= f.label :email, 'Your Email', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
           <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'name@company.com', class: 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5'  %>
         </div>

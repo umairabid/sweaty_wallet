@@ -10,4 +10,8 @@ class User < ApplicationRecord
   has_many :categories
   has_many :transaction_rules
   has_many_attached :transaction_exports
+
+  has_one_attached :avatar
+
+  validates :name, presence: true
 end
