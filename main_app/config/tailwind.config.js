@@ -30,7 +30,8 @@ module.exports = {
     'dark:bg-opacity-80',
     'my-2',
     'pr-2',
-    'pb-0'
+    'pb-0',
+    'text-gray-100'
   ],
   theme: {
     extend: {

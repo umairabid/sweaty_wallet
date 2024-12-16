@@ -19,13 +19,15 @@ Rails.application.routes.draw do
     get "users/sign_in" => "devise/sessions#new", :as => :login
   end
 
-  resources :connect, param: :bank, controller: "connectors", only: %i[show update] do
+  resources :connect, param: :bank, controller: "connectors", only: %i[index show update] do
     member do
       post "/direct" => "connectors#create_direct", as: :create_direct
       get "/extension/new" => "connectors#new_extension", as: :new_extension
       get "/direct/new" => "connectors#new_direct", as: :new_direct
     end
   end
+
+  resources :connectors, only: %i[index]
 
   resources :accounts, only: %i[index update] do
     collection do

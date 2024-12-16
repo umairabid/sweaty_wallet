@@ -1,6 +1,10 @@
 class ConnectorsController < ApplicationController
-  before_action :set_connector
-  before_action :set_bank_name
+  before_action :set_connector, except: [:index]
+  before_action :set_bank_name, except: [:index]
+
+  def index
+    @connectors = current_user.connectors.preload(:accounts)
+  end
 
   def new_direct
     respond_to do |format|

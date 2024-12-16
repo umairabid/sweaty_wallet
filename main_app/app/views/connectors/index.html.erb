@@ -1,0 +1,78 @@
+<div id="connectors-page">
+  <div class="p-6 relative overflow-x-auto bg-white">
+    <div class="text-base mb-6">Hello, <%= current_user.name %>!</div>
+    <div class="flex mb-4">
+      <div class="text-2xl my-4">Connected Banks</div>
+      <div class="flex flex-1 justify-end">
+        <a class="border rounded border-blue-400 py-1 px-2 my-3 text-blue-400 font-semibold text-lg">Add New</a>
+      </div>
+    </div>
+    <div>
+      <%- @connectors.each do |c| %>
+        <div class="flex bg-gray-100 h-20 p-3 border rounded-lg" style="color: #fff; background-color: #006AC3">
+          <div class="border rounded bg-white mr-3">
+            <%= render 'icons/rbc' %>
+          </div>
+          <div class="flex-1 content-between">
+            <div class="text-lg"><%= Connector::BANK_NAMES[c.bank] %></div>
+            <div class="text-sm">Connected 2 hours ago</div>
+          </div>
+          <div class="flex justify-end my-2">
+            <button class="border rounded-md border-white px-3 py-1">Hide Accounts</button>
+          </div>
+        </div>
+        <div class="relative flex flex-col w-full text-gray-700 bg-white rounded-lg mt-4 mb-6 overflow-hidden border">
+          <table class="w-full text-left table-auto min-w-max">
+            <thead>
+              <tr>
+                <th class="p-4 border-b border-blue-gray-100 bg-gray-200">
+                  <p class="block font-sans text-sm antialiased font-normal leading-none">
+                    Account Name
+                  </p>
+                </th>
+                <th class="p-4 border-b border-blue-gray-100 bg-gray-200">
+                  <p class="block font-sans text-sm antialiased font-normal leading-none">
+                    Type
+                  </p>
+                </th>
+                <th class="p-4 border-b border-blue-gray-100 bg-gray-200">
+                  <p class="block font-sans text-sm antialiased font-normal leading-none">
+                    Balance
+                  </p>
+                </th>
+                <th class="p-4 border-b border-blue-gray-100 bg-gray-200">
+                  <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"></p>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <%- c.accounts.each do |account| %>
+                <tr>
+                  <td class="p-4 border-b border-blue-gray-50">
+                    <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                      <%= account.name %>
+                    </p>
+                  </td>
+                  <td class="p-4 border-b border-blue-gray-50">
+                    <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                      <%= account.account_type %>
+                    </p>
+                  </td>
+                  <td class="p-4 border-b border-blue-gray-50">
+                    <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                      <%= account.balance %>
+                    </p>
+                  </td>
+                  <td class="p-4 border-b border-blue-gray-50">
+                    <a href="#" class="block font-sans text-sm antialiased font-medium leading-normal text-blue-gray-900">
+                    </a>
+                  </td>
+                </tr>
+              <%- end %>
+            </tbody>
+          </table>
+        </div>
+      <%- end %>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   authorize_resource class: false
+  helper_method :sidebar_menu
 
   layout :layout
   before_action :authenticate_user! # Devise authentication
@@ -18,6 +19,10 @@ class ApplicationController < ActionController::Base
 
   def set_user_references
     @user_references = current_user_repo.fetch_referencables
+  end
+
+  def sidebar_menu
+    Navigation.loggedin_sidebar
   end
 
   private
