@@ -11,7 +11,7 @@ function creditCardTransactionPromise(account_id, customer_id, cycle_date) {
   return new Promise((resolve) => {
     function reqCreditCardListener() {
       const response = JSON.parse(this.responseText)
-      const transactions = response.activities.map((t) => {
+      const transactions = (response.activities || []).map((t) => {
         const amount = parseFloat(t.amount.value)
         const is_debit = amount > 0
         return {

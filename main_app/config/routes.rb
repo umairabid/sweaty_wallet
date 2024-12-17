@@ -27,13 +27,13 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :connectors, only: %i[index]
-
-  resources :accounts, only: %i[index update] do
+  resources :connectors, only: %i[index] do
     collection do
       post :import
     end
   end
+
+  resources :accounts, only: %i[index update]
 
   resources :transactions, only: %i[index update edit] do
     collection do

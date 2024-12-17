@@ -74,7 +74,7 @@
                 <%= transaction.account.nick_name || transaction.account.name %>
               </td>
               <td class="px-6 py-4">
-                <%= Connector::BANK_NAMES[transaction.account.connector.bank] %>
+                <%= transaction.account.connector.bank_name %>
               </td>
             </tr>
           <% end %>

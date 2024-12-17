@@ -8,6 +8,7 @@ class ConnectorExtension {
     this.connect_with_bank = this.connect_with_bank.bind(this)
     this.pull_accounts = this.pull_accounts.bind(this)
     this.pull_transactions = this.pull_transactions.bind(this)
+    console.log(this.extension_id)
   }
 
   pull_bank(bank) {
@@ -20,7 +21,7 @@ class ConnectorExtension {
         if (!res.success) {
           return res
         }
-        return fetch("/accounts/import", {
+        return fetch("/connectors/import", {
           method: "POST",
           body: JSON.stringify({
             bank: bank,
@@ -61,14 +62,21 @@ class ConnectorExtension {
   }
 
   ping_extension(res) {
+    console.log(res)
     if (res.success) {
-      return this.send_message_with_response_timeout({ message: "ping" }).then((res) => {
+      return this.send_message_with_response_timeout({ message: "ping" })
+      .then((res) => {
+        console.log(res)
         if (res.success) {
           this.handle_success({ success: true, status: "installed" })
           return res
         } else {
           return { success: false, status: "unable_to_reach_extension" }
         }
+      })
+      .catch((err) => {
+        console.log(err)
+        return { success: false, status: "unable_to_reach_extension" }
       })
     } else {
       return res
@@ -186,7 +194,7 @@ class ConnectorExtension {
       try {
         chrome.runtime.sendMessage(this.extension_id, message, (response) => {
           clearTimeout(timeoutId)
-          if (response.success) {
+          if (response &&response.success) {
             return resolve(response)
           }
           return reject({ success: false, status: "message_failed" })

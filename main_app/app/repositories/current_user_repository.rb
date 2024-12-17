@@ -19,7 +19,7 @@ class CurrentUserRepository
   def fetch_referencables
     {
       banks: [["Select Bank", ""]] +
-             @base_scope.connectors.map { |c| [Connector::BANK_NAMES[c.bank], c.id] },
+             @base_scope.connectors.map { |c| [c.bank_name, c.id] },
       categories: [["Select Category", ""]] + [["Uncategorized", "-1"]] +
                   fetch_categories.map { |c| [c.name, c.id] },
       account_types: [["Select Account Type", ""]] +

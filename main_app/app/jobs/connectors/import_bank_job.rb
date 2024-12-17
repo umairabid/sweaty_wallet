@@ -1,4 +1,4 @@
-class Accounts::ImportAccountsJob < ApplicationJob
+class Connectors::ImportBankJob < ApplicationJob
   queue_as :default
 
   def perform(params, user)
@@ -6,7 +6,7 @@ class Accounts::ImportAccountsJob < ApplicationJob
       conn.auth_type = "transient"
       conn.status = "connected"
     end
-    GoodJob::Batch.enqueue(on_finish: Accounts::ImportAccountsCallbackJob, user: user, bank: params[:bank]) do
+    GoodJob::Batch.enqueue(on_finish: Connectors::ImportBankCallbackJob, connector: connector) do
       params[:accounts].each do |account_params|
         Accounts::ImportAccountJob.perform_later(connector, account_params)
       end

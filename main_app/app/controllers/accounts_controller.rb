@@ -1,13 +1,6 @@
 class AccountsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: %i[import]
   before_action :set_account, only: %i[update]
   before_action :set_selects, only: %i[index update]
-
-  def import
-    parameters = params.slice(:accounts, :bank).to_unsafe_hash
-    job = Accounts::ImportAccountsJob.perform_later(parameters, current_user)
-    render json: { job_id: job.job_id }
-  end
 
   def index
     @accounts = current_user.accounts.preload(:connector)

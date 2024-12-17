@@ -22,7 +22,7 @@
     <%= transaction.account.nick_name || transaction.account.name %>
   </td>
   <td class="px-6 py-4">
-    <%= Connector::BANK_NAMES[transaction.account.connector.bank] %>
+    <%= transaction.account.connector.bank_name %>
   </td>
   <td>
     <button class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 mb-2" type="button" data-action="click->transactions--row#open_drawer">

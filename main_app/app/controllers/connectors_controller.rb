@@ -1,6 +1,13 @@
 class ConnectorsController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: %i[import]
   before_action :set_connector, except: [:index]
   before_action :set_bank_name, except: [:index]
+
+  def import
+    parameters = params.slice(:accounts, :bank).to_unsafe_hash
+    job = Connectors::ImportBankJob.perform_later(parameters, current_user)
+    render json: { job_id: job.job_id }
+  end
 
   def index
     @connectors = current_user.connectors.preload(:accounts)
@@ -50,7 +57,7 @@ class ConnectorsController < ApplicationController
   end
 
   def set_bank_name
-    @bank_name = Connector::BANK_NAMES[bank]
+    @bank_name = Connector::BANKS_CONFIG[bank][:name]
   end
 
   def set_connector

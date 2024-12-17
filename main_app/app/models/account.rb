@@ -14,4 +14,8 @@ class Account < ApplicationRecord
 
   belongs_to :connector
   has_many :transactions
+
+  def account_type_label
+    ACCOUNT_TYPE_LABELS[account_type.to_sym]
+  end
 end
