@@ -8,7 +8,6 @@ class ConnectorExtension {
     this.connect_with_bank = this.connect_with_bank.bind(this)
     this.pull_accounts = this.pull_accounts.bind(this)
     this.pull_transactions = this.pull_transactions.bind(this)
-    console.log(this.extension_id)
   }
 
   pull_bank(bank) {
@@ -62,11 +61,9 @@ class ConnectorExtension {
   }
 
   ping_extension(res) {
-    console.log(res)
     if (res.success) {
       return this.send_message_with_response_timeout({ message: "ping" })
       .then((res) => {
-        console.log(res)
         if (res.success) {
           this.handle_success({ success: true, status: "installed" })
           return res
@@ -75,7 +72,6 @@ class ConnectorExtension {
         }
       })
       .catch((err) => {
-        console.log(err)
         return { success: false, status: "unable_to_reach_extension" }
       })
     } else {

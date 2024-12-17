@@ -8,11 +8,11 @@ export default function create_modal(elem_id) {
     backdropClasses: "bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40",
     closable: true,
     onHide: () => {
-      console.log("modal is hidden")
+      
     },
     onShow: () => {},
     onToggle: () => {
-      console.log("modal has been toggled")
+      
     },
   }
 

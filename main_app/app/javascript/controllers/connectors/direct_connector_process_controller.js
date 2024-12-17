@@ -13,7 +13,7 @@ export default class extends Controller {
       this.subscription = consumer.subscriptions.create(this.channel_params(), {
         connected() {
           // Called when the subscription is ready for use on the server
-          console.log("connected")
+          
         },
 
         disconnected() {

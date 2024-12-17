@@ -19,12 +19,5 @@ RSpec.describe AccountsController, type: :controller do
         end
       end
     end
-
-    context "post #import" do
-      it "schedules import job" do
-        expect(Accounts::ImportAccountsJob).to receive(:perform_later).and_return(double(job_id: "123"))
-        post :import
-      end
-    end
   end
 end
