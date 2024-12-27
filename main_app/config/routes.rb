@@ -27,9 +27,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :connectors, only: %i[index] do
+  resources :connectors, only: %i[index new] do
     collection do
       post :import
+      post :import_csv
     end
   end
 

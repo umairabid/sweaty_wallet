@@ -1,0 +1,29 @@
+<div class="relative p-4 w-full max-w-2xl max-h-full">
+  <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+    <div aria-description="header" class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+      <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+        Connect Bank
+      </h3>
+      <button data-action="click->connectors--new#close_modal" type="button" class="text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+        <%= render "icons/cross" %>
+        <span class="sr-only">Close modal</span>
+      </button>
+    </div>
+    <div aria-description="body" class="p-4 md:p-5 space-y-4">
+      <div class="py-4 px-6">
+        <%= select_tag( 'new_banks', options_for_select(@user_references[:unconnected_banks], @bank), { class: 'border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5' }) %>
+        <%= link_to new_connector_path(bank: @bank, mode: 'import'), class: "flex border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 my-4 pr-1.5 #{@bank.present? ? '' : 'invisible'}", data: {'turbo-stream' => ''} do %>
+          <span class="text-left text-sm flex-1">Import Transactions CSV</span>
+          <%= render 'icons/arrow-right' %>
+        <% end %>
+        <%= link_to new_connector_path(bank: @bank, mode: 'extension'), class: "flex border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 my-4 pr-1.5 #{@bank.present? ? '' : 'invisible'}", data: {'turbo-stream' => ''} do %>
+          <span class="text-left text-sm flex-1">Connect Through Extension</span>
+          <%= render 'icons/arrow-right' %>
+        <% end %>
+      </div>
+    </div>
+    <div aria-description="footer" class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b justify-end justify-items-center">
+      <button data-action="click->connectors--new#close_modal" type="button" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 ">Decline</button>
+    </div>
+</div>
+</div>

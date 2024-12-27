@@ -1,7 +1,8 @@
 class ConnectorsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: %i[import]
-  before_action :set_connector, except: [:index]
-  before_action :set_bank_name, except: [:index]
+  before_action :set_connector, only: [:show]
+  before_action :set_bank_name, only: [:show]
+  before_action :set_user_references, only: :new
 
   def import
     parameters = params.slice(:accounts, :bank).to_unsafe_hash
@@ -9,8 +10,23 @@ class ConnectorsController < ApplicationController
     render json: { job_id: job.job_id }
   end
 
+  def import_csv
+  end
+
   def index
     @connectors = current_user.connectors.preload(:accounts)
+  end
+
+  def new
+    @bank = bank
+    @mode = params[:mode]
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(:new_connector, template: "connectors/new")
+      end
+
+      format.html { render :new }
+    end
   end
 
   def new_direct

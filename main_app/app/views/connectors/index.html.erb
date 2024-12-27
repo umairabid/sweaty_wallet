@@ -4,7 +4,7 @@
     <div class="flex mb-4">
       <div class="text-2xl my-4">Connected Banks</div>
       <div class="flex flex-1 justify-end">
-        <a class="border rounded border-blue-400 py-1 px-2 my-3 text-blue-400 font-semibold text-lg">Add New</a>
+        <%= link_to "Add New", new_connector_path, class: 'border rounded border-blue-400 py-1 px-2 my-3 text-blue-400 font-semibold text-lg', data: {'turbo-stream' => ''} %>
       </div>
     </div>
     <div>
@@ -18,8 +18,8 @@
             <div class="text-sm"><%= time_ago_in_words(c.updated_at) %> ago</div>
           </div>
           <div class="flex justify-end my-2">
-            <%= link_to "Refresh", new_extension_connect_path(bank: c.bank), class: 'border rounded-md border-white px-3 py-1', data: {'turbo-stream' => ''} %>
-            <!--<button class="border rounded-md border-white px-3 py-1">Hide Accounts</button>-->
+            <%= link_to "Refresh", new_extension_connect_path(bank: c.bank), class: 'border rounded-md border-white px-3 py-1 mr-3', data: {'turbo-stream' => ''} %>
+            <button class="border rounded-md border-white px-3 py-1">Hide Accounts</button>
           </div>
         </div>
         <div class="relative flex flex-col w-full text-gray-700 bg-white rounded-lg mt-4 mb-6 overflow-hidden border">

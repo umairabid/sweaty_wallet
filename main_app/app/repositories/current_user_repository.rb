@@ -15,6 +15,12 @@ class CurrentUserRepository
     @base_scope.transaction_rules.order(name: :asc)
   end
 
+  def unconnected_banks
+    connected_banks = @base_scope.connectors.map(&:bank)
+    not_connected = Connector::BANKS_CONFIG.keys - connected_banks
+    not_connected.map { |b| [Connector::BANKS_CONFIG[b][:name], b] }
+  end
+
   # returns data references by various forms
   def fetch_referencables
     {
@@ -29,6 +35,7 @@ class CurrentUserRepository
                   .map { |a| [a.name, a.id] },
       transaction_types: [["Select Type", ""], ["Credit", "credit"], ["Debit", "debit"]],
       parent_categories: [["Select Parent Category", ""]] + fetch_parent_categories.map { |c| [c.name, c.id] },
+      unconnected_banks: [["Select Bank", ""]] + unconnected_banks,
     }
   end
 end

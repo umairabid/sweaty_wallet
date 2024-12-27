@@ -1,0 +1,32 @@
+<div class="relative p-4 w-full max-w-2xl max-h-full">
+  <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+    <div aria-description="header" class="flex items-center justify-between p-4 pb-0">
+      <h3 class="text-xl font-semibold text-gray-900">
+        Upload a CSV file
+      </h3>
+      <button data-action="click->connectors--new#close_modal" type="button" class="text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+        <%= render "icons/cross" %>
+        <span class="sr-only">Close modal</span>
+      </button>
+    </div>
+    <div aria-description="body" class="p-4 pt-2">
+      <p>Make sure you are only importing trnsactions for the bank you selected</p>
+      <div 
+          id="droppable-area" 
+          class="border-2 border-dashed p-4 border-blue-600 rounded-lg mt-4 h-52 flex justify-center items-center"
+          data-dropzone-target="area"
+        >
+        <label for="dropzone-file">
+          <div class="m-6 flex items-center justify-center flex-col">
+            <%= render 'icons/upload' %>
+            <span>Drop a file or click to browse</span>
+          </div>
+          <input id="dropzone-file" type="file" class="hidden" />
+        </label>
+      </div>
+    </div>
+    <div aria-description="footer" class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b justify-items-center">
+      <span class="text-sm">Looking for CSV format? Download Sample CSV File</span>
+    </div>
+  </div>
+</div>
