@@ -11,6 +11,10 @@ class ConnectorsController < ApplicationController
   end
 
   def import_csv
+    return
+    file_import = current_user.file_imports.new(file: params[:file], input: { bank: params[:bank] })
+    file_import.save!
+    render json: { file_import_id: file_import.id }
   end
 
   def index

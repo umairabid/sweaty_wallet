@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :transactions, through: :accounts
   has_many :categories
   has_many :transaction_rules
+  has_many :file_imports
   has_many_attached :transaction_exports
 
   has_one_attached :avatar

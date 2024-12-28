@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_15_235428) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_27_121702) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -82,6 +82,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_15_235428) do
     t.index ["bank"], name: "index_connectors_on_bank"
     t.index ["status"], name: "index_connectors_on_status"
     t.index ["user_id"], name: "index_connectors_on_user_id"
+  end
+
+  create_table "file_imports", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "status", default: 1, null: false
+    t.jsonb "input", default: {}
+    t.jsonb "output", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_file_imports_on_user_id"
   end
 
   create_table "good_job_batches", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -227,6 +237,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_15_235428) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "categories", "users"
   add_foreign_key "connectors", "users", on_delete: :cascade
+  add_foreign_key "file_imports", "users"
   add_foreign_key "transaction_rules", "categories"
   add_foreign_key "transaction_rules", "users"
   add_foreign_key "transactions", "accounts", on_delete: :cascade
