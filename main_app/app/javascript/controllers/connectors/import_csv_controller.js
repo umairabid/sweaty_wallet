@@ -1,5 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 import Dropzone from "dropzone";
+import consumer from "channels/consumer";
+import handle_message from "../../lib/handle_message";
 
 export default class extends Controller {
   connect() {
@@ -40,6 +42,10 @@ export default class extends Controller {
         this.droppable_area().classList.toggle("hidden")
         this.loading_container().classList.toggle("hidden")
       },
+      success: (file, response) => {
+        console.log(file, response)
+        const sub = this.create_subscription({ channel: "FileImportChannel", file_import_id: response.file_import_id })
+      },
     };
 
     this.dropzone = new Dropzone(this.element, dropzoneConfig);
@@ -54,10 +60,24 @@ export default class extends Controller {
   }
 
   loading_container() {
-    return document.getElementById("loading-container");
+    return document.getElementById("progress-spinner");
   }
 
   droppable_area() { 
     return document.getElementById("droppable-area")
+  }
+
+  create_subscription(params) {
+    this.subscription = consumer.subscriptions.create(params, {
+      connected() { },
+
+      disconnected() {},
+
+      received(data) {
+        console.log(data)
+      },
+    })
+
+    return this.subscription
   }
 }

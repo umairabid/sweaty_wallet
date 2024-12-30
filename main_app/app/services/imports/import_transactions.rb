@@ -28,7 +28,7 @@ class Imports::ImportTransactions
         secondary_external_id: t[:secondary_external_id],
         description: t[:description],
         date: t[:date],
-        is_credit: t[:type].downcase == "credit",
+        is_credit: t[:is_credit].nil? ? t[:type].downcase == "credit" : t[:is_credit],
         amount: amount < 0 ? amount.abs : amount,
         external_object: t[:external_object],
       }

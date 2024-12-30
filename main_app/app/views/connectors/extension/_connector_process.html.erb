@@ -21,12 +21,7 @@
       </div>
       <!-- Modal body -->
       <div class="p-4 md:p-5 space-y-4">
-        <div id="progress-spinner" class="flex items-center justify-center w-100 h-32">
-          <div role="status">
-            <%= render 'icons/loading-spinner' %>
-            <span class="sr-only">Loading...</span>
-          </div>
-        </div>
+        <%= render 'helpers/spinner' %>
         <div id="progress-messages">
           <div class="flex justify-center align-items-center progress-message text-sm" id="initiating">Connecting with extension</div>
           <div class="flex justify-center align-items-center progress-message text-sm hidden" id="installed">Connected with extension, connecting to Bank</div>

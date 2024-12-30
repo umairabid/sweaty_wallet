@@ -25,7 +25,9 @@
           <input id="dropzone-file" type="file" class="hidden" />
         </label>
       </div>
-      <div id="loading-container" class="hidden">Loading...</div>
+      <%= render 'helpers/spinner', hide: true %>
+      <div class="flex justify-center align-items-center progress-message text-sm hidden" id="uploading-file">Uploading your file</div>
+      <div class="flex justify-center align-items-center progress-message text-sm hidden" id="importing-transactions">File is uploaded, importing your transactions</div>
     </div>
     <div aria-description="footer" class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b justify-items-center">
       <span class="text-sm">Looking for CSV format? Download Sample CSV File</span>

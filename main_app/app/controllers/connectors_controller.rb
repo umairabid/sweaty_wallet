@@ -11,9 +11,8 @@ class ConnectorsController < ApplicationController
   end
 
   def import_csv
-    return
-    file_import = current_user.file_imports.new(file: params[:file], input: { bank: params[:bank] })
-    file_import.save!
+    file_import = current_user.file_imports.create!(file: params[:csv], input: { bank: params[:bank] })
+    Connectors::ImportCsvFileJob.perform_later(file_import)
     render json: { file_import_id: file_import.id }
   end
 
