@@ -41,6 +41,7 @@ export default class extends Controller {
       uploadprogress: (file, progress, bytesSent) => {
         this.droppable_area().classList.toggle("hidden")
         this.loading_container().classList.toggle("hidden")
+        handle_message("progress-message", "uploading-file")
       },
       success: (file, response) => {
         console.log(file, response)
