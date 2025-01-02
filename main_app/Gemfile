@@ -50,6 +50,8 @@ gem "devise", "~> 4.9"
 
 gem "tailwindcss-rails", "~> 2.6"
 
+gem "ferrum", git: "https://github.com/rubycdp/ferrum.git", branch: "main"
+
 gem "good_job", "~> 3.29"
 
 gem "geared_pagination", "~> 1.2.0"
