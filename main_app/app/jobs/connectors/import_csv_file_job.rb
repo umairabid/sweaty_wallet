@@ -5,7 +5,7 @@ class Connectors::ImportCsvFileJob < ApplicationJob
 
   def perform(file_import)
     @channel_name = "file_import_#{file_import.id}"
-    broadcast({ status: "processing" })
+    broadcast({ status: "importing_transactions" })
     file_import.update!(status: "processing")
     csv = CSV.parse(file_import.file.download, headers: true)
     bank = file_import.input["bank"]
@@ -26,7 +26,7 @@ class Connectors::ImportCsvFileJob < ApplicationJob
       Imports::ImportTransactions.call(account, account_transactions[account_id].map { |t| t.to_h.symbolize_keys })
     end
     file_import.update!(status: "success")
-    broadcast({ status: "success" })
+    broadcast({ status: "imported_transactions" })
   end
 
   def channel_name

@@ -27,24 +27,18 @@ export default class extends Controller {
         "X-CSRF-Token": document.querySelector("meta[name=csrf-token]").content,
       },
       previewTemplate: "",
-      // Specifing an event as an configuration option overwrites the default
-      // `addedfile` event handler.
       addedfile: function (file) {
         file.previewElement = Dropzone.createElement(
           this.options.previewTemplate
         );
-        // Now attach this new element some where in your page
       },
-      thumbnail: function (file, dataUrl) {
-        // Display the image in your file.previewElement
-      },
+      thumbnail: function (file, dataUrl) {},
       uploadprogress: (file, progress, bytesSent) => {
         this.droppable_area().classList.toggle("hidden")
         this.loading_container().classList.toggle("hidden")
         handle_message("progress-message", "uploading-file")
       },
       success: (file, response) => {
-        console.log(file, response)
         const sub = this.create_subscription({ channel: "FileImportChannel", file_import_id: response.file_import_id })
       },
     };
@@ -70,12 +64,15 @@ export default class extends Controller {
 
   create_subscription(params) {
     this.subscription = consumer.subscriptions.create(params, {
-      connected() { },
+      connected() {},
 
       disconnected() {},
 
-      received(data) {
-        console.log(data)
+      received: (data) =>  {
+        if (data.status == "imported_transactions") {
+          this.loading_container().classList.toggle("hidden")
+        }
+        handle_message("progress-message", data.status)
       },
     })
 
