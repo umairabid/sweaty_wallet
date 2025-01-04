@@ -1,0 +1,49 @@
+<div 
+  class="relative p-4 w-full max-w-2xl max-h-full" 
+  data-controller="connectors--import_extension"
+  data-bank="<%= params['bank'] %>"
+  data-extension_id="<%= Rails.application.credentials.chrome_extension_id %>">
+  <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+    <div aria-description="header" class="flex items-center justify-between p-4 pb-0">
+      <h3 class="text-xl font-semibold text-gray-900">
+        Import Transaction through Extension
+      </h3>
+      <button data-action="click->connectors--new#close_modal" type="button" class="text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+        <%= render "icons/cross" %>
+        <span class="sr-only">Close modal</span>
+      </button>
+    </div>
+    <div id="instructions" aria-description="body" class="p-4 pt-2 text-sm">
+      <p>Our extensions allows you to import your transactions directly from your bank, without manually importing. In order to use extension</p>
+      <ol class="max-w-md space-y-1 mt-4 list-decimal list-inside">
+        <li>Ensure you are using chrome browser</li>
+        <li>Download our extension from <%= link_to('here', url_for('/downloads/sweaty_wallet_chrome_extension.zip'), class: 'text-blue-800') %></li>
+        <li>Install extension as explained in <%= link_to('video', 'https://youtu.be/yNFwFQrc27Q?si=y_fcpdpdun0U2GnH', target: 'blank', class: 'text-blue-800') %></li>
+        <li>Login to your bank</li>
+      </ol>
+    </div>
+    <div id="process" aria-description="body" class="p-4 pt-2 text-sm hidden">
+      <%= render 'helpers/spinner', hide: false %>
+      <div id="progress-messages">
+        <div class="p-4 text-sm text-blue-800 rounded-lg bg-blue-50 flex justify-center align-items-center progress-message text-sm" id="initiating">Connecting with extension</div>
+        <div class="p-4 text-sm text-blue-800 rounded-lg bg-blue-50 flex justify-center align-items-center progress-message text-sm hidden" id="installed">Connected with extension, connecting to Bank</div>
+        <div class="p-4 text-sm text-blue-800 rounded-lg bg-blue-50 flex justify-center align-items-center progress-message text-sm hidden" id="found_bank">We are connected to Bank, pulling your accounts</div>
+        <div class="p-4 text-sm text-blue-800 rounded-lg bg-blue-50 flex justify-center align-items-center progress-message text-sm hidden" id="pulled_accounts">We have pulled your accounts, pulling transactions</div>
+        <div class="p-4 text-sm text-blue-800 rounded-lg bg-blue-50 flex justify-center align-items-center progress-message text-sm hidden" id="pulled_transactions">We have pulled your transactions, syncing your data</div>
+        <div class="p-4 mt-4 text-sm text-green-800 rounded-lg bg-green-50 flex justify-center align-items-center progress-message text-sm hidden" id="synced_accounts">Your transactions are imported successfully</div>
+      </div>
+      <div id="error-messages" class="p-4 text-sm text-red-800 rounded-lg bg-red-50 hidden" role="alert">
+        <div class="error-message font-medium" id="chrome_unavailable">We need chrome browser to connect.</div>
+        <div class="error-message font-medium" id="no_accessible_extension">We could not reach any extension, have you installed our extension?</div>
+        <div class="error-message font-medium" id="unable_to_reach_extension">We could not reach our extension, check if it is active?</div>
+        <div class="error-message font-medium" id="bank_not_found">We could not connected with Bank tab, if you are connected please refresh</div>
+        <div class="error-message font-medium" id="pull_accounts_fail">Unable to pull accounts</div>
+        <div class="error-message font-medium" id="pull_transactions_fail">Unable to pull transactions</div>
+      </div>
+    </div>
+    <div aria-describedby="footer" class="flex items-center p-4 border-t border-gray-200 rounded-b justify-end justify-items-center">
+      <button id="next_button" data-action="click->connectors--import_extension#start_import" type="button" class="cursor-pointer ms-3 text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Next</button>
+      <button id="done_button" data-action="click->connectors--new#close_modal" type="button" class="cursor-pointer ms-3 text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center hidden">Close</button>
+    </div>
+  </div>
+</div>

@@ -11,7 +11,7 @@
     </div>
     <div aria-description="body" class="p-4 md:p-5 space-y-4">
       <div class="py-4 px-6">
-        <%= select_tag( 'new_banks', options_for_select(@user_references[:unconnected_banks], @bank), { class: 'border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5' }) %>
+        <%= select_tag('new_banks', options_for_select(@user_references[:all_banks], @bank), { class: 'border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5' }) %>
         <%= link_to new_connector_path(bank: @bank, mode: 'import'), class: "flex border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 my-4 pr-1.5 #{@bank.present? ? '' : 'invisible'}", data: {'turbo-stream' => ''} do %>
           <span class="text-left text-sm flex-1">Import Transactions CSV</span>
           <%= render 'icons/arrow-right' %>

@@ -1,0 +1,8 @@
+date,external_id,description,amount,is_credit,external_account_id,account_type,account_name,currency
+2024-10-29,10001,AMZN Mktp CA*DW5P78MY3,49.0,false,credit_card_external_id,credit_card,Credit Card Account,CAD
+2024-10-23,10002,DOLLARAMA # 660,74.0,false,credit_card_external_id,credit_card,Credit Card Account,CAD
+2024-12-14,10003,TIM HORTONS #7551,33.0,false,credit_card_external_id,credit_card,Credit Card Account,CAD
+2024-11-12,10004,Visa Debit purchase - 1703 | BCAA - INSURANC,28.0,false,credit_card_external_id,credit_card,Credit Card Account,CAD
+2024-12-19,10001,7 ELEVEN STORE #14846,23.0,false,deposit_account_bank_id,deposit_account,Chequing Account,CAD
+2024-10-14,10002,WAL-MART SUPERCENTER#1113,29.0,false,deposit_account_bank_id,deposit_account,Chequing Account,CAD
+2024-10-23,10003,C-LOVERS FISH & CHIPS ABB,3.0,false,deposit_account_bank_id,deposit_account,Chequing Account,CAD

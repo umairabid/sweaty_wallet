@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Connectors::ImportCsvFile, type: :job do
+RSpec.describe Connectors::ImportCsvFileJob, type: :job do
   let(:user) { create(:user) }
   let(:file) { Rails.root.join("spec", "support", "transactions.csv") }
   let(:file_import) { create(:file_import, user: user, file: file) }

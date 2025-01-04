@@ -18,7 +18,7 @@
             <div class="text-sm"><%= time_ago_in_words(c.updated_at) %> ago</div>
           </div>
           <div class="flex justify-end my-2">
-            <%= link_to "Refresh", new_extension_connect_path(bank: c.bank), class: 'border rounded-md border-white px-3 py-1 mr-3', data: {'turbo-stream' => ''} %>
+            <%= link_to "Refresh", new_connector_path(bank: c.bank), class: 'border rounded-md border-white px-3 py-1 mr-3', data: {'turbo-stream' => ''} %>
             <button class="border rounded-md border-white px-3 py-1">Hide Accounts</button>
           </div>
         </div>
@@ -48,28 +48,8 @@
             </thead>
             <tbody>
               <%- c.accounts.each do |account| %>
-                <tr>
-                  <td class="p-4 border-b border-blue-gray-50">
-                    <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                      <%= account.name %>
-                    </p>
-                  </td>
-                  <td class="p-4 border-b border-blue-gray-50">
-                    <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                      <%= account.account_type_label %>
-                    </p>
-                  </td>
-                  <td class="p-4 border-b border-blue-gray-50">
-                    <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                      <%= account.balance %>
-                    </p>
-                  </td>
-                  <td class="p-4 border-b border-blue-gray-50">
-                    <a href="#" class="block font-sans text-sm antialiased font-medium leading-normal text-blue-gray-900">
-                    </a>
-                  </td>
-                </tr>
-              <%- end %>
+                <%= render "accounts/account_row", account: account, bank_options: @user_references[:banks], account_types: @user_references[:account_types] %>
+              <% end %>
             </tbody>
           </table>
         </div>

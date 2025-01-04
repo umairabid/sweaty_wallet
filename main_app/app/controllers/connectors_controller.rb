@@ -2,7 +2,7 @@ class ConnectorsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: %i[import]
   before_action :set_connector, only: [:show]
   before_action :set_bank_name, only: [:show]
-  before_action :set_user_references, only: :new
+  before_action :set_user_references, only: %i[new index]
 
   def import
     parameters = params.slice(:accounts, :bank).to_unsafe_hash
