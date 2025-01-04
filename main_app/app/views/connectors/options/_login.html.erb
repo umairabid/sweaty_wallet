@@ -1,0 +1,72 @@
+<div class="relative p-4 w-full max-w-2xl max-h-full">
+  <div class="relative bg-white rounded-lg shadow">
+    <div aria-description="header" class="flex items-center justify-between p-4 border-b">
+      <h3 class="text-xl font-semibold text-gray-900">
+        Login to your Bank Directly
+      </h3>
+      <button data-action="click->connectors--new#close_modal" type="button" class="text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+        <%= render "icons/cross" %>
+        <span class="sr-only">Close modal</span>
+      </button>
+    </div>
+    <%- if start_direct_process %>
+      <div class="p-4 md:p-5 space-y-4" data-controller="connectors--login_process">
+        <div class="flex items-center justify-center w-100 h-32">
+          <div role="status">
+            <%= render 'icons/loading-spinner' %>
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div class="flex justify-center align-items-center progress-message text-sm" id="initiating">We are connecting with your bank</div>
+        <div class="flex justify-center align-items-center progress-message text-sm hidden" id="logging_in">We are logging in your bank account</div>
+        <div class="progress-message hidden" id="confirm_two_factor_notification">
+          <div class="flex justify-center align-items-center text-sm m-4">You should have received notification, please confirm when you have allowed access</div>
+          <div class="flex justify-center align-items-center">
+            <button data-action="click->connectors--direct_connector_process#send_two_factor" class="text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Confirm Access</button>
+          </div>
+        </div>
+        <div class="flex justify-center align-items-center progress-message text-sm hidden" id="received_connector_prompt">Recieved Two Factor</div>
+        <div class="flex justify-center align-items-center progress-message text-sm hidden" id="login_complete">Login is successful</div>
+      </div>
+      <!-- Modal footer -->
+      <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b justify-end justify-items-center">
+        <button data-action="click->connectors--direct_connector_process#close_modal" type="button" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 ">Decline</button>
+      </div>
+    <%- else %>
+      <%= form_with(method: 'post', model: @connector, url: connectors_path(bank: params[:bank], mode: 'login')) do |f| %>
+        <div id="form" aria-description="body" class="p-4 text-sm">
+          <%- if @connector.errors.any? %>
+            <div class="form-errors p-2 mb-4 text-sm text-red-800 rounded-lg bg-red-50">
+              <ul>
+                <% @connector.errors.each do |error| %>
+                  <li class="ml-4"><%= error.full_message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <%- end %>
+          <div class="mb-4">
+            <%= f.label :username, 'Your Bank Username', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+            <%= f.text_field :username, autofocus: true, autocomplete: "username", placeholder: 'name@company.com', class: 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5' %>
+          </div>
+          <div class="mb-4">
+            <%= f.label :password, 'Your Bank Password', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+            <%= f.password_field :password, autocomplete: "password", placeholder: '••••••••', class: 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5' %>
+          </div>
+          <div class="mb-4">
+            <%= f.radio_button :auth_type, "persisted", class: 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300' %>
+            <%= f.label :auth_type_persisted, "I want to save my credentials for future use", class: 'ms-2 text-sm font-medium text-gray-900 ' %>
+          </div>
+          <div class="mb-0">
+            <%= f.radio_button :auth_type, "transient", class: 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300' %>
+            <%= f.label :auth_type_transient, "I don't wany my credentials saved", class: 'ms-2 text-sm font-medium text-gray-900 ' %>
+          </div>
+          <%= f.hidden_field :auth_method, value: "direct" %>
+        </div>
+        <div class="flex items-center p-4 border-t border-gray-200 rounded-b justify-end justify-items-center">
+          <button data-action="click->connectors--new_direct_connector#close_modal" type="button" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 ">Decline</button>
+          <%= f.submit "Connect", class: 'cursor-pointer ms-3 text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center' %>
+        </div>
+      <%- end %>
+    <%- end %>
+  </div>
+</div>

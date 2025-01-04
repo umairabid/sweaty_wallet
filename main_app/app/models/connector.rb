@@ -30,6 +30,8 @@ class Connector < ApplicationRecord
 
   validates :bank, presence: true
   validates :auth_type, presence: true
+  validates :username, presence: true, if: -> { auth_method == "direct" }
+  validates :password, presence: true, if: -> { auth_method == "direct" }
 
   def bank_name
     BANKS_CONFIG[bank][:name]

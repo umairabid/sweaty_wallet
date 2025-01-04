@@ -3,8 +3,6 @@ import consumer from "channels/consumer"
 
 export default class extends Controller {
   connect() {
-    const form = document.getElementById("new_connector_form")
-    form.classList.add("hidden")
     const sub = this.get_subscription()
   }
 

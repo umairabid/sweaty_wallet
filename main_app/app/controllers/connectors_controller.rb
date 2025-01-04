@@ -1,8 +1,6 @@
 class ConnectorsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: %i[import]
-  before_action :set_connector, only: [:show]
-  before_action :set_bank_name, only: [:show]
-  before_action :set_user_references, only: %i[new index]
+  before_action :set_user_references, only: %i[new index create]
 
   def import
     parameters = params.slice(:accounts, :bank).to_unsafe_hash
@@ -23,12 +21,34 @@ class ConnectorsController < ApplicationController
   def new
     @bank = bank
     @mode = params[:mode]
+    @connector = current_user.connectors.find_or_initialize_by(bank: @bank)
+    locals = { bank: @bank, mode: @mode, connector: @connector, start_direct_process: false }
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(:new_connector, template: "connectors/new")
+        render turbo_stream: turbo_stream.replace(:new_connector, template: "connectors/new", locals: locals)
       end
 
-      format.html { render :new }
+      format.html { render :new, locals: locals }
+    end
+  end
+
+  def create
+    @connector = current_user.connectors.find_or_initialize_by(bank: bank)
+    @connector.assign_attributes(connector_params)
+    @connector.save
+    if @connector.valid?
+      ConnectBankJob.perform_later(@connector)
+    end
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(:new_connector, template: "connectors/new", locals: {
+                                                                    connector: @connector,
+                                                                    bank: bank,
+                                                                    mode: params[:mode],
+                                                                    start_direct_process: @connector.save,
+                                                                  })
+      end
     end
   end
 
@@ -41,18 +61,6 @@ class ConnectorsController < ApplicationController
       format.html { render :new_direct }
     end
   end
-
-  def new_extension
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(:new_connector, template: "connectors/new_extension")
-      end
-
-      format.html { render :new_extension }
-    end
-  end
-
-  def show; end
 
   def create_direct
     render_lambda = lambda {
@@ -75,25 +83,7 @@ class ConnectorsController < ApplicationController
     params[:bank]
   end
 
-  def set_bank_name
-    @bank_name = Connector::BANKS_CONFIG[bank][:name]
-  end
-
-  def set_connector
-    raise NotFound unless valid_bank?
-
-    @connector = Connector.find_by(bank: bank, user: current_user) ||
-                 Connector.new(user: current_user, bank: bank)
-  end
-
-  def valid_bank?
-    Connector.banks.keys.include? bank
-  end
-
   def connector_params
-    params.require(:connector)
-          .permit(:username, :password, :auth_type)
-          .to_h
-          .merge!({ bank: bank, user_id: @connector.user_id })
+    params.require(:connector).permit(:auth_type, :username, :password, :two_factor_key, :auth_method)
   end
 end

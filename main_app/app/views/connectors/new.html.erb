@@ -4,11 +4,13 @@
   aria-hidden="true"
   class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
   data-controller="connectors--new">
-  <%- if @mode.blank?  %>
+  <%- if mode.blank?  %>
     <%= render 'connectors/options/select' %>
-  <%- elsif @mode == 'import' %>
+  <%- elsif mode == 'import' %>
     <%= render 'connectors/options/import' %>
-  <%- else %>
+  <%- elsif mode == 'extension' %>
     <%= render 'connectors/options/extension' %>
+  <%- elsif mode == 'login' %>
+    <%= render 'connectors/options/login', start_direct_process: start_direct_process %>
   <%- end %>
 </div>
