@@ -2,14 +2,14 @@
   id="transaction_row_<%= transaction.id %>"
   data-controller="transactions--row"
   data-transaction_id="<%= transaction.id %>"
-  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+  class="">
   <td class="px-6 py-4">
     <%= transaction.date %>
   </td>
-  <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+  <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
     <%= transaction.description %>
   </td>
-  <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+  <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
     <%= transaction.category&.name || 'Uncategorized' %>
   </td>
   <td class="px-6 py-4">
