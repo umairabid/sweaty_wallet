@@ -1,7 +1,11 @@
 <div class="sm:flex">
   <div class="mb-3 hidden items-center dark:divide-gray-700 sm:mb-0 sm:flex sm:divide-gray-100">
     <%= form_for :filter, url: transactions_path, method: :get do |f| %>
-      <%= f.text_field :query, placeholder: 'Search for transactions', class: 'block w-full border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 rounded-lg p-2.5 text-sm' %>
+      <div class="p-2 py-1.5 flex border border-gray-300 rounded-lg">
+        <%= render 'icons/search' %>
+        <%= f.text_field :query, placeholder: 'Search for transactions', class: 'text-sm border-0 p-0 pl-2 focus:ring-0 w-52' %>
+      </div>
+
       <input type="hidden" name="page" value="1">
       <div id="advance-search-drawer"  class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80">
         <h5 id="drawer-label" class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase">Search Transactions</h5>
@@ -40,22 +44,23 @@
       </div>
     <% end %>
     <div class="mt-3 flex space-x-1 pl-0 sm:mt-0 sm:pl-2">
-      <button data-action="click->transactions--index#open_search" class="inline-flex cursor-pointer justify-center rounded p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-900">
-        <span class="sr-only">Configure</span>
-        <%= render 'icons/gear' %>
+      <button data-action="click->transactions--index#open_search" class="flex border border-gray-300 p-2 py-1.5 rounded-lg text-sm text-gray-500 items-center justify-center">
+        <%= render 'icons/filter' %>
+        <span class="pl-1">Filters</span>
       </button>
     </div>
   </div>
   <div class="ml-auto flex items-center space-x-2 sm:space-x-3">
-    <button class="text-white bg-primary-700 hover:bg-primary-800 p-0 font-medium rounded-lg" type="button">
-            <span class="flex items-center rounded-md text-sm px-3 py-2">
-              <div class="flex items-center gap-x-3"><%= render 'icons/plus' %> Add Transaction</div>
-            </span>
+    <button data-action="click->transactions--index#open_search" class="flex border border-gray-300 p-2 py-1.5 rounded-lg text-sm text-gray-500 items-center justify-center">
+      <%= render 'icons/columns' %>
     </button>
-    <a href="<%= export_transactions_path(filter: (params[:filter] ? params[:filter].to_unsafe_h : {})) %>" data-turbo-stream class="text-gray-900 bg-white border border-gray-200 hover:bg-gray-100 hover:text-blue-700 disabled:hover:bg-white p-0 font-medium rounded-lg" type="button">
-            <span class="flex items-center rounded-md text-sm px-3 py-2">
-              <div class="flex items-center gap-x-3"><%= render 'icons/export' %> Export</div>
-            </span>
+    <button data-action="click->transactions--index#open_search" class="flex p-2 py-1.5 rounded-lg text-sm text-white bg-primary-700 items-center justify-center">
+      <%= render 'icons/plus' %>
+      <span class="pl-1">Add Transaction</span>
+    </button>
+    <a href="<%= export_transactions_path(filter: (params[:filter] ? params[:filter].to_unsafe_h : {})) %>" data-turbo-stream class="flex border border-gray-300 p-2 py-1.5 rounded-lg text-sm text-gray-500 items-center justify-center" type="button">
+      <%= render 'icons/export' %>
+      <span class="pl-1">Export</span>
     </a>
   </div>
 </div>

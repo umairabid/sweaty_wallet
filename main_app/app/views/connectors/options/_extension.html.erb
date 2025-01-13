@@ -25,12 +25,12 @@
     <div id="process" aria-description="body" class="p-4 pt-2 text-sm hidden">
       <%= render 'helpers/spinner', hide: false %>
       <div id="progress-messages">
-        <div class="p-4 text-sm text-blue-800 rounded-lg bg-blue-50 flex justify-center align-items-center progress-message text-sm" id="initiating">Connecting with extension</div>
-        <div class="p-4 text-sm text-blue-800 rounded-lg bg-blue-50 flex justify-center align-items-center progress-message text-sm hidden" id="installed">Connected with extension, connecting to Bank</div>
-        <div class="p-4 text-sm text-blue-800 rounded-lg bg-blue-50 flex justify-center align-items-center progress-message text-sm hidden" id="found_bank">We are connected to Bank, pulling your accounts</div>
-        <div class="p-4 text-sm text-blue-800 rounded-lg bg-blue-50 flex justify-center align-items-center progress-message text-sm hidden" id="pulled_accounts">We have pulled your accounts, pulling transactions</div>
-        <div class="p-4 text-sm text-blue-800 rounded-lg bg-blue-50 flex justify-center align-items-center progress-message text-sm hidden" id="pulled_transactions">We have pulled your transactions, syncing your data</div>
-        <div class="p-4 mt-4 text-sm text-green-800 rounded-lg bg-green-50 flex justify-center align-items-center progress-message text-sm hidden" id="synced_accounts">Your transactions are imported successfully</div>
+        <div class="p-4 text-sm text-blue-800 rounded-lg bg-blue-50 flex justify-center progress-message text-sm" id="initiating">Connecting with extension</div>
+        <div class="p-4 text-sm text-blue-800 rounded-lg bg-blue-50 flex justify-center progress-message text-sm hidden" id="installed">Connected with extension, connecting to Bank</div>
+        <div class="p-4 text-sm text-blue-800 rounded-lg bg-blue-50 flex justify-centerprogress-message text-sm hidden" id="found_bank">We are connected to Bank, pulling your accounts</div>
+        <div class="p-4 text-sm text-blue-800 rounded-lg bg-blue-50 flex justify-center progress-message text-sm hidden" id="pulled_accounts">We have pulled your accounts, pulling transactions</div>
+        <div class="p-4 text-sm text-blue-800 rounded-lg bg-blue-50 flex justify-center progress-message text-sm hidden" id="pulled_transactions">We have pulled your transactions, syncing your data</div>
+        <div class="p-4 mt-4 text-sm text-green-800 rounded-lg bg-green-50 flex justify-center progress-message text-sm hidden" id="synced_accounts">Your transactions are imported successfully</div>
       </div>
       <div id="error-messages" class="p-4 text-sm text-red-800 rounded-lg bg-red-50 hidden" role="alert">
         <div class="error-message font-medium" id="chrome_unavailable">We need chrome browser to connect.</div>
