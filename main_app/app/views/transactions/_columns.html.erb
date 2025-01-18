@@ -1,0 +1,22 @@
+<div id="select_columns_modal" 
+    tabindex="-1"
+    aria-hidden="true"
+    class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full overflow-y-auto overflow-x-hidden p-4 md:inset-0"
+>
+  <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+    <div aria-description="header" class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+      <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+        Select Columns
+      </h3>
+      <button data-action="click->transactions--index#close_columns_modal" type="button" class="text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+        <%= render "icons/cross" %>
+        <span class="sr-only">Close modal</span>
+      </button>
+    </div>
+    <div aria-description="body" class="p-4 md:p-5 space-y-4">
+    </div>
+    <div aria-description="footer" class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b justify-end justify-items-center">
+      <button data-action="click->transactions--index#close_columns_modal" type="button" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 ">Decline</button>
+    </div>
+  </div>
+</div>

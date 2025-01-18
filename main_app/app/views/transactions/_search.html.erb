@@ -1,0 +1,42 @@
+<%= form_for :filter, url: transactions_path, method: :get do |f| %>
+  <div class="p-2 py-1.5 flex border border-gray-300 rounded-lg">
+    <%= render 'icons/search' %>
+    <%= f.text_field :query, placeholder: 'Search for transactions', class: 'text-sm border-0 p-0 pl-2 focus:ring-0 w-52' %>
+  </div>
+  <input type="hidden" name="page" value="1">
+  <div id="advance-search-drawer"  class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80">
+    <h5 id="drawer-label" class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase">Search Transactions</h5>
+    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center" >
+      <%= render "icons/cross" %>
+      <span class="sr-only">Close menu</span>
+    </button>
+    <div class="mb-6">
+      <%= f.label :time_range, 'Time Range', class: 'block mb-2 text-sm font-medium text-gray-900' %>
+      <%= f.select :time_range, @filter.selects[:time_ranges], {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+    </div>
+    <div class="mb-6">
+      <%= f.label :account_type, 'Account Type', class: 'block mb-2 text-sm font-medium text-gray-900' %>
+      <%= f.select :account_type, @filter.selects[:account_types], {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+    </div>
+    <div class="mb-6">
+      <%= f.label :account_id, 'Account', class: 'block mb-2 text-sm font-medium text-gray-900' %>
+      <%= f.select :account_id, @filter.selects[:accounts], {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+    </div>
+    <div class="mb-6">
+      <%= f.label :bank, 'Bank', class: 'block mb-2 text-sm font-medium text-gray-900' %>
+      <%= f.select :bank, @filter.selects[:banks], {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+    </div>
+    <div class="mb-6">
+      <%= f.label :type, 'Type', class: 'block mb-2 text-sm font-medium text-gray-900' %>
+      <%= f.select :type,@filter.selects[:types], {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+    </div>
+    <div class="mb-6">
+      <%= f.label :categories, 'Category', class: 'block mb-2 text-sm font-medium text-gray-900' %>
+      <%= f.select :categories, @filter.selects[:categories], {}, multiple: true, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+    </div>
+    <div class="flex items-center justify-end">
+      <button type="button" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 ">Decline</button>
+      <%= f.submit "Apply", class: 'cursor-pointer ms-3 text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center' %>
+    </div>
+  </div>
+<% end %>
