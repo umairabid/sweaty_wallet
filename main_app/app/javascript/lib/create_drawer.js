@@ -26,5 +26,11 @@ export default function create_drawer(elem_id) {
     override: true,
   }
 
+  const current_instance = FlowbiteInstances.getInstance('Drawer', elem_id)
+  
+  if (current_instance) {
+    current_instance.removeInstance();
+  } 
+
   return new Drawer($targetEl, options, instanceOptions)
 }

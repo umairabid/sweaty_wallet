@@ -1,7 +1,7 @@
-import { Controller } from "@hotwired/stimulus";
+import BaseController from "../base_controller"
 import create_modal from "lib/create_modal";
 
-export default class extends Controller {
+export default class extends BaseController {
   connect() {
     this.get_modal().show();
     this.on_bank_change = this.on_bank_change.bind(this);

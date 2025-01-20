@@ -1,6 +1,6 @@
-import { Controller } from "@hotwired/stimulus"
+import BaseController from "../base_controller"
 
-export default class extends Controller {
+export default class extends BaseController {
   connect() {
     this.rule_dropdown().onchange = (e) => {
       Turbo.visit(`/transaction_rules/${e.target.value}/preview`);

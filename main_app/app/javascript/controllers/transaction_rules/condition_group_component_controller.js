@@ -1,6 +1,6 @@
-import { Controller } from "@hotwired/stimulus"
+import BaseController from "../base_controller"
 
-export default class extends Controller {
+export default class extends BaseController {
   connect() {
     this.group_id = this.element.dataset.group_id
   }

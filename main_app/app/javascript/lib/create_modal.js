@@ -21,6 +21,11 @@ export default function create_modal(elem_id) {
     id: elem_id,
     override: true,
   }
-
+  
+  const current_instance = FlowbiteInstances.getInstance('Modal', elem_id)
+  
+  if (current_instance) {
+    current_instance.removeInstance();
+  } 
   return new Modal($targetEl, options, instanceOptions)
 }

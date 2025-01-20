@@ -1,8 +1,8 @@
-import { Controller } from "@hotwired/stimulus"
+import BaseController from "../base_controller"
 import create_drawer from "lib/create_drawer"
 import create_modal from "lib/create_modal"
 
-export default class extends Controller {
+export default class extends BaseController {
   connect() {
     this.init_search_drawer()
     this.init_columns_modal()
@@ -10,6 +10,10 @@ export default class extends Controller {
 
   open_search() {
     this.advance_search_drawer.show()
+  }
+
+  close_search() {
+    this.advance_search_drawer.hide()
   }
 
   init_search_drawer() {

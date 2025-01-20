@@ -1,8 +1,8 @@
-import { Controller } from "@hotwired/stimulus";
+import BaseController from "../base_controller"
 import ConnectorExtension from "lib/connector_extension"
 import handle_message from "lib/handle_message"
 
-export default class extends Controller {
+export default class extends BaseController {
   connect() {
     this.handle_success = this.handle_success.bind(this)
     this.handle_error = this.handle_error.bind(this)

@@ -1,5 +1,6 @@
 class TransactionsController < ApplicationController
   before_action :set_filter, only: %i[index]
+  before_action :set_columns, only: %i[index update]
   before_action :set_repository, only: %i[index]
   before_action :set_user_references, only: %i[index update]
   before_action :set_transaction, only: %i[update]
@@ -30,7 +31,7 @@ class TransactionsController < ApplicationController
         render turbo_stream: turbo_stream.replace(
           "transaction_row_#{@transaction.id}",
           partial: "transactions/transaction_row",
-          locals: { transaction: @transaction, references: @user_references },
+          locals: { transaction: @transaction, references: @user_references, columns: @columns },
         )
       end
     end
@@ -52,5 +53,11 @@ class TransactionsController < ApplicationController
 
   def transaction_params
     params.require(:transaction).permit(:category_id, :date, :description, :amount, :is_credit)
+  end
+
+  def set_columns
+    default_columns = Transaction::COLUMNS.transform_values { |v| "1" }
+    @columns = params[:columns] ? params[:columns].to_unsafe_hash : default_columns
+    puts @columns.inspect
   end
 end

@@ -1,7 +1,7 @@
-import { Controller } from "@hotwired/stimulus"
+import BaseController from "../base_controller"
 import create_drawer from "lib/create_drawer"
 
-export default class extends Controller {
+export default class extends BaseController {
   connect() {
     this.open_drawer()
   }
