@@ -1,4 +1,4 @@
-import BaseController from "../base_controller"
+import BaseController from "controllers/base_controller"
 import create_drawer from "lib/create_drawer"
 
 export default class extends BaseController {

@@ -1,4 +1,4 @@
-import BaseController from "../base_controller"
+import BaseController from "controllers/base_controller"
 import ConnectorExtension from "lib/connector_extension"
 import handle_message from "lib/handle_message"
 

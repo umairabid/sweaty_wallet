@@ -1,4 +1,4 @@
-import BaseController from "../base_controller"
+import BaseController from "controllers/base_controller"
 import create_modal from "lib/create_modal";
 
 export default class extends BaseController {

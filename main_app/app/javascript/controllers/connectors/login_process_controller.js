@@ -1,4 +1,4 @@
-import BaseController from "../base_controller"
+import BaseController from "controllers/base_controller"
 import consumer from "channels/consumer"
 
 export default class extends BaseController {

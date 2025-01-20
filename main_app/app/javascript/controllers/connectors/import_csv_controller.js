@@ -1,4 +1,4 @@
-import BaseController from "../base_controller"
+import BaseController from "controllers/base_controller"
 import Dropzone from "dropzone";
 import consumer from "channels/consumer";
 import handle_message from "../../lib/handle_message";
