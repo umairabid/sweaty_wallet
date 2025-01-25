@@ -56,7 +56,7 @@ class TransactionsController < ApplicationController
   end
 
   def set_columns
-    default_columns = Transaction::COLUMNS.transform_values { |v| "1" }
+    default_columns = Transaction::DEFAULT_COLUMNS.map { |k| [k, "1"] }.to_h
     @columns = params[:columns] ? params[:columns].to_unsafe_hash : default_columns
     puts @columns.inspect
   end

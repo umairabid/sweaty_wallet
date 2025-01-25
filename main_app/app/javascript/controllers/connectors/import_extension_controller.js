@@ -31,6 +31,7 @@ export default class extends BaseController {
   }
 
   handle_success(data) {
+    handle_message("error-message")
     handle_message("progress-message", data.status)
   }
 

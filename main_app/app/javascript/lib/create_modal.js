@@ -8,12 +8,10 @@ export default function create_modal(elem_id) {
     backdropClasses: "bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40",
     closable: true,
     onHide: () => {
-      
+      console.log("hide")
     },
     onShow: () => {},
-    onToggle: () => {
-      
-    },
+    onToggle: () => {},
   }
 
   // instance options object
@@ -25,7 +23,12 @@ export default function create_modal(elem_id) {
   const current_instance = FlowbiteInstances.getInstance('Modal', elem_id)
   
   if (current_instance) {
-    current_instance.removeInstance();
+    if (document.querySelector('[modal-backdrop]')) {
+      current_instance.destroyAndRemoveInstance();
+    } else {
+      current_instance.removeInstance();
+    }
+    
   } 
   return new Modal($targetEl, options, instanceOptions)
 }

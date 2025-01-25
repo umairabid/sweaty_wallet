@@ -81,7 +81,7 @@ port.onMessage.addListener((msg) => {
     req.addEventListener("load", reqAccountsListener)
     req.open(
       "GET",
-      `https://www1.royalbank.com/sgw5/omniapi/product-summary-presentation-service-v3/v3/accountListSummary?timestamp=${new Date().getTime()}`,
+      `https://www1.royalbank.com/sgw5/digital/product-summary-presentation-service-v3/v3/accountListSummary?timestamp=${new Date().getTime()}`,
     )
 
     return req.send()
@@ -94,7 +94,7 @@ port.onMessage.addListener((msg) => {
       port.postMessage({ name: msg.name, params: transactions })
     }
     const req = new XMLHttpRequest()
-    const url = `https://www1.royalbank.com/sgw5/omniapi/transaction-presentation-service-v3-dbb/v3/search/pda/account/${msg.params.encrypted_identifier}`
+    const url = `https://www1.royalbank.com/sgw5/digital/transaction-presentation-service-v3-dbb/v3/search/pda/account/${msg.params.encrypted_identifier}`
     req.open("POST", url)
     req.setRequestHeader("X-Xsrf-Token", getCookie("XSRF-TOKEN"))
     req.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
@@ -116,7 +116,7 @@ port.onMessage.addListener((msg) => {
       port.postMessage({ name: msg.name, params: transactions })
     }
     const req = new XMLHttpRequest()
-    const url = `https://www1.royalbank.com/sgw5/omniapi/transaction-presentation-service-v3-dbb/v3/search/cc/posted/account/${msg.params.encrypted_identifier}`
+    const url = `https://www1.royalbank.com/sgw5/digital/transaction-presentation-service-v3-dbb/v3/search/cc/posted/account/${msg.params.encrypted_identifier}`
     req.open("POST", url)
     req.setRequestHeader("X-Xsrf-Token", getCookie("XSRF-TOKEN"))
     req.setRequestHeader("Content-Type", "application/json;charset=UTF-8")

@@ -10,6 +10,9 @@ class Transaction < ApplicationRecord
     "account_name" => { label: "Account", value: ->(t) { t.account.name } },
     "bank_name" => { label: "Bank", value: ->(t) { t.account.connector.bank_name } },
   }
+
+  DEFAULT_COLUMNS = %w(date description amount type category_name account_name)
+
   belongs_to :account
   belongs_to :category, optional: true
 
