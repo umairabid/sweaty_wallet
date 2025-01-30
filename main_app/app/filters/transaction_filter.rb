@@ -20,7 +20,7 @@ class TransactionFilter
     @account_type = params[:account_type] || ""
     @type = params[:type] || ""
     @account_id = params[:account_id] || ""
-    @show_duplicates = params[:show_duplicates]
+    @show_duplicates = params[:show_duplicates] == "1"
     set_select_options
   end
 
