@@ -24,7 +24,7 @@ function creditCardTransactionPromise(accountId, cycle) {
     function reqCreditCardListener() {
       const response = JSON.parse(this.responseText)
       const mapTransactionFunc = mapTransaction.bind(null, accountId)
-      const transactions = response.transactions.posted.map(mapTransactionFunc)
+      const transactions = (response.transactions.posted || []).map(mapTransactionFunc)
       resolve(transactions)
     }
 

@@ -11,9 +11,14 @@
     <%- end %>
   <%- end %>
   <td class="p-4 py-2">
-    <button class="px-5 py-2.5 mb-2" type="button" data-action="click->transactions--row#open_drawer">
-      <%= render 'icons/edit' %>
-    </button>
+    <div class="flex">
+      <button class="py-2" type="button" data-action="click->transactions--row#open_drawer">
+        <%= render 'icons/edit' %>
+      </button>
+      <%= link_to transaction_path(transaction, request.query_parameters), class: 'py-2', data: { turbo_method: :delete, turbo_confirm: "Are you sure?", turbo_action: "replace" } do %>
+        <%= render 'icons/delete' %>
+      <% end %>
+    </div>
     <!-- drawer component -->
     <div id="drawer-transaction-form-<%= transaction.id %>" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80">
       <h5 id="drawer-label" class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase">Update Transaction</h5>

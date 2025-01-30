@@ -3,7 +3,7 @@ class TransactionsController < ApplicationController
   before_action :set_columns, only: %i[index update]
   before_action :set_repository, only: %i[index]
   before_action :set_user_references, only: %i[index update]
-  before_action :set_transaction, only: %i[update]
+  before_action :set_transaction, only: %i[update destroy]
 
   def index
     scope = @repo.fetch_by_filters @filter
@@ -35,6 +35,12 @@ class TransactionsController < ApplicationController
         )
       end
     end
+  end
+
+  def destroy
+    @transaction.soft_delete
+    redirect_params = params.to_unsafe_hash
+    redirect_to transactions_path(filter: redirect_params[:filter], columns: redirect_params[:columns], page: redirect_params[:page])
   end
 
   private

@@ -6,7 +6,8 @@ class TransactionFilter
               :bank,
               :type,
               :account_id,
-              :selects
+              :selects,
+              :show_duplicates
 
   FILTERABLE_ACCOUT_TYPES = [:credit_card, :deposit_account]
 
@@ -19,6 +20,7 @@ class TransactionFilter
     @account_type = params[:account_type] || ""
     @type = params[:type] || ""
     @account_id = params[:account_id] || ""
+    @show_duplicates = params[:show_duplicates]
     set_select_options
   end
 

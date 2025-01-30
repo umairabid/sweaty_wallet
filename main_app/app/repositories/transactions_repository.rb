@@ -39,6 +39,20 @@ class TransactionsRepository
       scope = scope.where(category_id: categories) unless categories.empty?
     end
 
+    if filter.has? :show_duplicates
+      duplicate_scope = @base_scope
+        .select(:date, :description, :amount, :is_credit, :account_id)
+        .group(:date, :description, :amount, :is_credit, :account_id)
+        .having("count(*) > 1")
+        .pluck(:date, :description, :amount, :is_credit, :account_id)
+
+      scope = scope.where(date: duplicate_scope.map { |d| d[0] })
+        .where(description: duplicate_scope.map { |d| d[1] })
+        .where(amount: duplicate_scope.map { |d| d[2] })
+        .where(is_credit: duplicate_scope.map { |d| d[3] })
+        .where(account_id: duplicate_scope.map { |d| d[4] })
+    end
+
     scope = scope.order(date: :desc).preload(account: :connector)
   end
 end
