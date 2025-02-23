@@ -18,5 +18,14 @@ RSpec.describe TransactionsController, type: :controller do
         get :index
       end
     end
+
+    context "post #create" do
+      let(:transaction) { build(:transaction, account: account) }
+      it "creates transaction" do
+        expect {
+          post :create, params: { transaction: transaction.as_json }
+        }.to change { Transaction.count }.by(1)
+      end
+    end
   end
 end

@@ -25,7 +25,7 @@ class TransactionsController < ApplicationController
   end
 
   def update
-    @transaction.update!(transaction_params)
+    @transaction.update!(update_params)
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
@@ -35,6 +35,13 @@ class TransactionsController < ApplicationController
         )
       end
     end
+  end
+
+  def create
+    account = current_user.accounts.find(create_params[:account_id])
+
+    @transaction = account.transactions.create!(create_params.merge(external_id: SecureRandom.uuid))
+    redirect_to transactions_path
   end
 
   def destroy
@@ -57,8 +64,12 @@ class TransactionsController < ApplicationController
     @transaction = current_user.transactions.find(params[:id])
   end
 
-  def transaction_params
+  def update_params
     params.require(:transaction).permit(:category_id, :date, :description, :amount, :is_credit)
+  end
+
+  def create_params
+    params.require(:transaction).permit(:category_id, :date, :description, :amount, :is_credit, :account_id)
   end
 
   def set_columns

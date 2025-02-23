@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 
   resources :accounts, only: %i[index update]
 
-  resources :transactions, only: %i[index update edit destroy] do
+  resources :transactions do
     collection do
       get :export
     end

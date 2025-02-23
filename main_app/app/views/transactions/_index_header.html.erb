@@ -12,7 +12,7 @@
     <button data-action="click->transactions--index#open_columns_modal" class="flex border border-gray-300 p-2 py-1.5 rounded-lg text-sm text-gray-500 items-center justify-center">
       <%= render 'icons/columns' %>
     </button>
-    <button data-action="click->transactions--index#open_search" class="flex p-2 py-1.5 rounded-lg text-sm text-white bg-primary-700 items-center justify-center">
+    <button data-action="click->transactions--index#open_add_drawer" class="flex p-2 py-1.5 rounded-lg text-sm text-white bg-primary-700 items-center justify-center">
       <%= render 'icons/plus' %>
       <span class="pl-1">Add Transaction</span>
     </button>
@@ -22,4 +22,5 @@
     </a>
   </div>
   <%= render "transactions/columns" %>
+  <%= render "transactions/new" %>
 </div>
