@@ -1,4 +1,4 @@
-class ConditionComponent < ViewComponent::Base
+class TransactionRules::ConditionComponent < ViewComponent::Base
   with_collection_parameter :condition
 
   CONDITION_TYPES = {

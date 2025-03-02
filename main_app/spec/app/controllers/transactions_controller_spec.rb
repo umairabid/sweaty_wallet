@@ -13,8 +13,7 @@ RSpec.describe TransactionsController, type: :controller do
 
     context "get #index" do
       it "performs filter" do
-        expect(TransactionFilter).to receive(:new)
-        expect(TransactionsRepository).to receive(:new).and_return(double(TransactionsRepository, fetch_by_filters: user.transactions))
+        expect(TransactionFilter).to receive(:new).and_return(double(TransactionsRepository, apply: user.transactions))
         get :index
       end
     end

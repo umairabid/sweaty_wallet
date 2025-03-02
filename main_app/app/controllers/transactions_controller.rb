@@ -1,12 +1,11 @@
 class TransactionsController < ApplicationController
   before_action :set_filter, only: %i[index]
   before_action :set_columns, only: %i[index update]
-  before_action :set_repository, only: %i[index]
   before_action :set_user_references, only: %i[index update]
   before_action :set_transaction, only: %i[update destroy]
 
   def index
-    scope = @repo.fetch_by_filters @filter
+    scope = @filter.apply(current_user.transactions)
     @transactions = set_page_and_extract_portion_from scope
   end
 
@@ -56,10 +55,6 @@ class TransactionsController < ApplicationController
     @filter = TransactionFilter.new(current_user, params[:filter] || {})
   end
 
-  def set_repository
-    @repo = TransactionsRepository.new(current_user.transactions)
-  end
-
   def set_transaction
     @transaction = current_user.transactions.find(params[:id])
   end
@@ -75,6 +70,5 @@ class TransactionsController < ApplicationController
   def set_columns
     default_columns = Transaction::DEFAULT_COLUMNS.map { |k| [k, "1"] }.to_h
     @columns = params[:columns] ? params[:columns].to_unsafe_hash : default_columns
-    puts @columns.inspect
   end
 end

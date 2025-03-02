@@ -3,7 +3,7 @@
   data-controller="transaction_rules--condition_group_component">
   <div class="text-gray-900 text-sm w-full rounded-lg overflow-hidden">
     <%- (@group['conditions'] || []).each_with_index do |condition, index| %>
-      <%= render(ConditionComponent.new(
+      <%= render(TransactionRules::ConditionComponent.new(
         group_id: @group['id'],
         index: index,
         condition: condition, 

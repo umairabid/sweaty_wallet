@@ -1,7 +1,7 @@
-class ConditionGroupComponent < ViewComponent::Base
+class TransactionRules::ConditionGroupComponent < ViewComponent::Base
   Condition = Struct.new(:join_by, :type, :value, :edges)
 
-  CONDITION_TYPE_OPTIONS = [["Select Condition", ""]] + ConditionComponent::CONDITION_TYPES.keys.map { |k| [k.to_s.humanize, k] }
+  CONDITION_TYPE_OPTIONS = [["Select Condition", ""]] + TransactionRules::ConditionComponent::CONDITION_TYPES.keys.map { |k| [k.to_s.humanize, k] }
 
   def initialize(group:, references:, level: 0)
     @references = references
@@ -12,7 +12,7 @@ class ConditionGroupComponent < ViewComponent::Base
   end
 
   def condition_options
-    all_conditions = ConditionComponent::CONDITION_TYPES.keys.map { |k| [k.to_s.humanize, k] }
+    all_conditions = TransactionRules::ConditionComponent::CONDITION_TYPES.keys.map { |k| [k.to_s.humanize, k] }
     if @group["id"].blank? || @level > 0
       all_conditions = all_conditions.select { |k| k[1] != :group }
     end

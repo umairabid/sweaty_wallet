@@ -29,7 +29,7 @@
       <div class="pr-2 py-2 uppercase"><%= @condition['join_by'] %></div>
     <%- end %>
     <div class="flex-1">
-      <%= render(ConditionGroupComponent.new(group: @condition, references: @references, level: 1)) %>
+      <%= render(TransactionRules::ConditionGroupComponent.new(group: @condition, references: @references, level: 1)) %>
     </div>
   </div>
 <%- end %>
