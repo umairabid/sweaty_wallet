@@ -1,6 +1,6 @@
 function mapTransaction(account_id, transaction) {
   const is_debit = !!transaction.debit
-  const date = transaction.postedDt
+  const date = transaction.postedDt || transaction.transactionDt
   const type = is_debit ? "debit" : "credit"
   const amount = is_debit ? transaction.debit.amt : transaction.credit.amt
   const description = transaction.transactionDesc

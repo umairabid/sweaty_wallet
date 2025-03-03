@@ -1,4 +1,5 @@
 
 <div id="dashboard-page" class="p-2 bg-white">
+  <div class="p-4">Select Month</div>
   <%= render(Widgets::MonthTimeseriesComponent.new(current_user, Time.zone.now.to_date - 1.month)) %>
 </div>

@@ -16,10 +16,8 @@ class Imports::ImportTransactions
 
   def new_transaction_params
     @t_params
-      .select do |t|
-      !existing_transactions_by_external_id[t[:external_id]] &&
-        !existing_transactions_by_secondary_external_id[t[:secondary_external_id]]
-    end
+      .select { |t| existing_transactions_by_external_id[t[:external_id]].blank? }
+      .select { |t| !(t[:secondary_external_id].present? && existing_transactions_by_secondary_external_id[t[:secondary_external_id].present?]) }
       .map do |t|
       amount = t[:amount].class == String ? t[:amount].tr(",", "").to_d : t[:amount]
 
@@ -38,14 +36,18 @@ class Imports::ImportTransactions
   def existing_transactions_by_external_id
     @existing_transactions_by_external_id ||= begin
         external_ids = @t_params.map { |t| t[:external_id] }
-        @account.transactions.where(external_id: external_ids).index_by(&:external_id)
+        @account.transactions.unscoped.where(external_id: external_ids)
+          .map { |t| [t.external_id, t.id] }
+          .to_h
       end
   end
 
   def existing_transactions_by_secondary_external_id
     @existing_transactions_by_secondary_external_id ||= begin
         secondary_external_ids = @t_params.map { |t| t[:secondary_external_id] }.compact!
-        @account.transactions.where(secondary_external_id: secondary_external_ids).index_by(&:secondary_external_id)
+        @account.transactions.unscoped.where(secondary_external_id: secondary_external_ids)
+          .map { |t| [t.secondary_external_id, t.id] }
+          .to_h
       end
   end
 end

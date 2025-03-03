@@ -13,14 +13,20 @@ function fromDate() {
 
 function mapTransaction(account_id, transaction) {
   const is_debit = !!transaction.withdrawalAmt
+  const date = transaction.date
+  const type = is_debit ? "debit" : "credit"
+  const amount = is_debit ? transaction.withdrawalAmt : transaction.depositAmt
+  const description = transaction.description
+  const balance = transaction.accountBalance
+  const secondary_external_id = `${date}-${description}-${type}-${amount}-${balance}`.replace(/ /g, "")
   return {
     external_id: transaction.transactionId,
-    secondary_external_id: '',
+    secondary_external_id: secondary_external_id,
     external_account_id: account_id,
-    description: transaction.description,
-    date: transaction.date,
-    type: is_debit ? "debit" : "credit",
-    amount: is_debit ? transaction.withdrawalAmt : transaction.depositAmt,
+    description: description,
+    date: date,
+    type: type,
+    amount: amount,
     external_object: transaction
   }
 }
