@@ -1,6 +1,6 @@
 import BaseController from "controllers/base_controller";
 import * as d3 from "d3";
-import element_available_width from "../../lib/element_available_width";
+import element_available_width from "lib/element_available_width";
 
 export default class extends BaseController {
   connect() {

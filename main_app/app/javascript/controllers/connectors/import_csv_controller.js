@@ -1,7 +1,7 @@
 import BaseController from "controllers/base_controller"
 import Dropzone from "dropzone";
 import consumer from "channels/consumer";
-import handle_message from "../../lib/handle_message";
+import handle_message from "lib/handle_message";
 
 export default class extends BaseController {
   connect() {
