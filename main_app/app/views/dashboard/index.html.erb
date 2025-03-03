@@ -1,4 +1,4 @@
 
-<div class="px-4 pt-6">
-  <div class="p-4 bg-white  border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800"> Hello World </div>
+<div id="dashboard-page" class="p-2 bg-white">
+  <%= render(Widgets::MonthTimeseriesComponent.new(current_user, Time.zone.now.to_date - 1.month)) %>
 </div>

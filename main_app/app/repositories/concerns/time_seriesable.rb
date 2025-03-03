@@ -1,4 +1,4 @@
-module TimeSeriesable
+module Concerns::TimeSeriesable
   extend ActiveSupport::Concern
 
   def accumulate_time_series(series, start_date, end_date)

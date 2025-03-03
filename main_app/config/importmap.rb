@@ -13,3 +13,4 @@ pin_all_from "app/javascript/controllers", under: "controllers"
 pin_all_from "app/javascript/channels", under: "channels"
 pin_all_from "app/javascript/lib", under: "lib"
 pin "just-extend" # @5.1.1
+pin "d3", to: "https://cdn.jsdelivr.net/npm/d3@7/+esm"
