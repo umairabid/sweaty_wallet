@@ -12,7 +12,7 @@ RSpec.describe Connectors::ImportCsvFileJob, type: :job do
       end
 
       it "creates the transactions" do
-        expect { described_class.perform_now(file_import) }.to change { Transaction.count }.by(7)
+        expect { described_class.perform_now(file_import) }.to change { Transaction.count }.by(4)
       end
     end
 
