@@ -1,5 +1,15 @@
-
-<div id="dashboard-page" class="p-2 bg-white">
-  <div class="p-4">Select Month</div>
-  <%= render(Widgets::MonthTimeseriesComponent.new(current_user, Time.zone.now.to_date - 1.month)) %>
+<div 
+  id="dashboard-page"
+  data-controller="dashboard--index"
+  class="p-2 bg-white">
+  <div class="p-4 flex items-center">
+    <label for="dashboard_dates_dropdown" class="font-semibold mr-4">Select Month:</label>
+    <%= select_tag(
+      'date',
+      options_for_select(@months, selected: @date),
+      id: 'dashboard_dates_dropdown',
+      class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 w-auto pr-10'
+    ) %>
+  </div>
+  <%= render(Widgets::MonthTimeseriesComponent.new(current_user, @date)) %>
 </div>
