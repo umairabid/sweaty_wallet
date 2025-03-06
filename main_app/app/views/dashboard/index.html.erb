@@ -12,4 +12,8 @@
     ) %>
   </div>
   <%= render(Widgets::MonthTimeseriesComponent.new(current_user, @date)) %>
+  <div class="flex justify-start">
+    <%= render(Widgets::TopTransactionsComponent.new(current_user, @date, true)) %>
+    <%= render(Widgets::TopTransactionsComponent.new(current_user, @date, false)) %>
+  </div>
 </div>

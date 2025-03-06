@@ -15,12 +15,18 @@ class TransactionsRepository
     accumulate_time_series(series.sum(:amount), start_date, end_date)
   end
 
+  def top_transactions(start_date, end_date)
+    @base_scope.where(date: start_date..end_date)
+      .exclude_transfers
+      .order(amount: :desc)
+  end
+
   private
 
   def for_range_by_day(range)
-    @base_scope.where(date: range)
-      .where.not(parent_category: { code: "transfers" })
-      .left_joins(category: :parent_category)
+    @base_scope
+      .exclude_transfers
+      .where(date: range)
       .group(:date)
   end
 end

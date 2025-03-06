@@ -1,0 +1,23 @@
+<div class="bg-white rounded-lg border border-gray-300 p-4 m-4 overflow-hidden">
+  <h3 class="p-4 py-2"><%= @credit ? 'Top Credit Transactions' : 'Top Debit Transactions' %></h3>
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+    <thead>
+      <tr>
+        <th scope="col" class="p-4 py-2 border-blue-gray-100">Date</th>
+        <th scope="col" class="p-4 py-2 border-blue-gray-100">Description</th>
+        <th scope="col" class="p-4 py-2 border-blue-gray-100">Category</th>
+        <th scope="col" class="p-4 py-2 border-blue-gray-100">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%- transactions.each do |t| %>
+        <tr>
+          <td class="p-4 py-2"><%= t.date %></td>
+          <td class="p-4 py-2"><div class="truncate w-32" title="<%= t.description %>"><%= t.description %></div></td>
+          <td class="p-4 py-2"><%= t.category.name %></td>
+          <td class="p-4 py-2"><%= t.amount %></td>
+        </tr>
+      <%- end %>
+    </tbody>
+  </table>
+</div>

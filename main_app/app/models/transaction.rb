@@ -18,7 +18,12 @@ class Transaction < ApplicationRecord
 
   validates :external_id, uniqueness: { scope: :account }
 
-  default_scope { where(deleted_at: nil) }
+  default_scope { where(deleted_at: nil).preload(:category) }
+
+  scope :exclude_transfers, -> {
+          where.not(parent_category: { code: "transfers" })
+            .left_joins(category: :parent_category)
+        }
 
   def soft_delete
     update(deleted_at: Time.current)
