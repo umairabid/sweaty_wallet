@@ -21,6 +21,15 @@ class TransactionsRepository
       .order(amount: :desc)
   end
 
+  def top_categories(start_date, end_date)
+    @base_scope
+      .select("category_id, sum(amount) as cat_amount")
+      .where(date: start_date..end_date, is_credit: false)
+      .exclude_transfers
+      .group(:category_id)
+      .order(cat_amount: :desc)
+  end
+
   private
 
   def for_range_by_day(range)

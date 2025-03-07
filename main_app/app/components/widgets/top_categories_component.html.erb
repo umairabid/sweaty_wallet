@@ -1,0 +1,19 @@
+<div class="bg-white rounded-lg border border-gray-300 p-4 m-4 overflow-hidden">
+  <h3 class="p-4 py-2">Top Spending Categories</h3>
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+    <thead>
+      <tr>
+        <th scope="col" class="p-4 py-2 border-blue-gray-100">Category</th>
+        <th scope="col" class="p-4 py-2 border-blue-gray-100">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%- top_categories.each do |t| %>
+        <tr>
+          <td class="p-4 py-2"><div class="truncate w-40"><%= t.category.name %></div></td>
+          <td class="p-4 py-2"><%= t.cat_amount %></td>
+        </tr>
+      <%- end %>
+    </tbody>
+  </table>
+</div>

@@ -12,8 +12,8 @@
     <tbody>
       <%- transactions.each do |t| %>
         <tr>
-          <td class="p-4 py-2"><%= t.date %></td>
-          <td class="p-4 py-2"><div class="truncate w-32" title="<%= t.description %>"><%= t.description %></div></td>
+          <td class="p-4 py-2"><%= t.date.strftime("%d %b %Y") %></td>
+          <td class="p-4 py-2"><div class="truncate w-40" title="<%= t.description %>"><%= t.description %></div></td>
           <td class="p-4 py-2"><%= t.category.name %></td>
           <td class="p-4 py-2"><%= t.amount %></td>
         </tr>

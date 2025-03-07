@@ -10,7 +10,7 @@ module.exports = {
   safelist: [
     'w-64',
     'w-1/2',
-    'w-32',
+    'w-40',
     'rounded-l-lg',
     'rounded-r-lg',
     'bg-gray-200',

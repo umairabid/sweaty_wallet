@@ -1,7 +1,7 @@
 class Transaction < ApplicationRecord
   COLUMNS = {
     "id" => { label: "ID", value: ->(t) { t.id } },
-    "date" => { label: "Date", value: ->(t) { t.date } },
+    "date" => { label: "Date", value: ->(t) { t.date.strftime("%d %b %Y") } },
     "external_id" => { label: "External ID", value: ->(t) { t.external_id } },
     "description" => { label: "Description", value: ->(t) { t.description } },
     "amount" => { label: "Amount", value: ->(t) { t.amount } },

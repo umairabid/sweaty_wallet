@@ -15,5 +15,6 @@
   <div class="flex justify-start">
     <%= render(Widgets::TopTransactionsComponent.new(current_user, @date, true)) %>
     <%= render(Widgets::TopTransactionsComponent.new(current_user, @date, false)) %>
+    <%= render(Widgets::TopCategoriesComponent.new(current_user, @date)) %>
   </div>
 </div>
