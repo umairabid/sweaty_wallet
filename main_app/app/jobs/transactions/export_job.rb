@@ -4,12 +4,11 @@ class Transactions::ExportJob < ApplicationJob
   queue_as :default
 
   def perform(user, filters: {})
-    repo = TransactionsRepository.new(user.transactions)
     filter = TransactionFilter.new(user, filters || {})
-    scope = repo.fetch_by_filters(filter)
+    scope = filter.apply(user.transactions)
     file = Transactions::Export.call(scope, channel_name)
     if file.nil?
-      broadcast({ status: "success", html: 'No records were found to export' })
+      broadcast({ status: "success", html: "No records were found to export" })
       return
     end
 
@@ -17,14 +16,14 @@ class Transactions::ExportJob < ApplicationJob
       io: File.open(file.path),
       content_type: "text/csv",
       filename: File.basename(file.path),
-      identify: true
+      identify: true,
     })
 
     user.save!
     url = rails_blob_path(user.transaction_exports.last, only_path: true)
     broadcast({ status: "success", html: ApplicationController.render(
       partial: "helpers/background_success_messages/export_transactions",
-      locals: { url: url}, # Pass any locals the partial requires
+      locals: { url: url },
     ) })
   end
 
