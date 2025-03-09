@@ -7,13 +7,11 @@ RSpec.describe Transactions::ExportJob, type: :job do
   let!(:transaction) { create(:transaction, account: account) }
 
   let(:transaction_filter) { double(TransactionFilter) }
-  let(:transactions_repository) { double(TransactionsRepository) }
 
   context "perform" do
     before do
-      expect(transactions_repository).to receive(:fetch_by_filters).with(transaction_filter).and_return(user.transactions)
       expect(TransactionFilter).to receive(:new).and_return(transaction_filter)
-      expect(TransactionsRepository).to receive(:new).and_return(transactions_repository)
+      expect(transaction_filter).to receive(:apply).and_return(user.transactions)
     end
     it "exports transactions" do
       expect { described_class.perform_later(user) }.to change { user.transaction_exports.count }.by(1)
