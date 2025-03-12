@@ -18,3 +18,9 @@
     <%= flash[:alert] %>
   </div>
 <% end %>
+
+<% if flash[:notice] %>
+  <div  class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 my-4" role="alert" data-turbo-cache="false">
+    <%= flash[:notice] %>
+  </div>
+<% end %>

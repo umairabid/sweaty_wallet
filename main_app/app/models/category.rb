@@ -6,6 +6,8 @@ class Category < ApplicationRecord
   before_create :set_code
   before_update :restore_code
 
+  validates :name, presence: true
+
   def restore_code
     self.code = code_was
   end

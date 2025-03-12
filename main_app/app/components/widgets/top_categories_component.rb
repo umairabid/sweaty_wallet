@@ -8,6 +8,10 @@ class Widgets::TopCategoriesComponent < ViewComponent::Base
     transactions_repo.top_categories(start_date, end_date).limit(10)
   end
 
+  def render?
+    top_categories.present?
+  end
+
   private
 
   def start_date

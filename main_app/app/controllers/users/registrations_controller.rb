@@ -8,6 +8,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
     edit_user_registration_path(resource)
   end
 
+  def after_inactive_sign_up_path_for(resource)
+    new_user_session_path
+  end
+
+  def after_sign_up_path_for(resource)
+    new_user_session_path
+  end
+
   # Permit additional fields during sign up and account update
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :avatar])
