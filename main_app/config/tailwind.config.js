@@ -32,7 +32,10 @@ module.exports = {
     'my-2',
     'pr-2',
     'pb-0',
-    'text-gray-100'
+    'text-gray-100',
+    'text-green-500',
+    'text-red-500',
+    'text-blue-500'
   ],
   theme: {
     extend: {

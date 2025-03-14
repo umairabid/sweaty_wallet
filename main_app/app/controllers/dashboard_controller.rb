@@ -11,7 +11,7 @@ class DashboardController < ApplicationController
     current_date = Time.zone.now.to_date.beginning_of_month
     @months = []
 
-    6.downto(0) do |months_ago|
+    12.downto(0) do |months_ago|
       month_date = current_date
       @months << [month_date.strftime("%B %Y"), month_date]
       current_date -= 1.month

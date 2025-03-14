@@ -1,0 +1,33 @@
+<div class="bg-white rounded-lg border border-gray-300 p-4 m-4 overflow-hidden">
+  <h3 class="text-lg font-semibold text-gray-800 mb-4">For Month</h3>
+  <div class="space-y-3">
+    <div class="flex justify-between">
+      <span class="text-gray-600">Total Spend</span>
+      <span class="text-red-500 font-medium"><%= month_spend %></span>
+    </div>
+    <div class="flex justify-between">
+      <span class="text-gray-600">Total Income</span>
+      <span class="text-green-500 font-medium"><%= month_income %></span>
+    </div>
+    <div class="flex justify-between">
+      <span class="text-gray-600">Net Savings</span>
+      <span class="text-blue-500 font-medium"><%= month_income - month_spend %></span>
+    </div>
+  </div>
+
+  <h3 class="text-lg font-semibold text-gray-800 my-4">For Year</h3>
+  <div class="space-y-3">
+    <div class="flex justify-between">
+      <span class="text-gray-600">Total Spend</span>
+      <span class="text-red-500 font-medium"><%= year_spend %></span>
+    </div>
+    <div class="flex justify-between">
+      <span class="text-gray-600">Total Income</span>
+      <span class="text-green-500 font-medium"><%= year_income %></span>
+    </div>
+    <div class="flex justify-between">
+      <span class="text-gray-600">Net Savings</span>
+      <span class="text-blue-500 font-medium"><%= year_income - year_spend %></span>
+    </div>
+  </div>
+</div>

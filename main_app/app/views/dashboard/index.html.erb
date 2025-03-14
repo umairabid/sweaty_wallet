@@ -11,8 +11,11 @@
       class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 w-auto pr-10'
     ) %>
   </div>
-  <%= render(Widgets::MonthTimeseriesComponent.new(current_user, @date)) %>
-  <div class="flex justify-start">
+  <div class="flex justify-start [&>*:first-child]:w-1/5 [&>*:last-child]:flex-grow">
+    <%= render(Widgets::MonthAndYearStatsComponent.new(current_user, @date)) %>
+    <%= render(Widgets::MonthTimeseriesComponent.new(current_user, @date)) %>
+  </div>
+  <div class="flex justify-start [&>*:last-child]:flex-grow">
     <%= render(Widgets::TopTransactionsComponent.new(current_user, @date, true)) %>
     <%= render(Widgets::TopTransactionsComponent.new(current_user, @date, false)) %>
     <%= render(Widgets::TopCategoriesComponent.new(current_user, @date)) %>

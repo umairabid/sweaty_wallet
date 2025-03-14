@@ -61,17 +61,22 @@ class TransactionFilter
     end
 
     if has? :show_duplicates
-      duplicate_scope = scope
-        .select(:date, :description, :amount, :is_credit, :account_id)
-        .group(:date, :description, :amount, :is_credit, :account_id)
-        .having("count(*) > 1")
-        .pluck(:date, :description, :amount, :is_credit, :account_id)
+      from_sql = <<~SQL
+        transactions.*, 
+        COUNT(transactions.*) OVER (
+          PARTITION BY date, 
+          TRIM(REGEXP_REPLACE(description, '\\s+', ' ', 'g')), 
+          amount, 
+          is_credit, 
+          account_id
+        ) as duplicate_count
+      SQL
+      duplicate_ids = Transaction.unscoped.select("id").from(
+        scope.select(from_sql)
+      ).where("duplicate_count > ?", 1).to_a.map(&:id)
 
-      scope = scope.where(date: duplicate_scope.map { |d| d[0] })
-        .where(description: duplicate_scope.map { |d| d[1] })
-        .where(amount: duplicate_scope.map { |d| d[2] })
-        .where(is_credit: duplicate_scope.map { |d| d[3] })
-        .where(account_id: duplicate_scope.map { |d| d[4] })
+      # Filter the original scope to include only duplicates
+      scope = scope.where(id: duplicate_ids)
     end
 
     scope = scope.order(date: :desc).preload(account: :connector)
