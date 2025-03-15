@@ -69,7 +69,7 @@ export default class extends BaseController {
       .append("path")
       .datum(expensesData)
       .attr("fill", "none")
-      .attr("stroke", "red")
+      .attr("stroke", "#EF4444")
       .attr("stroke-width", 1.5)
       .attr("d", line);
 
@@ -77,7 +77,7 @@ export default class extends BaseController {
       .append("path")
       .datum(incomesData)
       .attr("fill", "none")
-      .attr("stroke", "green")
+      .attr("stroke", "#22C55E")
       .attr("stroke-width", 1.5)
       .attr("d", line);
 
@@ -102,7 +102,7 @@ export default class extends BaseController {
       .attr("cx", (d) => x(d.date))
       .attr("cy", (d) => y(d.value))
       .attr("r", 4)
-      .attr("fill", "red")
+      .attr("fill", "#EF4444")
       .style("cursor", "pointer")
       .on("mouseover", function (event, expensePoint) {
         const incomePoint = incomesData.find(
@@ -140,7 +140,7 @@ export default class extends BaseController {
       .attr("cx", (d) => x(d.date))
       .attr("cy", (d) => y(d.value))
       .attr("r", 4)
-      .attr("fill", "green")
+      .attr("fill", "#22C55E")
       .style("cursor", "pointer")
       .on("mouseover", function (event, incomePoint) {
         const expensePoint = expensesData.find(
