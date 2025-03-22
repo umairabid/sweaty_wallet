@@ -19,6 +19,14 @@
     {
       "js": ["scripts/tabs/walmart_mc.js"],
       "matches": ["https://www.walmartrewardsmc.ca/app/*"]
+    },
+    {
+      "js": ["builds/cibc.js"],
+      "matches": ["https://www.cibconline.cibc.com/*"]
+    },
+    {
+      "js": ["builds/cibc.js"],
+      "matches": ["http://localhost:8000/*"]
     }
   ],
   "externally_connectable": {
