@@ -31,7 +31,7 @@ function onTabLoad() {
     if (msg.name === "pull_transactions_credit_card")
       return port.postMessage({
         name: msg.name,
-        params: pullCreditCardTransacttions(),
+        params: pullCreditCardTransacttions(msg.params.identifier),
       });
     if (msg.name === "pull_transactions_deposit_account")
       return port.postMessage({

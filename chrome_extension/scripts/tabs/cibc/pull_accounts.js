@@ -22,9 +22,11 @@ function extractAccountInfo(type, cardContainer) {
   return {
     type: type,
     balance: balance,
-    name: name,
-    exeternal_id: external_id,
+    account_name: name,
+    is_active: true,
+    external_id: external_id,
     encrypted_external_id: external_id,
+    currency: "CAD",
   };
 }
 

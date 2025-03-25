@@ -1,53 +1,58 @@
-function getRows(postedHeader) {
-  const table = postedHeader.closest("table");
-  const tbody = table.querySelector("tbody");
-  return tbody.querySelectorAll("tr");
+function getRows(firstTransactionRow) {
+  const tbody = firstTransactionRow.closest("tbody");
+  return tbody.querySelectorAll("tr.transaction-row");
 }
 
-function amountInfo(row) {
-  const debit = row.querySelector(".debit span").innerText.trim();
-  const credt = row.querySelector(".credit span").innerText.trim();
-  const balance = row.querySelector(".balance span").innerText.trim();
-  const type = debit == "Not applicable" ? "credit" : "debit";
-  const amount = parseFloat(
-    (type == "debit" ? debit : credt).replace(/[^0-9.-]/g, "")
+function parseTransaction(row, external_account_id) {
+  const dateSpan = row.querySelector("td.transactionDate span");
+  if (!dateSpan) return null;
+
+  const date = dateSpan.innerText.trim();
+  const descriptionSpan = row.querySelector(
+    "td.transactions span.transactionDescription"
   );
-  return { type, amount, balance };
-}
+  const description = descriptionSpan && descriptionSpan.innerText.trim();
+  console.log(row);
+  let amountTd = row.querySelector("td.amount.debit");
+  let type = "debit";
+  if (!amountTd) {
+    amountTd = row.querySelector("td.amount.credit");
+    type = "credit";
+  }
+  console.log(amountTd);
+  const isPending = amountTd.querySelector(".pending-indicator") != null;
+  if (isPending) return null;
 
-function locationDescriptionInfo(transactionsTd) {
-  const location = transactionsTd
-    .querySelector("span.transactionLocation")
-    .innerText.trim();
-  const description = transactionsTd
-    .querySelector("span.transactionDescription")
-    .innerText.trim();
-  return { location, description };
-}
-
-function parseTransaction(row) {
-  const date = row.querySelector("td.date").innerText.trim();
-  const transactionsTd = row.querySelector("td.transactions");
-  const { type, amount, balance } = amountInfo(row);
-  const { location, description } = locationDescriptionInfo(transactionsTd);
-  const id = `${date}-${location}-${description}-${type}-${amount}-${balance}`;
-  const secondary_external_id = id.replace(/ /g, "");
+  const amountStr = row.querySelector("span").innerText.trim();
+  const amount = amountStr.replace(/[^0-9.-]/g, "");
+  const descript_str = `${date}-${description}-${type}-${amount}`;
+  const secondary_external_id = descript_str.replace(/ /g, "");
   const external_id = secondary_external_id;
-  const is_credit = type == "credit";
 
-  return { date, description, amount, balance };
+  return {
+    external_id,
+    secondary_external_id,
+    external_account_id,
+    description,
+    date,
+    type,
+    amount,
+    external_object: {},
+  };
 }
 
-function scrapTransactions() {
-  const postedHeader = document.querySelector("#postedDateHeader");
-  const rows = getRows(postedHeader);
+function scrapTransactions(external_account_id) {
+  const firstTransactionRow = document.querySelector(".transaction-row");
+  const rows = getRows(firstTransactionRow);
+  const transactions = [];
   for (let i = 0; i < rows.length; i++) {
     const row = rows[i];
-    const transaction = parseTransaction(row);
-    console.log(transaction);
+    const transaction = parseTransaction(row, external_account_id);
+    if (transaction) transactions.push(transaction);
   }
+  return transactions;
 }
 
-export function pullCreditCardTransacttions() {
-  const transactions = scrapTransactions();
+export function pullCreditCardTransacttions(external_account_id) {
+  return scrapTransactions(external_account_id);
 }
