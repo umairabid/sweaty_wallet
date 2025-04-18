@@ -2,31 +2,31 @@
   <div class="block items-center justify-between border-b border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800 sm:flex">
     <div class="mb-1 w-full">
       <div class="mb-4">
-         <%= render 'helpers/breadcrumbs', crumbs: [['Accounts']] %>
+        <%= render 'helpers/breadcrumbs', crumbs: [['Accounts']] %>
         <h1 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Your Accounts</h1>
       </div>
     </div>
   </div>
   <div class="relative overflow-x-auto">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-        <tr>
-          <th scope="col" class="px-6 py-3">
+    <table class="w-full">
+      <thead>
+        <tr class="bg-gray-100 text-left">
+          <th scope="col" class="px-4 py-3 font-medium text-gray-700">
             Account Name
           </th>
-          <th scope="col" class="px-6 py-3">
+          <th scope="col" class="px-4 py-3 font-medium text-gray-700">
             Type
           </th>
-          <th scope="col" class="px-6 py-3">
+          <th scope="col" class="px-4 py-3 font-medium text-gray-700 text-right">
             Balance
           </th>
-          <th scope="col" class="px-6 py-3">
+          <th scope="col" class="px-4 py-3 font-medium text-gray-700">
             Bank
           </th>
           <th></th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="divide-y divide-gray-200">
         <% @accounts.each do |a| %>
           <%= render "accounts/account_row", account: a, bank_options: @bank_options, account_types: @account_types %>
         <% end %>

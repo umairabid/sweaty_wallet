@@ -18,4 +18,8 @@ class Account < ApplicationRecord
   def account_type_label
     ACCOUNT_TYPE_LABELS[account_type.to_sym]
   end
+
+  def active?
+    is_active
+  end
 end

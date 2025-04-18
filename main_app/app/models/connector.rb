@@ -21,8 +21,8 @@ class Connector < ApplicationRecord
     cibc: {
       name: "Canadian Imperial Bank of Commerce (CIBC)",
       icon: "cibc",
-      color: "#c00",
-      text_color: "#fff",
+      color: "#dee9f7",
+      text_color: "#8b1d41",
     },
   }.with_indifferent_access
 
@@ -49,5 +49,9 @@ class Connector < ApplicationRecord
 
   def bank_brand_color
     BANKS_CONFIG[bank][:color]
+  end
+
+  def bank_text_color
+    BANKS_CONFIG[bank][:text_color]
   end
 end
