@@ -15,44 +15,31 @@
       <% end %>
     </div>
   </td>
+  <td class="p-4"><%= account.nick_name %></td>
   <td class="px-4 py-4 <%= account.active? ? '' : 'text-gray-500' %>">
     <%= account.account_type_label %>
   </td>
   <td class="px-4 py-4 text-right font-medium">
     <%= account.balance %>
   </td>
-  <td class="px-4 py-4 w-32">
-    <button class="p-2 text-gray-500 hover:bg-gray-100 rounded-md" type="button" data-action="click->accounts--row#open_drawer">
+  <td class="px-4 py-4 w-40">
+    <button class="p-2 px-1 text-gray-500 hover:bg-gray-100 rounded-md" type="button" data-action="click->accounts--row#open_drawer">
       <%= render 'icons/edit' %>
     </button>
-  </td>
-  <% unless account.active? %>
-    <td class="px-4 py-4">
-      <div class="flex space-x-2 justify-end">
-        <button 
-          class="text-blue-600 border border-blue-200 hover:bg-blue-50 px-3 py-1.5 text-sm rounded-md flex items-center"
-          data-action="click->accounts--row#open_merge_modal">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="m9 18 6-6-6-6"/></svg>
-          Merge Account
-        </button>
-        <button 
-          class="text-red-600 border border-red-200 hover:bg-red-50 px-3 py-1.5 text-sm rounded-md flex items-center"
-          data-action="click->accounts--row#open_delete_modal">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
-          Delete Account
-        </button>
-      </div>
-    </td>
-  <% end %>
-  <!-- drawer component -->
-  <div id="drawer-account-form-<%= account.id %>" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 shadow-lg">
-    <div class="flex justify-between items-center mb-6">
-      <h5 class="text-lg font-semibold text-gray-700">Update Account</h5>
-      <button data-action="click->accounts--row#close_drawer" type="button" class="text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg p-1.5 inline-flex items-center justify-center">
-        <%= render "icons/cross" %>
-        <span class="sr-only">Close menu</span>
+    <%- unless account.active? %>
+      <button class="p-2 px-1 text-gray-500 hover:bg-gray-100 rounded-md" type="button" data-action="click->accounts--row#open_drawer">
+        <%= render 'icons/merge' %>
       </button>
-    </div>
-    <%= render "accounts/account_form", account: account, bank_options: bank_options, account_types: account_types %>
-  </div>
+      <button class="p-2 px-1 text-gray-500 hover:bg-gray-100 rounded-md" type="button" data-action="click->accounts--row#open_drawer">
+        <%= render 'icons/delete' %>
+      </button>
+    <%-end %>
+    <!-- drawer component -->
+    <%= render 'helpers/right_drawer',
+    drawer_id: "drawer-account-form-#{account.id}",
+    title: "Update Account",
+    close_action: "click->accounts--row#close_drawer" do %>
+      <%= render "accounts/account_form", account: account, bank_options: bank_options, account_types: account_types %>
+    <%- end %>
+  </td>
 </tr>

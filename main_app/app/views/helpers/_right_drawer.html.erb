@@ -1,0 +1,10 @@
+<div id="<%= drawer_id %>" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 shadow-lg">
+  <div class="flex justify-between items-center mb-6">
+    <h5 class="text-lg font-semibold text-gray-700"><%= title %></h5>
+    <button data-action="click->accounts--row#close_drawer" type="button" class="text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg p-1.5 inline-flex items-center justify-center">
+      <%= render "icons/cross" %>
+      <span class="sr-only">Close menu</span>
+    </button>
+  </div>
+  <%= yield %>
+</div>
