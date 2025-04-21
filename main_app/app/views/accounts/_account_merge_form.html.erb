@@ -1,8 +1,8 @@
 <%= form_tag(merge_account_url(id: account.id), method: :post) do %>
   <div class="mb-6">
     <label for="target_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Account to Merge</label>
-  <%= select_tag :target_id, options_for_select(
-    account.other_accounts.map { |acc| [acc.nick_name || acc.name, acc.id] },
+    <%= select_tag :target_id, options_for_select(
+    account.other_accounts.map { |acc| [acc.nick_name.empty? ? acc.name : acc.nick_name, acc.id] },
     params[:selected_option]
   ), class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
   </div>
