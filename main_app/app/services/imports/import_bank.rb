@@ -23,15 +23,15 @@ class Imports::ImportBank
 
   def mark_inactive_accounts!
     existing_accounts = connector.accounts.pluck(:external_id)
-    included_accounts = @params[:accounts].map { |account| account[:external_id] }
+    included_accounts = @params[:accounts].map { |account| account["external_id"] }
     excluded_accounts = existing_accounts - included_accounts
     connector.accounts.where.not(id: excluded_accounts).update_all(is_active: false)
   end
 
   def connector
     @connector ||= Connector.find_or_create_by!(user: @user, bank: @params[:bank]) do |conn|
-      conn.auth_type = 'transient'
-      conn.status = 'connected'
+      conn.auth_type = "transient"
+      conn.status = "connected"
     end
   end
 end
