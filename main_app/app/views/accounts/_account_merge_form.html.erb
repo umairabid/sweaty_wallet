@@ -1,0 +1,13 @@
+<%= form_tag(merge_account_url(id: account.id), method: :post) do %>
+  <div class="mb-6">
+    <label for="target_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Account to Merge</label>
+  <%= select_tag :target_id, options_for_select(
+    account.other_accounts.map { |acc| [acc.nick_name || acc.name, acc.id] },
+    params[:selected_option]
+  ), class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+  </div>
+  <div class="flex items-center justify-end">
+    <button type="button" data-action="click->accounts--row#close_merge_drawer" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 ">Decline</button>
+    <%= submit_tag "Merge", class: 'cursor-pointer ms-3 text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center' %>
+  </div>
+<% end %>

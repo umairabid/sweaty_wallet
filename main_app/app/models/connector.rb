@@ -1,29 +1,29 @@
 class Connector < ApplicationRecord
   BANKS_CONFIG = {
     rbc: {
-      name: "Royal Bank of Canada",
-      icon: "rbc",
-      color: "#006AC3",
-      text_color: "#fff",
+      name: 'Royal Bank of Canada',
+      icon: 'rbc',
+      color: '#006AC3',
+      text_color: '#fff'
     },
     td: {
-      name: "TD Canada Trust",
-      icon: "td",
-      color: "#008a00",
-      text_color: "#fff",
+      name: 'TD Canada Trust',
+      icon: 'td',
+      color: '#008a00',
+      text_color: '#fff'
     },
     walmart_mc: {
-      name: "Walmart Master Card",
-      icon: "walmart",
-      color: "#ffc220",
-      text_color: "#fff",
+      name: 'Walmart Master Card',
+      icon: 'walmart',
+      color: '#ffc220',
+      text_color: '#fff'
     },
     cibc: {
-      name: "Canadian Imperial Bank of Commerce (CIBC)",
-      icon: "cibc",
-      color: "#dee9f7",
-      text_color: "#8b1d41",
-    },
+      name: 'Canadian Imperial Bank of Commerce (CIBC)',
+      icon: 'cibc',
+      color: '#dee9f7',
+      text_color: '#8b1d41'
+    }
   }.with_indifferent_access
 
   enum bank: { rbc: 1, td: 2, walmart_mc: 3, cibc: 4 }
@@ -36,8 +36,8 @@ class Connector < ApplicationRecord
 
   validates :bank, presence: true
   validates :auth_type, presence: true
-  validates :username, presence: true, if: -> { auth_method == "direct" }
-  validates :password, presence: true, if: -> { auth_method == "direct" }
+  validates :username, presence: true, if: -> { auth_method == 'direct' }
+  validates :password, presence: true, if: -> { auth_method == 'direct' }
 
   def bank_name
     BANKS_CONFIG[bank][:name]
@@ -53,5 +53,9 @@ class Connector < ApplicationRecord
 
   def bank_text_color
     BANKS_CONFIG[bank][:text_color]
+  end
+
+  def active_accounts
+    accounts.where(is_active: true)
   end
 end

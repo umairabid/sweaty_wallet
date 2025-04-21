@@ -23,18 +23,23 @@ class CurrentUserRepository
   # returns data references by various forms
   def fetch_referencables
     {
-      banks: [["Select Bank", ""]] +
-             @base_scope.connectors.map { |c| [c.bank_name, c.id] },
-      categories: [["Select Category", ""]] + [["Uncategorized", "-1"]] +
-                  fetch_categories.map { |c| [c.name, c.id] },
-      account_types: [["Select Account Type", ""]] +
-                     Account::FILTERABLE_ACCOUT_TYPES.map { |v| [Account::ACCOUNT_TYPE_LABELS[v], v] },
-      accounts: [["Select Accounts", ""]] +
-                @base_scope.accounts.select { |a| Account::FILTERABLE_ACCOUT_TYPES.include?(a.account_type.to_sym) }
-                  .map { |a| [a.name, a.id] },
-      transaction_types: [["Select Type", ""], ["Credit", "credit"], ["Debit", "debit"]],
-      parent_categories: [["Select Parent Category", ""]] + fetch_parent_categories.map { |c| [c.name, c.id] },
-      all_banks: [["Select Bank", ""]] + all_banks,
+      banks: [['Select Bank', '']] +
+        @base_scope.connectors.map { |c| [c.bank_name, c.id] },
+      categories: [['Select Category', '']] + [['Uncategorized', '-1']] +
+        fetch_categories.map { |c| [c.name, c.id] },
+      account_types: [['Select Account Type', '']] +
+        Account::FILTERABLE_ACCOUNT_TYPES.map do |v|
+          [Account::ACCOUNT_TYPE_LABELS[v], v]
+        end,
+      accounts: [['Select Accounts', '']] +
+        (@base_scope.accounts.select do |a|
+          Account::FILTERABLE_ACCOUNT_TYPES.include?(a.account_type.to_sym)
+        end.map { |a| [a.name, a.id] }),
+      transaction_types: [['Select Type', ''], %w[Credit credit], %w[Debit debit]],
+      parent_categories: [['Select Parent Category', '']] + fetch_parent_categories.map do |c|
+                                                              [c.name, c.id]
+                                                            end,
+      all_banks: [['Select Bank', '']] + all_banks
     }
   end
 end

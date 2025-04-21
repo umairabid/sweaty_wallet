@@ -9,13 +9,14 @@ class ConnectorsController < ApplicationController
   end
 
   def import_csv
-    file_import = current_user.file_imports.create!(file: params[:csv], input: { bank: params[:bank] })
+    file_import = current_user.file_imports.create!(file: params[:csv],
+                                                    input: { bank: params[:bank] })
     Connectors::ImportCsvFileJob.perform_later(file_import)
     render json: { file_import_id: file_import.id }
   end
 
   def index
-    @connectors = current_user.connectors.preload(:accounts)
+    @connectors = current_user.connectors.preload(:accounts).select { |c| c.accounts.any? }
   end
 
   def new
@@ -25,29 +26,28 @@ class ConnectorsController < ApplicationController
     locals = { bank: @bank, mode: @mode, connector: @connector, start_direct_process: false }
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(:new_connector, template: "connectors/new", locals: locals)
+        render turbo_stream: turbo_stream.replace(:new_connector, template: 'connectors/new',
+                                                                  locals:)
       end
 
-      format.html { render :new, locals: locals }
+      format.html { render :new, locals: }
     end
   end
 
   def create
-    @connector = current_user.connectors.find_or_initialize_by(bank: bank)
+    @connector = current_user.connectors.find_or_initialize_by(bank:)
     @connector.assign_attributes(connector_params)
     @connector.save
-    if @connector.valid?
-      ConnectBankJob.perform_later(@connector)
-    end
+    ConnectBankJob.perform_later(@connector) if @connector.valid?
 
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(:new_connector, template: "connectors/new", locals: {
-                                                                    connector: @connector,
-                                                                    bank: bank,
-                                                                    mode: params[:mode],
-                                                                    start_direct_process: @connector.save,
-                                                                  })
+        render turbo_stream: turbo_stream.replace(:new_connector, template: 'connectors/new', locals: {
+                                                    connector: @connector,
+                                                    bank:,
+                                                    mode: params[:mode],
+                                                    start_direct_process: @connector.save
+                                                  })
       end
     end
   end
@@ -55,7 +55,8 @@ class ConnectorsController < ApplicationController
   def new_direct
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(:new_connector, template: "connectors/new_direct")
+        render turbo_stream: turbo_stream.replace(:new_connector,
+                                                  template: 'connectors/new_direct')
       end
 
       format.html { render :new_direct }
@@ -64,13 +65,15 @@ class ConnectorsController < ApplicationController
 
   def create_direct
     render_lambda = lambda {
-      render turbo_stream: turbo_stream.replace(:new_connector, partial: "connectors/direct/connector_form")
+      render turbo_stream: turbo_stream.replace(:new_connector,
+                                                partial: 'connectors/direct/connector_form')
     }
 
     if @connector.valid?
       ConnectBankJob.perform_later(connector_params)
       render_lambda = lambda {
-        render turbo_stream: turbo_stream.replace(:connector_process, partial: "connectors/direct/connector_process")
+        render turbo_stream: turbo_stream.replace(:connector_process,
+                                                  partial: 'connectors/direct/connector_process')
       }
     end
 
@@ -84,6 +87,7 @@ class ConnectorsController < ApplicationController
   end
 
   def connector_params
-    params.require(:connector).permit(:auth_type, :username, :password, :two_factor_key, :auth_method)
+    params.require(:connector).permit(:auth_type, :username, :password, :two_factor_key,
+                                      :auth_method)
   end
 end

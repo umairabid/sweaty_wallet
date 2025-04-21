@@ -1,5 +1,5 @@
 class AccountsController < ApplicationController
-  before_action :set_account, only: %i[update]
+  before_action :set_account, only: %i[update merge destroy]
   before_action :set_selects, only: %i[index update]
 
   def index
@@ -13,18 +13,31 @@ class AccountsController < ApplicationController
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
           "account-row-#{@account.id}",
-          partial: "accounts/account_row",
-          locals: { account: @account, bank_options: @bank_options, account_types: @account_types },
+          partial: 'accounts/account_row',
+          locals: { account: @account, bank_options: @bank_options,
+                    account_types: @account_types }
         )
       end
-      format.html { render html: "" }
+      format.html { render html: '' }
     end
+  end
+
+  def merge
+    target_id = params.permit(:target_id)[:target_id]
+    puts target_id.inspect
+    Accounts::Merge.call(@account, target_id)
+    redirect_to connectors_path, notice: 'Account merged successfully'
+  end
+
+  def destroy
+    @account.destroy!
+    redirect_to connectors_path, notice: 'Account deleted successfully'
   end
 
   private
 
   def set_account
-    @account = current_user.accounts.find(params["id"])
+    @account = current_user.accounts.find(params['id'])
   end
 
   def account_params
@@ -36,4 +49,6 @@ class AccountsController < ApplicationController
     @bank_options = selects[:banks]
     @account_types = selects[:account_types]
   end
+
+  def render_account_row; end
 end

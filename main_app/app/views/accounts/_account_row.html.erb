@@ -23,23 +23,31 @@
     <%= account.balance %>
   </td>
   <td class="px-4 py-4 w-40">
-    <button class="p-2 px-1 text-gray-500 hover:bg-gray-100 rounded-md" type="button" data-action="click->accounts--row#open_drawer">
-      <%= render 'icons/edit' %>
-    </button>
-    <%- unless account.active? %>
+    <div class="flex items-center">
       <button class="p-2 px-1 text-gray-500 hover:bg-gray-100 rounded-md" type="button" data-action="click->accounts--row#open_drawer">
-        <%= render 'icons/merge' %>
+        <%= render 'icons/edit' %>
       </button>
-      <button class="p-2 px-1 text-gray-500 hover:bg-gray-100 rounded-md" type="button" data-action="click->accounts--row#open_drawer">
-        <%= render 'icons/delete' %>
-      </button>
-    <%-end %>
+      <%- unless account.active? %>
+        <button class="p-2 px-1 text-gray-500 hover:bg-gray-100 rounded-md" type="button" data-action="click->accounts--row#open_merge_drawer">
+          <%= render 'icons/merge' %>
+        </button>
+        <%= link_to account_path(account), class: 'p-2 px-1 text-gray-500 hover:bg-gray-100 rounded-md', data: { turbo_method: :delete, turbo_confirm: "Are you sure?", turbo_action: "replace" } do %>
+          <%= render 'icons/delete' %>
+        <% end %>
+      <%-end %>
+    </div>
     <!-- drawer component -->
     <%= render 'helpers/right_drawer',
-    drawer_id: "drawer-account-form-#{account.id}",
-    title: "Update Account",
-    close_action: "click->accounts--row#close_drawer" do %>
+      drawer_id: "drawer-account-form-#{account.id}",
+      title: "Update Account",
+      close_action: "click->accounts--row#close_drawer" do %>
       <%= render "accounts/account_form", account: account, bank_options: bank_options, account_types: account_types %>
+    <%- end %>
+    <%= render 'helpers/right_drawer',
+      drawer_id: "drawer-account-merge-form-#{account.id}",
+      title: "Merge Account",
+      close_action: "click->accounts--row#close_merge_drawer" do %>
+      <%= render "accounts/account_merge_form", account: account, bank_options: bank_options, account_types: account_types %>
     <%- end %>
   </td>
 </tr>

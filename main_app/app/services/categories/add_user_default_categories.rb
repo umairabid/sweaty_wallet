@@ -2,20 +2,21 @@ class Categories::AddUserDefaultCategories
   include Callable
 
   CATEGORIES = {
-    "Income" => [
-      "Salary", "Business Income", "Investments", "Other Income",
+    'Income' => [
+      'Salary', 'Business Income', 'Investments', 'Other Income'
     ],
-    "Expenses" => [
-      "Accommodation", "Utilities", "Groceries", "Shopping", "Personal Care", "Healthcare",
-      "Insurance", "Entertainment", "Education", "Gifts", "Miscellaneous", "Other Expenses", "Commute", "Travel",
+    'Expenses' => [
+      'Accommodation', 'Utilities', 'Groceries', 'Shopping', 'Personal Care', 'Healthcare',
+      'Insurance', 'Entertainment', 'Education', 'Gifts', 'Miscellaneous', 'Other Expenses',
+      'Commute', 'Travel'
     ],
-    "Transfers" => [
-      "Between Accounts", "Peer-to-Peer Transfers", "Credit Card Payments", "Investments",
+    'Transfers' => [
+      'Between Accounts', 'Peer-to-Peer Transfers', 'Credit Card Payments', 'Investments'
     ],
-    "Financial Obligations" => [
-      "Loan Payments", "Credit Card Debt", "Car Payment", "Other Debt Payment",
-    ],
-  }
+    'Financial Obligations' => [
+      'Loan Payments', 'Credit Card Debt', 'Car Payment', 'Other Debt Payment'
+    ]
+  }.freeze
 
   def initialize(user)
     @user = user

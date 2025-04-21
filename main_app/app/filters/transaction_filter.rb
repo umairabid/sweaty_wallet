@@ -9,30 +9,26 @@ class TransactionFilter
               :selects,
               :show_duplicates
 
-  FILTERABLE_ACCOUT_TYPES = [:credit_card, :deposit_account]
+  FILTERABLE_ACCOUNT_TYPES = %i[credit_card deposit_account].freeze
 
   def initialize(user, params = {})
     @user = user
-    @query = params[:query] || ""
-    @categories = params[:categories] || ""
-    @time_range = params[:time_range] || ""
-    @bank = params[:bank] || ""
-    @account_type = params[:account_type] || ""
-    @type = params[:type] || ""
-    @account_id = params[:account_id] || ""
-    @show_duplicates = params[:show_duplicates] == "1"
+    @query = params[:query] || ''
+    @categories = params[:categories] || ''
+    @time_range = params[:time_range] || ''
+    @bank = params[:bank] || ''
+    @account_type = params[:account_type] || ''
+    @type = params[:type] || ''
+    @account_id = params[:account_id] || ''
+    @show_duplicates = params[:show_duplicates] == '1'
     set_select_options
   end
 
   def apply(scope)
     scope = scope.joins(account: :connector).preload(:category)
-    if has? :query
-      scope = scope.where("description ilike ?", "%#{query}%")
-    end
+    scope = scope.where('description ilike ?', "%#{query}%") if has? :query
 
-    if has? :bank
-      scope = scope.where(accounts: { connectors: { bank: bank } })
-    end
+    scope = scope.where(accounts: { connectors: { bank: } }) if has? :bank
 
     if has? :time_range
       end_date = Time.now.to_date
@@ -40,40 +36,32 @@ class TransactionFilter
       scope = scope.where(date: start_date..end_date)
     end
 
-    if has? :type
-      scope = scope.where(is_credit: type == "credit")
-    end
+    scope = scope.where(is_credit: type == 'credit') if has? :type
 
-    if has? :account_id
-      scope = scope.where(account_id: account_id)
-    end
+    scope = scope.where(account_id:) if has? :account_id
 
-    if has? :account_type
-      scope = scope.where(account: { account_type: account_type })
-    end
+    scope = scope.where(account: { account_type: }) if has? :account_type
 
     if has? :categories
       cats = categories.select { |id| id.to_i > 0 }
-      if categories.any? { |id| id == "-1" }
-        cats << nil
-      end
+      cats << nil if categories.any? { |id| id == '-1' }
       scope = scope.where(category_id: cats) unless cats.empty?
     end
 
     if has? :show_duplicates
       from_sql = <<~SQL
-        transactions.*, 
+        transactions.*,#{' '}
         COUNT(transactions.*) OVER (
-          PARTITION BY date, 
-          TRIM(REGEXP_REPLACE(description, '\\s+', ' ', 'g')), 
-          amount, 
-          is_credit, 
+          PARTITION BY date,#{' '}
+          TRIM(REGEXP_REPLACE(description, '\\s+', ' ', 'g')),#{' '}
+          amount,#{' '}
+          is_credit,#{' '}
           account_id
         ) as duplicate_count
       SQL
-      duplicate_ids = Transaction.unscoped.select("id").from(
+      duplicate_ids = Transaction.unscoped.select('id').from(
         scope.select(from_sql)
-      ).where("duplicate_count > ?", 1).to_a.map(&:id)
+      ).where('duplicate_count > ?', 1).to_a.map(&:id)
 
       # Filter the original scope to include only duplicates
       scope = scope.where(id: duplicate_ids)
@@ -85,14 +73,15 @@ class TransactionFilter
   private
 
   def has?(name)
-    self.send(name).present?
+    send(name).present?
   end
 
   def set_select_options
     @selects = {
       **current_user_repo.fetch_referencables,
-      time_ranges: [["Select Duration", ""], ["Last Month", 1], ["Last Two Months", 2], ["Last Three Months", 3]],
-      types: [["Select Type", ""], ["Credit", "credit"], ["Debit", "debit"]],
+      time_ranges: [['Select Duration', ''], ['Last Month', 1], ['Last Two Months', 2],
+                    ['Last Three Months', 3]],
+      types: [['Select Type', ''], ['Credit', 'credit'], ['Debit', 'debit']]
     }
   end
 
