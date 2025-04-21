@@ -23,8 +23,12 @@ class Imports::ImportBank
 
   def mark_inactive_accounts!
     existing_accounts = connector.accounts.pluck(:external_id)
+    puts existing_accounts.inspect
     included_accounts = @params[:accounts].map { |account| account["external_id"] }
+    puts included_accounts.inspect
+    puts @params[:accounts].map { |account| account[:external_id] }.inspect
     excluded_accounts = existing_accounts - included_accounts
+    puts excluded_accounts.inspect
     connector.accounts.where.not(id: excluded_accounts).update_all(is_active: false)
   end
 
