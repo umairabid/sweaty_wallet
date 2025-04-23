@@ -24,3 +24,18 @@
     border-color: rgb(153 27 27 / var(--tw-text-opacity));
   }
 }
+
+.nav-link {
+  svg, path {
+    stroke: rgb(55 65 81/var(--tw-text-opacity));
+    fill: white;
+  }
+  &:hover, &.active {
+    background-color: rgb(29 78 216/var(--tw-bg-opacity));
+    color: white;
+    svg, path {
+      stroke: white;
+      fill: rgb(29 78 216/var(--tw-bg-opacity));
+    }
+  }
+}

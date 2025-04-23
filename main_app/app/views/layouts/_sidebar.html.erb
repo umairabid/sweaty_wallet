@@ -5,10 +5,11 @@
         <ul class="pb-2 space-y-2">
           <%- sidebar_menu.each do |menu| %>
             <li>
-              <a href="<%= menu[:path]%>" class="flex items-center p-2 text-base text-gray-500 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 font-semibold">
+              <%= link_to(menu[:path], 
+                class: "nav-link flex items-center p-2 text-base text-gray-500 rounded-lg font-semibold#{current_page?(menu[:path]) ? ' active' : ''}") do %>
                 <%= render "icons/#{menu[:icon]}" %>
                 <span class="ml-3" sidebar-toggle-item><%= menu[:name] %></span>
-              </a>
+              <% end %>
             </li>
           <%- end %>
         </ul>
