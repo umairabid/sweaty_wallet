@@ -24,6 +24,7 @@ class Ability
       can :destroy, :session
       can :edit, :registration
       can :update, :registration
+      can :manage, :net_worth
     end
   end
 end
