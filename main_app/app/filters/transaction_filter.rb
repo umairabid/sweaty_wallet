@@ -78,7 +78,7 @@ class TransactionFilter
 
   def set_select_options
     @selects = {
-      **current_user_repo.fetch_referencables,
+      **current_user_repo.select_options,
       time_ranges: [['Select Duration', ''], ['Last Month', 1], ['Last Two Months', 2],
                     ['Last Three Months', 3]],
       types: [['Select Type', ''], ['Credit', 'credit'], ['Debit', 'debit']]
@@ -86,6 +86,6 @@ class TransactionFilter
   end
 
   def current_user_repo
-    @users_repo ||= CurrentUserRepository.new(@user)
+    @current_user_repo ||= CurrentUserRepository.new(@user)
   end
 end

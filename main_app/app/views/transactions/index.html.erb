@@ -1,4 +1,4 @@
-<div id="transactions-page" class="p-2 bg-white" data-controller="transactions--index">
+<div id="transactions-page" class="p-2 bg-gray-100" data-controller="transactions--index">
   <div class="block items-center justify-between p-4">
     <div class="w-full">
       <div class="mb-4">
@@ -11,15 +11,15 @@
   <div class="relative overflow-x-auto p-4 pt-0">
     <div class="border border-gray-300 rounded-lg overflow-hidden">
       <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+        <thead class="text-xs text-gray-700 uppercase">
           <tr>
             <%- Transaction::COLUMNS.each do |key| %>
               <%- if @columns[key[0]].present? && @columns[key[0]]== '1' %>
-                <th scope="col" class="p-4 border-blue-gray-100 bg-gray-200">
-                  <p class="block font-sans text-sm antialiased font-normal leading-none"><%=  Transaction::COLUMNS[key[0]][:label] %></p></th>
+                <th scope="col" class="p-4 border-blue-gray-100 bg-primary-700">
+                  <p class="block font-sans text-sm text-white antialiased font-normal leading-none"><%=  Transaction::COLUMNS[key[0]][:label] %></p></th>
               <%- end %>
             <%- end %>
-            <th class="p-4 border-blue-gray-100 bg-gray-200"></th>
+            <th class="p-4 border-blue-gray-100 bg-primary-700"></th>
           </tr>
         </thead>
         <tbody>
@@ -29,7 +29,7 @@
         </tbody>
       </table>
     </div>
-    <div class="flex bg-white justify-center p-6">
+    <div class="flex justify-center p-6">
       <% if @page.first? %>
         <button disabled class="flex items-center justify-center px-4 h-10 me-3 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700">
           <%= render 'icons/pointer-left' %>

@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :categories, dependent: :destroy
   has_many :transaction_rules, dependent: :destroy
   has_many :file_imports, dependent: :destroy
+  has_many :assets, dependent: :destroy
   has_many_attached :transaction_exports
 
   has_one_attached :avatar

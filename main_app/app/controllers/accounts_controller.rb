@@ -24,7 +24,6 @@ class AccountsController < ApplicationController
 
   def merge
     target_id = params.permit(:target_id)[:target_id]
-    puts target_id.inspect
     Accounts::Merge.call(@account, target_id)
     redirect_to connectors_path, notice: 'Account merged successfully'
   end
@@ -45,7 +44,7 @@ class AccountsController < ApplicationController
   end
 
   def set_selects
-    selects = current_user_repo.fetch_referencables
+    selects = current_user_repo.select_options
     @bank_options = selects[:banks]
     @account_types = selects[:account_types]
   end

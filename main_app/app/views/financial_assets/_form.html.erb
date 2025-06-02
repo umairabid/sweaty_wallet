@@ -1,0 +1,19 @@
+<div class="mb-6">
+  <%= f.label :name, 'Name', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+  <%= f.text_field :name, autofocus: true, autocomplete: "name", class: 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5' %>
+</div>
+
+<div class="mb-6">
+  <%= f.label :description, 'Description', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+  <%= f.text_area :description, autofocus: true, autocomplete: "description", class: 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5' %>
+</div>
+
+<div class="mb-6">
+  <%= f.label :asset_type, 'Asset Type', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+  <%= f.select :asset_type, options_for_select(Asset::ASSET_TYPES.map { |k, v| [v, k] }), {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+</div>
+
+<div class="mb-6">
+  <%= f.label :value, 'Value', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+  <%= f.number_field :value, autofocus: true, autocomplete: "value", class: 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5' %>
+</div>

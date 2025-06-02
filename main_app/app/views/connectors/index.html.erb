@@ -1,10 +1,9 @@
-<div id="connectors-page bg-white">
-  <div class="p-6 relative overflow-x-auto bg-white">
-    <div class="text-base mb-6">Hello, <%= current_user.name %>!</div>
+<div id="connectors-page bg-gray-100">
+  <div class="p-6 relative overflow-x-auto">
     <div class="flex mb-4">
       <div class="text-2xl my-4">Connected Banks</div>
-      <div class="flex flex-1 justify-end">
-        <%= link_to "Add New", new_connector_path, class: 'bg-primary text-white hover:bg-primary/90 py-2 px-4 rounded-md my-3 text-sm font-medium', data: {'turbo-stream' => ''} %>
+      <div class="flex flex-1 justify-end items-center">
+        <%= link_to "Add New", new_connector_path, class: 'p-2 py-1.5 rounded-lg text-sm text-white bg-primary-700', data: {'turbo-stream' => ''} %>
       </div>
     </div>
     <div>

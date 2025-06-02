@@ -7,7 +7,11 @@ class Account < ApplicationRecord
     mortgage: 'Mortgage'
   }.freeze
 
-  FILTERABLE_ACCOUNT_TYPES = %i[credit_card deposit_account].freeze
+  ASSET_TYPES = %i[deposit_account investment].freeze
+
+  LIABILITY_ASSET_TYPES = %i[deposit_account].freeze
+
+  FILTERABLE_ACCOUNT_TYPES = %i[credit_card mortgage].freeze
 
   enum account_type: { credit_card: 1, deposit_account: 2, investment: 3, credit_line: 4,
                        mortgage: 5 }

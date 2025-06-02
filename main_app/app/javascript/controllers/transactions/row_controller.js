@@ -3,11 +3,7 @@ import create_drawer from "lib/create_drawer"
 
 export default class extends BaseController {
   connect() {
-    const backdrop = document.getElementsByClassName('drawer-backdrop')[0]
-    if (backdrop) {
-      backdrop.remove()
-      document.getElementsByTagName('body')[0].classList.toggle('overflow-hidden')
-    }
+    this.removeBackdrop();
   }
 
   open_drawer() {

@@ -26,7 +26,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :net_worth, only: %i[index]
+  resources :financial_assets
 
   resources :accounts, only: %i[index update destroy] do
     member do

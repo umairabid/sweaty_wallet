@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_user_references
-    @user_references = current_user_repo.fetch_referencables
+    @user_references = current_user_repo.select_options
   end
 
   def sidebar_menu
@@ -28,6 +28,6 @@ class ApplicationController < ActionController::Base
   private
 
   def layout
-    devise_controller? ? "slim" : "application"
+    devise_controller? ? 'slim' : 'application'
   end
 end
