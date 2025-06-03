@@ -1,4 +1,4 @@
-class UserSelectOptions
+class Users::SelectOptions
   include Callable
 
   def initialize(repo)

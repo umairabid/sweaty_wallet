@@ -19,6 +19,6 @@ class CurrentUserRepository
   end
 
   def select_options
-    @select_options ||= UserSelectOptions.call(self)
+    @select_options ||= Users::SelectOptions.call(self)
   end
 end

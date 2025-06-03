@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable, :trackable
 
-  after_commit :create_categories, on: [:create, :update]
+  after_commit :create_categories, on: %i[create update]
 
   has_many :connectors, dependent: :destroy
   has_many :accounts, through: :connectors
@@ -19,9 +19,15 @@ class User < ApplicationRecord
 
   validates :name, presence: true
 
+  delegate :net_worth, to: :net_worth_breakdown
+
   private
 
   def create_categories
     Categories::AddUserDefaultCategories.call(self)
+  end
+
+  def net_worth_breakdown
+    @net_worth_breakdown ||= Users::NetWorthBreakdown.new(self)
   end
 end

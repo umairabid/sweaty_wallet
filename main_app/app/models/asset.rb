@@ -10,7 +10,7 @@ class Asset < ApplicationRecord
 
   POSITIVE_ASSET_TYPES = %i[real_estate vehicle investment other_asset].freeze
 
-  LIABILITY_ASSET_TYPES = %i[load other_liability].freeze
+  NEGATIVE_ASSET_TYPES = %i[loan other_liability].freeze
 
   belongs_to :user
 
