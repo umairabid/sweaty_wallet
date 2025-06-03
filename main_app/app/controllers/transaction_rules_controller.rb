@@ -1,6 +1,7 @@
 class TransactionRulesController < ApplicationController
   before_action :set_user_references, only: %i[edit update new conditions]
-  before_action :set_rule, only: %i[update edit conditions destroy preview delete_condition apply next]
+  before_action :set_rule,
+                only: %i[update edit conditions destroy preview delete_condition apply next]
 
   def index
     @transaction_rules = current_user.transaction_rules.preload(:category)
@@ -16,7 +17,7 @@ class TransactionRulesController < ApplicationController
   end
 
   def edit
-    @transaction_rules = current_user_repo.fetch_transaction_rules.map { |r| [r.name, r.id] }
+    @transaction_rules = current_user.transaction_rules.map { |r| [r.name, r.id] }
   end
 
   def update
@@ -36,8 +37,8 @@ class TransactionRulesController < ApplicationController
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
           :transaction_rules_conditions,
-          partial: "transaction_rules/rules_conditions",
-          locals: { group: @transaction_rule.conditions, references: @user_references },
+          partial: 'transaction_rules/rules_conditions',
+          locals: { group: @transaction_rule.conditions, references: @user_references }
         )
       end
 
@@ -46,7 +47,7 @@ class TransactionRulesController < ApplicationController
   end
 
   def preview
-    @transaction_rules = current_user_repo.fetch_transaction_rules.map { |r| [r.name, r.id] }
+    @transaction_rules = current_user_repo.transaction_rules.map { |r| [r.name, r.id] }
     @transactions = applier.preview
   end
 
