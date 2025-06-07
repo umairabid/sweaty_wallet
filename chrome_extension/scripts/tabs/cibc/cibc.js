@@ -5,10 +5,11 @@ import { pullDepositAccountTransacttions } from "./pull_deposit_account_transact
 
 function onTabLoad() {
   const port = chrome.runtime.connect({ name: "cibc_port" });
-  const CREDIT_CARD_URL = "http://localhost:8000/credit_card";
-  const DEPOSIT_ACC_URL = "http://localhost:8000/deposit_account";
+  const CREDIT_CARD_URL = "https://www.cibconline.cibc.com/ebm-resources/public/banking/cibc/client/web/index.html#/accounts/credit-cards";
+  const DEPOSIT_ACC_URL = "https://www.cibconline.cibc.com/ebm-resources/public/banking/cibc/client/web/index.html#/accounts/deposits";
 
   const current_url = window.location.href;
+  console.log(current_url)
   const is_credit_card = current_url.startsWith(CREDIT_CARD_URL);
   const is_deposite_acc_url = current_url.startsWith(DEPOSIT_ACC_URL);
 
@@ -29,15 +30,20 @@ function onTabLoad() {
     if (msg.name === "redirect_to_deposit_acc_url")
       window.location.href = msg.params.url;
     if (msg.name === "pull_transactions_credit_card")
-      return port.postMessage({
-        name: msg.name,
-        params: pullCreditCardTransacttions(msg.params.identifier),
-      });
+      console.log('tab pulling credit card transactions');
+      setTimeout(() => {
+          return port.postMessage({
+          name: msg.name,
+          params: pullCreditCardTransacttions(msg.params.identifier),
+        });
+      }, 2000);
     if (msg.name === "pull_transactions_deposit_account")
-      return port.postMessage({
-        name: msg.name,
-        params: pullDepositAccountTransacttions(msg.params.identifier),
-      });
+      setTimeout(() => {
+        return port.postMessage({
+          name: msg.name,
+          params: pullDepositAccountTransacttions(msg.params.identifier),
+        });
+      }, 2000);
   });
 }
 

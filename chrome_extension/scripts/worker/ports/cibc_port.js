@@ -54,6 +54,7 @@ export default class CibcPort {
         "redirect_to_credit_card_url",
         { url: this.credit_card_url(params.encrypted_identifier) },
         () => {
+          console.log('credit card redirect received');
           this.execute_command(
             "pull_transactions_credit_card",
             {},
@@ -94,11 +95,11 @@ export default class CibcPort {
   }
 
   credit_card_url(id) {
-    return `http://localhost:8000/credit_card/${id}`;
+    return `https://www.cibconline.cibc.com/ebm-resources/public/banking/cibc/client/web/index.html#/accounts/credit-cards/${id}`;
   }
 
   deposit_account_url(id) {
-    return `http://localhost:8000/deposit_account/${id}`;
+    return `https://www.cibconline.cibc.com/ebm-resources/public/banking/cibc/client/web/index.html#/accounts/deposits/${id}`;
   }
 
   set_port(port) {
