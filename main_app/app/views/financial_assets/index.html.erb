@@ -7,7 +7,9 @@
     <div class="flex justify-center items-center text-green-800 font-bold"><%= number_to_currency current_user.net_worth %></div>
   </div>
   <div class="flex">
-    <div class="w-1/2 bg-white rounded-lg border border-gray-300 p-4 m-4 overflow-hidden"></div>
+    <div class="w-1/2 bg-white rounded-lg border border-gray-300 p-4 m-4 overflow-hidden">
+      <%= render(Widgets::AssetsLiabilitiesComponent.new(current_user)) %>
+    </div>
     <div class="w-1/2 bg-white rounded-lg border border-gray-300 p-4 m-4 overflow-hidden"></div>
   </div>
   <div class="m-4 p-4 bg-white border border-gray-300 rounded-lg">

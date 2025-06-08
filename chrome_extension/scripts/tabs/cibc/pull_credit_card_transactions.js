@@ -12,18 +12,17 @@ function parseTransaction(row, external_account_id) {
     "td.transactions span.transactionDescription"
   );
   const description = descriptionSpan && descriptionSpan.innerText.trim();
-  console.log(row);
   let amountTd = row.querySelector("td.amount.debit");
   let type = "debit";
   if (!amountTd) {
     amountTd = row.querySelector("td.amount.credit");
     type = "credit";
   }
-  console.log(amountTd);
+
   const isPending = amountTd.querySelector(".pending-indicator") != null;
   if (isPending) return null;
 
-  const amountStr = row.querySelector("span").innerText.trim();
+  const amountStr = amountTd.querySelector("span").innerText.trim();
   const amount = amountStr.replace(/[^0-9.-]/g, "");
   const descript_str = `${date}-${description}-${type}-${amount}`;
   const secondary_external_id = descript_str.replace(/ /g, "");

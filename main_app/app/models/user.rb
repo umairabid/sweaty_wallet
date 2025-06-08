@@ -21,13 +21,13 @@ class User < ApplicationRecord
 
   delegate :net_worth, to: :net_worth_breakdown
 
+  def net_worth_breakdown
+    @net_worth_breakdown ||= Users::NetWorthBreakdown.new(self)
+  end
+
   private
 
   def create_categories
     Categories::AddUserDefaultCategories.call(self)
-  end
-
-  def net_worth_breakdown
-    @net_worth_breakdown ||= Users::NetWorthBreakdown.new(self)
   end
 end

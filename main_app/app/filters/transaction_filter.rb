@@ -28,7 +28,7 @@ class TransactionFilter
     scope = scope.joins(account: :connector).preload(:category)
     scope = scope.where('description ilike ?', "%#{query}%") if has? :query
 
-    scope = scope.where(accounts: { connectors: { bank: } }) if has? :bank
+    scope = scope.where(accounts: { connector_id: bank }) if has? :bank
 
     if has? :time_range
       end_date = Time.now.to_date

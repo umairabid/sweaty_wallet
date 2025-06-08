@@ -48,24 +48,26 @@ export default class CibcPort {
   }
 
   pull_transactions_credit_card(params) {
-    console.log("pulling transactions for credit card");
+    console.log("redirecting to credit card");
     return new Promise((resolve) => {
       this.execute_command(
         "redirect_to_credit_card_url",
         { url: this.credit_card_url(params.encrypted_identifier) },
         () => {
-          console.log('credit card redirect received');
-          this.execute_command(
-            "pull_transactions_credit_card",
-            {},
-            (response) =>
-              resolve({
-                success: true,
-                status: "pulled_transactions_credit_card",
-                identifier: params.identifier,
-                transactions: response,
-              })
-          );
+          console.log("credit card redirect received");
+          setTimeout(() => {
+            this.execute_command(
+              "pull_transactions_credit_card",
+              {},
+              (response) =>
+                resolve({
+                  success: true,
+                  status: "pulled_transactions_credit_card",
+                  identifier: params.identifier,
+                  transactions: response,
+                })
+            );
+          }, 5000);
         }
       );
     });
@@ -78,17 +80,19 @@ export default class CibcPort {
         "redirect_to_deposit_acc_url",
         { url: this.deposit_account_url(params.encrypted_identifier) },
         () => {
-          this.execute_command(
-            "pull_transactions_deposit_account",
-            {},
-            (response) =>
-              resolve({
-                success: true,
-                status: "pulled_transactions_deposit_account",
-                identifier: params.identifier,
-                transactions: response,
-              })
-          );
+          setTimeout(() => {
+            this.execute_command(
+              "pull_transactions_deposit_account",
+              {},
+              (response) =>
+                resolve({
+                  success: true,
+                  status: "pulled_transactions_deposit_account",
+                  identifier: params.identifier,
+                  transactions: response,
+                })
+            );
+          }, 5000);
         }
       );
     });
