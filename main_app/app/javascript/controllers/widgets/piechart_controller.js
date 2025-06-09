@@ -9,8 +9,8 @@ export default class extends BaseController {
   }
 
   create_chart() {
-    const width = 600;
-    const height = 400;
+    const width = 400;
+    const height = 200;
     const radius = Math.min(width, height) / 2 - 40; // Reduced radius to make space for labels
 
     const svg = d3
