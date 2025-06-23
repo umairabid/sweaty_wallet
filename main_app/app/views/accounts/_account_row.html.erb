@@ -31,10 +31,10 @@
         <button class="p-2 px-1 text-gray-500 hover:bg-gray-100 rounded-md" type="button" data-action="click->accounts--row#open_merge_drawer">
           <%= render 'icons/merge' %>
         </button>
-        <%= link_to account_path(account), class: 'p-2 px-1 text-gray-500 hover:bg-gray-100 rounded-md', data: { turbo_method: :delete, turbo_confirm: "Are you sure?", turbo_action: "replace" } do %>
-          <%= render 'icons/delete' %>
-        <% end %>
       <%-end %>
+      <%= link_to account_path(account), class: 'p-2 px-1 text-gray-500 hover:bg-gray-100 rounded-md', data: { turbo_method: :delete, turbo_confirm: "Are you sure?", turbo_action: "replace" } do %>
+        <%= render 'icons/delete' %>
+      <% end %>
     </div>
     <!-- drawer component -->
     <%= render 'helpers/right_drawer',

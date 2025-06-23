@@ -20,26 +20,30 @@ class Imports::ImportAccount
   end
 
   def account
-    Account.find_by(external_id: @params[:external_id])
+    @connector.accounts.unscoped.find_by(external_id: @params[:external_id])
   end
 
   def create_params
     @create_params ||= {
       account_type: @params[:account_type],
-      balance: @params[:balance].class == String ? @params[:balance].tr(",", "").to_d : @params[:balance],
+      balance: parse_balance(@params[:balance]),
       currency: @params[:currency],
       is_active: @params[:is_active],
       nick_name: @params[:nick_name],
       external_id: @params[:external_id],
-      name: @params[:name],
+      name: @params[:name]
     }
+  end
+
+  def parse_balance(balance)
+    balance.instance_of?(String) ? balance.tr(',', '').to_d : balance
   end
 
   def update_params
     @update_params ||= begin
-        params = create_params.dup
-        params.delete(:nick_name)
-        params
-      end
+      params = create_params.dup
+      params.delete(:nick_name)
+      params
+    end
   end
 end

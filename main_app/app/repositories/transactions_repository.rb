@@ -2,7 +2,7 @@ class TransactionsRepository
   include TimeSeriesable
 
   def initialize(base_scope)
-    @base_scope = base_scope
+    @base_scope = base_scope.preload(:category)
   end
 
   def expenses_time_series(start_date, end_date)
@@ -29,7 +29,7 @@ class TransactionsRepository
 
   def top_categories(start_date, end_date)
     @base_scope
-      .select("category_id, sum(amount) as cat_amount")
+      .select('category_id, sum(amount) as cat_amount')
       .where(date: start_date..end_date, is_credit: false)
       .exclude_transfers
       .group(:category_id)

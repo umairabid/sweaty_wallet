@@ -29,7 +29,7 @@ class AccountsController < ApplicationController
   end
 
   def destroy
-    @account.destroy!
+    @account.soft_delete
     redirect_to connectors_path, notice: 'Account deleted successfully'
   end
 

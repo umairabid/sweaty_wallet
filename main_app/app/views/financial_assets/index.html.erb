@@ -10,10 +10,10 @@
     <div class="w-1/3 bg-white rounded-lg border border-gray-300 p-4 m-4 overflow-hidden text-sm">
       <%= render(Widgets::AssetsLiabilitiesComponent.new(current_user)) %>
     </div>
-    <div class="w-1/3 bg-white rounded-lg border border-gray-300 p-4 m-4 overflow-hidden">
+    <div class="w-1/3 bg-white rounded-lg border border-gray-300 p-4 m-4 overflow-hidden text-sm">
       <%= render(Widgets::AssetsBreakdownComponent.new(current_user)) %>
     </div>
-    <div class="w-1/3 bg-white rounded-lg border border-gray-300 p-4 m-4 overflow-hidden">
+    <div class="w-1/3 bg-white rounded-lg border border-gray-300 p-4 m-4 overflow-hidden text-sm">
       <%= render(Widgets::LiabilitiesBreakdownComponent.new(current_user)) %>
     </div>
   </div>

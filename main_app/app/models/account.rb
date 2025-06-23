@@ -1,4 +1,6 @@
 class Account < ApplicationRecord
+  include SoftDeletable
+
   ACCOUNT_TYPE_LABELS = {
     credit_card: 'Credit Card',
     deposit_account: 'Deposit/Chequing Account',
