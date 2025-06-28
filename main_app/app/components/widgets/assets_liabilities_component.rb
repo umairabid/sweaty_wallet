@@ -8,10 +8,14 @@ class Widgets::AssetsLiabilitiesComponent < ViewComponent::Base
   end
 
   def assets_percentage
+    return 0 if total.zero?
+
     (net_worth_breakdown.total_assets * 100 / total).round(2)
   end
 
   def liabilities_percentage
+    return 0 if total.zero?
+
     (net_worth_breakdown.total_liabilities * 100 / total).round(2)
   end
 
@@ -23,7 +27,7 @@ class Widgets::AssetsLiabilitiesComponent < ViewComponent::Base
   end
 
   def render?
-    @user
+    @user && total.positive?
   end
 
   private

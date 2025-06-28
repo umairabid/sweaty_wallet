@@ -7,12 +7,10 @@ class TransactionRulesController < ApplicationController
     @transaction_rules = current_user.transaction_rules.preload(:category)
   end
 
-  def new
-  end
+  def new; end
 
   def create
-    rule = current_user.transaction_rules.create!(rule_params)
-
+    rule = current_user.transaction_rules.create!(create_params)
     redirect_to edit_transaction_rule_path(id: rule.id)
   end
 
@@ -85,6 +83,14 @@ class TransactionRulesController < ApplicationController
 
   def rule_params
     params.require(:transaction_rule).permit(:name, :category_id)
+  end
+
+  def create_params
+    rule_params.merge(conditions: {
+                        id: SecureRandom.uuid,
+                        type: :group,
+                        conditions: []
+                      })
   end
 
   def set_rule

@@ -3,7 +3,7 @@ class Categories::AddUserDefaultCategories
 
   CATEGORIES = {
     'Income' => [
-      'Salary', 'Business Income', 'Investments', 'Other Income'
+      'Salary', 'Business Income', 'Capital Gains', 'Other Income'
     ],
     'Expenses' => [
       'Accommodation', 'Utilities', 'Groceries', 'Shopping', 'Personal Care', 'Healthcare',

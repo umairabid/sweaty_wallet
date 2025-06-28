@@ -1,6 +1,7 @@
 <div
   id="asset_row_<%= asset.id %>"
   data-controller="assets--row"
+  data-asset_id="<%= asset.id %>"
   class="bg-white p-6 rounded-lg shadow-md mb-4 break-inside-avoid-column">
   <h2 class="text-lg font-bold mb-2"><%= asset.name %></h2>
   <p class="text-gray-600 mb-4"><%= asset.description %></p>
@@ -10,7 +11,7 @@
     <button data-action="click->assets--row#open_drawer" class="flex p-2 py-1.5 rounded-lg text-sm text-white bg-primary-700 items-center justify-center">Edit</button>
     <%= link_to 'Delete', financial_asset_path(asset), data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: 'flex p-2 py-1.5 rounded-lg text-sm text-white bg-red-700 items-center justify-center mx-2' %>
   </div>
-  <div id="edit_asset_drawer" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80">
+  <div id="edit_asset_drawer_<%= asset.id %>" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80">
     <h5 id="drawer-label" class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase">Update Asset</h5>
     <button data-action="click->assets--row#close_drawer" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center" >
       <%= render "icons/cross" %>

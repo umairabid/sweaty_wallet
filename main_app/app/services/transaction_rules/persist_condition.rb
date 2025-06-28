@@ -3,16 +3,15 @@ class TransactionRules::PersistCondition
 
   def initialize(transaction_rule, params)
     @transaction_rule = transaction_rule
-    @group_id = params[:group_id]
-    @condition = params_to_condition(params) unless params[:type] == "group"
-    @nested_group = params_to_group(params) if params[:type] == "group"
+    @params = params
+    @group_id = @params[:group_id]
+    @condition = params_to_condition unless @params[:type] == 'group'
+    @condition_group = params_to_group if @params[:type] == 'group'
   end
 
   def call
-    if @transaction_rule.conditions.blank?
-      initialize_conditions
-    elsif @nested_group.present?
-      add_nested_group
+    if @condition_group.present?
+      add_group
     else
       add_to_group
     end
@@ -21,60 +20,60 @@ class TransactionRules::PersistCondition
 
   private
 
-  def initialize_conditions
-    @transaction_rule.conditions = {
-      id: SecureRandom.uuid,
-      type: :group,
-      conditions: [@condition],
-    }
-  end
-
-  def add_nested_group
+  def add_group
     group = find_group
-    raise CustomerError, "Group not found" if group.blank?
-    raise CustomerError, "Needs join_by" if @nested_group[:join_by].blank? && group["conditions"].size > 0
+    raise CustomerError, 'Group not found' if group.blank?
 
-    group["conditions"] << @nested_group
+    if @condition_group[:join_by].blank? && group['conditions'].size > 0
+      raise CustomerError,
+            'Needs join_by'
+    end
+
+    group['conditions'] << @condition_group
   end
 
   def add_to_group
     group = find_group
-    raise CustomerError, "Group not found" if group.blank?
-    raise CustomerError, "Needs join_by" if @condition[:join_by].blank? && group["conditions"].size > 0
+    raise CustomerError, 'Group not found' if group.blank?
 
-    group["conditions"] << @condition
+    if @condition[:join_by].blank? && group['conditions'].size > 0
+      raise CustomerError,
+            'Needs join_by'
+    end
+
+    group['conditions'] << @condition
   end
 
   def find_group(group = nil)
     group ||= @transaction_rule.conditions
-    return nil if group["type"] != 'group'
-    return group if group["id"] == @group_id
+    return nil if group['type'] != 'group'
+    return group if group['id'] == @group_id
 
-    conditions = group.dig("conditions") || []
+    conditions = group['conditions'] || []
     groups = conditions.map do |c|
       find_group(c)
     end
     groups.compact.first
   end
 
-  def params_to_condition(params)
-    type = params[:type].to_sym
-    value = params[type]
+  def params_to_condition
+    type = @params[:type].to_sym
+    value = @params[type]
     raise CustomerError, "No value for type #{type}" if value.blank?
 
     {
-      type: type,
-      value: value,
-      join_by: params.dig(:join_by),
+      type:,
+      value:,
+      join_by: @params[:join_by]
     }
   end
 
-  def params_to_group(params)
+  def params_to_group
     {
       id: SecureRandom.uuid,
       type: :group,
       conditions: [],
-      join_by: params.dig(:join_by),
+      join_by: @params[:join_by]
     }
   end
 end
