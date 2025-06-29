@@ -2,10 +2,9 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
   content: [
-    "./public/*.html",
+    "./app/**/*.html.erb", // Make sure this covers your Rails templates
     "./app/helpers/**/*.rb",
     "./app/javascript/**/*.js",
-    "./app/views/**/*.{erb,haml,html,slim}",
   ],
   safelist: [
     "w-64",
@@ -38,7 +37,9 @@ module.exports = {
     "text-green-500",
     "text-red-500",
     "text-blue-500",
-    "border-l-blue-500"
+    "border-l-blue-500",
+    "bg-orange-50/30",
+    "border-l-orange-500",
   ],
   theme: {
     extend: {

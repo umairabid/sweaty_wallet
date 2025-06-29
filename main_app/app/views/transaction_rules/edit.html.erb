@@ -23,7 +23,6 @@
       </a>
     </div>
   </div>
-
   <div class="px-4 py-6 flex justify-center">
     <div class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
       <%= form_with(model: @transaction_rule, url: transaction_rule_path(id: params[:id])) do |f| %>
@@ -41,7 +40,6 @@
       <% end %>
     </div>
   </div>
-
   <div class="px-4 py-6 flex justify-center">
     <div class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
       <%= render('transaction_rules/rules_conditions', group: @transaction_rule.conditions, references: @user_references) %>

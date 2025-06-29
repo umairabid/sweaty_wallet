@@ -9,18 +9,14 @@ class TransactionRules::DeleteCondition
 
   def call
     group = find_group
-    raise CustomerError, "Group not found" if group.blank?
+    raise CustomerError, 'Group not found' if group.blank?
 
-    group["conditions"].delete_at(@index)
-    if group["conditions"].blank?
+    group['conditions'].delete_at(@index)
+    if group['conditions'].blank?
       parent = find_parent(@group_id)
-      if parent == nil
-        @transaction_rule.conditions = {}
-      else
-        parent["conditions"].delete_at(parent["conditions"].index(group))
-      end
+      parent['conditions'].delete_at(parent['conditions'].index(group)) if parent.present?
     elsif @index == 0
-      group["conditions"][0].delete("join_by")
+      group['conditions'][0].delete('join_by')
     end
     @transaction_rule.save!
   end
@@ -29,10 +25,10 @@ class TransactionRules::DeleteCondition
 
   def find_group(group = nil)
     group ||= @transaction_rule.conditions
-    return nil if group["type"] != "group"
-    return group if group["id"] == @group_id
+    return nil if group['type'] != 'group'
+    return group if group['id'] == @group_id
 
-    conditions = group.dig("conditions") || []
+    conditions = group.dig('conditions') || []
     groups = conditions.map do |c|
       find_group(c)
     end
@@ -42,14 +38,12 @@ class TransactionRules::DeleteCondition
   def find_parent(group_id, group = nil)
     group ||= @transaction_rule.conditions
 
-    parents = group["conditions"]
-      .select { |c| c["type"] == "group" }
+    parents = group['conditions']
+      .select { |c| c['type'] == 'group' }
       .map do |condition|
-      if condition["id"] == group_id
-        return group
-      else
-        find_parent(group_id, condition)
-      end
+      return group if condition['id'] == group_id
+
+      find_parent(group_id, condition)
     end
 
     parents.compact.first

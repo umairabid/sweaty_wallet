@@ -1,13 +1,13 @@
-<%- if @condition['type'] != 'group' %>
-  <%- if @condition['join_by'].present? %>
-    <div class="flex m-2 p-2 justify-center">
-      <div class="border border-gray-100 rounded-lg shadow-sm flex">
-        <div class="text-card-foreground p-2 w-20 flex justify-center <%= @condition['join_by'] == 'or' ? 'bg-gray-100 rounded-lg' : '' %>">OR</div>
-        <div class="text-card-foreground p-2 w-20 flex justify-center <%= @condition['join_by'] == 'and' ? 'bg-gray-100 rounded-lg' : '' %>">AND</div>
-      </div>
+<%- if @condition['join_by'].present? %>
+  <div class="flex m-2 p-2 justify-center">
+    <div class="border border-gray-100 rounded-lg shadow-sm flex">
+      <div class="text-card-foreground p-2 w-20 flex justify-center <%= @condition['join_by'] == 'or' ? 'bg-gray-100 rounded-lg' : '' %>">OR</div>
+      <div class="text-card-foreground p-2 w-20 flex justify-center <%= @condition['join_by'] == 'and' ? 'bg-gray-100 rounded-lg' : '' %>">AND</div>
     </div>
-  <%- end %>
-  <div class="space-y-3 rounded-lg border bg-card text-card-foreground shadow-sm border-l-4 border-l-blue-500 " condition>
+  </div>
+<%- end %>
+<%- if @condition['type'] != 'group' %>
+  <div class="space-y-3 bg-white rounded-lg border bg-card text-card-foreground shadow-sm border-l-4 border-l-blue-500" condition>
     <div class="p-2">
       <div class="p-2 flex items-center">
         When

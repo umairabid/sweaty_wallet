@@ -1,30 +1,35 @@
 <div
+  class="<%= component_class %>"
   data-group_id="<%= @group_id %>"
   data-controller="transaction_rules--condition_group_component">
   <% if @level == 0 %>
-    <div class="flex w-full items-center justify-between">
-      <h2 class="text-xl font-semibold text-gray-900 mb-2">Rule Conditions</h2>
+    <div class="flex w-full items-center justify-between mb-4">
+      <h2 class="text-xl font-semibold text-gray-900">Rule Conditions</h2>
       <button
         id="conditions-group-button-<%= @group_id %>"
         data-action="click->transaction_rules--condition_group_component#add_rule"
-        class='cursor-pointer text-white bg-blue-700 font-sm text-xs rounded-lg text-sm px-4 py-2 text-center my-2'>
-        Add Condition
+        class="flex p-2 py-1.5 rounded-lg text-sm text-white bg-primary-700 items-center justify-center" 
+        data-turbo-stream href="<%= new_transaction_rule_path() %>">
+        <div class="flex items-center gap-x-3"><%= render 'icons/plus' %> Add Condition </div>
       </button>
     </div>
-    <% else %>
+  <% else %>
     <div class="flex w-full items-center justify-between">
-      <h2 class="text-xl font-semibold text-gray-900 mb-2">Rule Child Conditions</h2>
+      <div class="text-sm font-medium text-orange-800 flex">
+        <%= render('icons/folder', class: 'w-4 h-4 text-orange-800') %>
+        <span class="pl-2">Condition Group</span>
+      </div>
       <button
         id="conditions-group-button-<%= @group_id %>"
         data-action="click->transaction_rules--condition_group_component#add_rule"
-        class='cursor-pointer text-white bg-blue-700 font-sm text-xs rounded-lg text-sm px-4 py-2 text-center my-2'>
-        Add Condition
+        class="flex p-2 py-1.5 rounded-lg text-sm font-medium text-gray-800 bg-white items-center justify-center border border-gray-100" 
+        data-turbo-stream href="<%= new_transaction_rule_path() %>">
+        <div class="flex items-center gap-x-3"><%= render 'icons/plus', class: 'w-4 h-4 text-gray-800' %> Add Condition </div>
       </button>
     </div>
   <% end %>
-
   <div
-    class="space-y-3 rounded-lg border bg-card text-card-foreground shadow-sm border-l-4 border-l-blue-500 mb-4 hidden"
+    class="space-y-3 bg-white rounded-lg border bg-card text-card-foreground shadow-sm border-l-4 border-l-blue-500 mb-4 hidden"
     id="conditions-group-form-<%= @group_id %>">
     <div class="p-4">
       <%= form_for(:condition, method: :post, url: conditions_transaction_rule_path) do |f| %>
@@ -79,7 +84,6 @@
       <% end %>
     </div>
   </div>
-
   <div class="text-gray-900 text-sm w-full rounded-lg overflow-hidden">
     <%- (@group['conditions'] || []).each_with_index do |condition, index| %>
       <%= render(TransactionRules::ConditionComponent.new(
