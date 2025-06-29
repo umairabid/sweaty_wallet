@@ -11,6 +11,7 @@ module.exports = {
     "w-64",
     "w-1/2",
     "w-40",
+    "w-20",
     "rounded-l-lg",
     "rounded-r-lg",
     "bg-gray-200",
@@ -32,10 +33,12 @@ module.exports = {
     "my-2",
     "pr-2",
     "pb-0",
+    "m-2",
     "text-gray-100",
     "text-green-500",
     "text-red-500",
     "text-blue-500",
+    "border-l-blue-500"
   ],
   theme: {
     extend: {

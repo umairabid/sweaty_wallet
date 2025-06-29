@@ -33,6 +33,10 @@ class TransactionRules::ConditionComponent < ViewComponent::Base
   end
 
   def categories_by_id
-    @categories_by_id ||= @references[:categories].map { |p| [p[1], p[0]] }.to_h
+    @categories_by_id ||= @references[:categories].map { |p| [p[1].to_s, p[0]] }.to_h
+  end
+
+  def accounts_by_id
+    @accounts_by_id ||= @references[:accounts].map { |p| [p[1].to_s, p[0]] }.to_h
   end
 end
