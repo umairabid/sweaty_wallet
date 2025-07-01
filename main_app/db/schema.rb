@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_23_022337) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_30_042049) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension "pg_catalog.plpgsql"
+  enable_extension "vector"
 
   create_table "accounts", force: :cascade do |t|
     t.integer "account_type", null: false
@@ -221,6 +222,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_23_022337) do
     t.jsonb "external_object", default: {}
     t.bigint "category_id"
     t.datetime "deleted_at"
+    t.vector "embedding", limit: 768
     t.index ["account_id"], name: "index_transactions_on_account_id"
     t.index ["category_id"], name: "index_transactions_on_category_id"
     t.index ["secondary_external_id"], name: "index_transactions_on_secondary_external_id"

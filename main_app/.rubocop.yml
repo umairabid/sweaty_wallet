@@ -13,6 +13,9 @@ Style/FrozenStringLiteralComment:
 Lint/MissingSuper:
   Enabled: false
 
+Metrics/BlockLength:
+  Enabled: false
+
 Layout/LineLength:
   Max: 99
 

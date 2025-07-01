@@ -1,6 +1,10 @@
 class Transaction < ApplicationRecord
   include SoftDeletable
 
+  DIMENSION_COUNT = 768
+
+  has_neighbors :embedding, normalize: true, dimensions: Transaction::DIMENSION_COUNT
+
   COLUMNS = {
     'id' => { label: 'ID', value: ->(t) { t.id } },
     'date' => { label: 'Date', value: ->(t) { t.date.strftime('%d %b %Y') } },
