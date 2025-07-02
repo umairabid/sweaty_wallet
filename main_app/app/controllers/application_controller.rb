@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include Pagy::Backend
+
   authorize_resource class: false
   helper_method :sidebar_menu
 

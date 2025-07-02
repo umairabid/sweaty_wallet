@@ -1,5 +1,5 @@
-class InstallNeighborVector < ActiveRecord::Migration[8.0]
+class InstallNeighborVector < ActiveRecord::Migration[7.1]
   def change
-    enable_extension "vector"
+    enable_extension 'vector'
   end
 end

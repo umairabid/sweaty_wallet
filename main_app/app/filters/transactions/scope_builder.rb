@@ -1,31 +1,16 @@
-class TransactionFilter
-  attr_reader :query,
-              :categories,
-              :time_range,
-              :account_type,
-              :bank,
-              :type,
-              :account_id,
-              :selects,
-              :show_duplicates
+class Transactions::ScopeBuilder
+  include Callable
 
-  FILTERABLE_ACCOUNT_TYPES = %i[credit_card deposit_account].freeze
+  delegate :has?, to: :@filter_model
+  delegate(*Transactions::Model::ATTRIBUTES, to: :@filter_model)
 
-  def initialize(user, params = {})
-    @user = user
-    @query = params[:query] || ''
-    @categories = params[:categories] || ''
-    @time_range = params[:time_range] || ''
-    @bank = params[:bank] || ''
-    @account_type = params[:account_type] || ''
-    @type = params[:type] || ''
-    @account_id = params[:account_id] || ''
-    @show_duplicates = params[:show_duplicates] == '1'
-    set_select_options
+  def initialize(filter_model, base_scope)
+    @filter_model = filter_model
+    @base_scope = base_scope
   end
 
-  def apply(scope)
-    scope = scope.joins(account: :connector).preload(:category)
+  def call
+    scope = @base_scope.joins(account: :connector).preload(:category)
     scope = scope.where('description ilike ?', "%#{query}%") if has? :query
 
     scope = scope.where(accounts: { connector_id: bank }) if has? :bank
@@ -67,25 +52,6 @@ class TransactionFilter
       scope = scope.where(id: duplicate_ids)
     end
 
-    scope = scope.order(date: :desc).preload(account: :connector)
-  end
-
-  private
-
-  def has?(name)
-    send(name).present?
-  end
-
-  def set_select_options
-    @selects = {
-      **current_user_repo.select_options,
-      time_ranges: [['Select Duration', ''], ['Last Month', 1], ['Last Two Months', 2],
-                    ['Last Three Months', 3]],
-      types: [['Select Type', ''], ['Credit', 'credit'], ['Debit', 'debit']]
-    }
-  end
-
-  def current_user_repo
-    @current_user_repo ||= CurrentUserRepository.new(@user)
+    scope.order(date: :desc).preload(account: :connector)
   end
 end

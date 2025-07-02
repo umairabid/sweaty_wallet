@@ -54,8 +54,6 @@ gem 'ferrum'
 
 gem 'good_job'
 
-gem 'geared_pagination'
-
 gem 'view_component'
 
 gem 'csv'
@@ -65,6 +63,9 @@ gem 'cancancan'
 gem 'ruby_llm'
 
 gem 'neighbor'
+
+gem 'pagy'
+
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
@@ -79,10 +80,9 @@ group :development do
   gem 'mailcatcher'
 
   gem 'debug'
-
 end
 
 group :test do
-  gem 'rspec-rails'
   gem 'factory_bot_rails'
+  gem 'rspec-rails'
 end

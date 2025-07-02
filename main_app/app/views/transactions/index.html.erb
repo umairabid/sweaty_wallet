@@ -9,50 +9,7 @@
     </div>
   </div>
   <div class="relative overflow-x-auto p-4 pt-0">
-    <div class="border border-gray-300 rounded-lg overflow-hidden">
-      <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-        <thead class="text-xs text-gray-700 uppercase">
-          <tr>
-            <%- Transaction::COLUMNS.each do |key| %>
-              <%- if @columns[key[0]].present? && @columns[key[0]]== '1' %>
-                <th scope="col" class="p-4 border-blue-gray-100 bg-primary-700">
-                  <p class="block font-sans text-sm text-white antialiased font-normal leading-none"><%=  Transaction::COLUMNS[key[0]][:label] %></p></th>
-              <%- end %>
-            <%- end %>
-            <th class="p-4 border-blue-gray-100 bg-primary-700"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @transactions.each do |transaction| %>
-            <%= render('transactions/transaction_row', transaction: transaction, references: @user_references, columns: @columns) %>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-    <div class="flex justify-center p-6">
-      <% if @page.first? %>
-        <button disabled class="flex items-center justify-center px-4 h-10 me-3 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700">
-          <%= render 'icons/pointer-left' %>
-          Previous
-        </button>
-      <% else %>
-        <a href="<%= transactions_path(page: @page.next_param - 2, filter: params[:filter]&.to_unsafe_hash, columns: params[:columns]&.to_unsafe_hash) %>" class="flex items-center justify-center px-4 h-10 me-3 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700">
-          <%= render 'icons/pointer-left' %>
-          Previous
-        </a>
-      <% end %>
-      <% if @page.last? %>
-        <button disabled class="flex items-center justify-center px-4 h-10 me-3 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700">
-          Next
-          <%= render 'icons/pointer-right' %>
-        </button>
-      <% else %>
-        <a href="<%= transactions_path(page: @page.next_param, filter: params[:filter]&.to_unsafe_hash, columns: params[:columns]&.to_unsafe_hash) %>" class="flex items-center justify-center px-4 h-10 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700">
-          Next
-          <%= render 'icons/pointer-right' %>
-        </a>
-      <% end %>
-    </div>
+    <%= render(Transactions::ListComponent.new(user: current_user, columns: @columns, filter: @filter, page: params[:page])) %>
   </div>
   <div id="background_processing_modal"></div>
 </div>

@@ -1,0 +1,23 @@
+<div class="border border-gray-300 rounded-lg overflow-hidden">
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+    <thead class="text-xs text-gray-700 uppercase">
+    <tr>
+      <%- Transaction::COLUMNS.each do |key| %>
+        <%- if @columns[key[0]].present? && @columns[key[0]]== '1' %>
+          <th scope="col" class="p-4 border-blue-gray-100 bg-primary-700">
+            <p class="block font-sans text-sm text-white antialiased font-normal leading-none"><%=  Transaction::COLUMNS[key[0]][:label] %></p></th>
+        <%- end %>
+      <%- end %>
+      <th class="p-4 border-blue-gray-100 bg-primary-700"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @transactions.each do |transaction| %>
+      <%= render('transactions/transaction_row', transaction: transaction, references: @user_references, columns: @columns) %>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="flex justify-center p-6">
+  <%== helpers.pagy_nav(@pagy) %>
+</div>
