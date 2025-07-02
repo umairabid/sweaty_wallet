@@ -16,7 +16,7 @@ jobs:
         working-directory: ./main_app
     services:
       postgres:
-        image: postgres:16-alpine
+        image: pgvector:pg-17
         ports:
           - "5432:5432"
         env:
