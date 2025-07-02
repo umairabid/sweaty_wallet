@@ -16,8 +16,12 @@ class Transactions::UpdateEmbeddings
   private
 
   def validate!
-    msg = 'All transactions must have description and category'
-    raise CustomerError, msg if @transactions.any? { |t| t.embedding.present? || t.description.blank? }
+    msg = 'All transactions must have description and no existing embedding.'
+    raise CustomerError, msg unless transactions_valid?
+  end
+
+  def transactions_valid?
+    @transactions.all? { |t| t.embedding.blank? || t.description.present? }
   end
 
   def descriptions

@@ -1,17 +1,25 @@
 class Transactions::ListComponent < ViewComponent::Base
   include Pagy::Backend
 
-  def initialize(user:, columns: nil, filter: nil, page: 1)
+  DEFAULT_OPTIONS = {
+    with_suggestions: false
+  }.freeze
+
+  def initialize(user:, columns: nil, filter: nil, page: 1, options: DEFAULT_OPTIONS)
     @params = params
     @columns = columns || Transaction::DEFAULT_COLUMNS.map { |k| [k, '1'] }.to_h
     @filter = filter
     @page = page
     @user = user
+    @options = options
     set_user_references
-    set_transactions
   end
 
   private
+
+  def before_render
+    set_transactions
+  end
 
   def params
     { page: [@page.to_i || 0, 1].max }
@@ -20,7 +28,7 @@ class Transactions::ListComponent < ViewComponent::Base
   def set_transactions
     scope = @user.transactions
     scope = Transactions::ScopeBuilder.call(@filter, scope) if @filter.present?
-    @pagy, @transactions = pagy_countless(scope)
+    @pagy, @transactions = pagy_countless(scope, request_path: helpers.transactions_path)
   end
 
   def user_repo

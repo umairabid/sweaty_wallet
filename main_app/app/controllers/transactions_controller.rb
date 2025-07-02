@@ -48,6 +48,19 @@ class TransactionsController < ApplicationController
                                   columns: redirect_params[:columns], page: redirect_params[:page])
   end
 
+  def with_category_suggestions
+    filter = Transactions::Model.new(current_user, params[:filter] || {})
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          'transactions_list_frame', # Target ID for replacement
+          partial: 'transactions/with_category_suggestions', # A new partial for the frame content
+          locals: { user: current_user, params:, filter: }
+        )
+      end
+    end
+  end
+
   private
 
   def set_columns

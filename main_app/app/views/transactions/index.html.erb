@@ -8,7 +8,7 @@
       <%= render 'transactions/index_header' %>
     </div>
   </div>
-  <div class="relative overflow-x-auto p-4 pt-0">
+  <div id="transactions_list_frame" class="relative overflow-x-auto p-4 pt-0">
     <%= render(Transactions::ListComponent.new(user: current_user, columns: @columns, filter: @filter, page: params[:page])) %>
   </div>
   <div id="background_processing_modal"></div>

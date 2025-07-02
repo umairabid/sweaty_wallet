@@ -1,0 +1,9 @@
+<div class="relative overflow-x-auto p-4 pt-0">
+  <%= render(Transactions::ListComponent.new(
+    user: user,
+    columns: @columns,
+    filter: filter,
+    page: params[:page],
+    options: { with_suggestions: true })
+  ) %>
+</div>
