@@ -52,6 +52,17 @@ class Transactions::ScopeBuilder
       scope = scope.where(id: duplicate_ids)
     end
 
+    scope = rule_applier.preview if has? :transaction_rule_id
+
     scope.order(date: :desc).preload(account: :connector)
+  end
+
+  private
+
+  def rule_applier
+    @rule_applier ||= begin
+      rule = TransactionRule.find @filter_model.transaction_rule_id
+      TransactionRules::ApplyRule.new(rule)
+    end
   end
 end

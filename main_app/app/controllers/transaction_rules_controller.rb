@@ -46,7 +46,7 @@ class TransactionRulesController < ApplicationController
 
   def preview
     @transaction_rules = current_user_repo.transaction_rules.map { |r| [r.name, r.id] }
-    @transactions = applier.preview
+    @filter = Transactions::Model.new(current_user, { transaction_rule_id: @transaction_rule.id })
   end
 
   def apply

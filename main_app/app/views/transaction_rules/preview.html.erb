@@ -1,85 +1,41 @@
-<div id="transaction-rules-preview" data-controller="transaction_rules--preview">
-  <div class="block items-center justify-between border-b border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800 sm:flex">
-    <div class="mb-1 w-full">
-      <div class="mb-4">
-        <%= render 'helpers/breadcrumbs', crumbs: [['Transaction Rules', transaction_rules_path],['Apply']] %>
-        <h1 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Apply Transaction Rule</h1>
+<div id="transactions-manage-page" data-controller="transaction_rules--edit" class="p-2 bg-gray-100">
+  <div class="flex items-center justify-between p-4">
+    <div class="mb-4">
+      <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl">Preview Rule</h1>
+    </div>
+    <div class="ml-auto flex items-center space-x-2 sm:space-x-3">
+      <button type="button" id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="flex px-4 py-2 pr-4 rounded-lg text-sm text-white bg-primary-700 items-center justify-center">
+        <div class="flex items-center gap-x-1"> <%= @transaction_rule.name %> <%= render('icons/arrow-down') %> </div>
+      </button>
+      <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-xl w-44 ">
+        <ul class="py-2 border-gray-200 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+          <%- @transaction_rules.each do |rule| %>
+            <li>
+              <a href="<%= preview_transaction_rule_path(rule.last) %>" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                <%= rule.first %>
+              </a>
+            </li>
+          <% end %>
+        </ul>
       </div>
-      <p class="text-sm mt-4">Rules help you to categorize transactions</p>
+
+      <%= link_to(
+                apply_transaction_rule_path(id: params[:id]),
+                data: {turbo_method: :post, turbo_confirm: 'Are you sure?'},
+                class: 'flex px-4 py-2 pr-2 rounded-lg text-sm text-white bg-primary-700 items-center justify-center') do %>
+        <div class="flex items-center gap-x-1"> Apply  <%= render('icons/arrow-right', class: 'w-5 h-5 text-white', view_box: '0 0 20 20') %> </div>
+      <% end %>
+      <%= link_to(
+                next_transaction_rule_path(id: params[:id]),
+                class: 'flex px-4 py-2 pr-2 rounded-lg text-sm text-white bg-primary-700 items-center justify-center') do %>
+        <div class="flex items-center gap-x-1"> Next  <%= render('icons/arrow-right', class: 'w-5 h-5 text-white', view_box: '0 0 20 20') %> </div>
+      <% end %>
+      <a class="flex px-4 py-2 pr-2 rounded-lg text-sm text-white bg-primary-700 items-center justify-center" href="<%= edit_transaction_rule_path(id: @transaction_rule.id) %>">
+        <div class="flex items-center gap-x-1"> Manage  <%= render('icons/arrow-right', class: 'w-5 h-5 text-white', view_box: '0 0 20 20') %> </div>
+      </a>
     </div>
   </div>
-  <div class="px-4 py-6 flex items-center flex-col">
-    <div class="w-1/2 p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
-      <div class="mb-4"> Selet Rule to Apply </div>
-        <%= select_tag(
-          'rule', 
-          options_for_select(@transaction_rules, selected: params[:id]),
-          id: 'transaction_rule_dropdown',
-          class: 'block mb-4 w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5'
-        ) %>
-      <div class="flex justify-end">
-        <%= 
-          link_to('Next', 
-          next_transaction_rule_path(id: params[:id]),
-          class: 'text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-10 py-2.5 mr-4')
-        %>
-        <%= 
-          link_to('Apply', 
-          apply_transaction_rule_path(id: params[:id]),
-          data: {turbo_method: :post, turbo_confirm: 'Are you sure?'},
-          class: 'text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-10 py-2.5')
-        %>
-      </div>
-    </div>
-    <div class="mt-6 w-1/2 p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
-      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            <th scope="col" class="px-6 py-3">
-              Date
-            </th>
-            <th scope="col" class="px-6 py-3">
-              Description
-            </th>
-            <th scope="col" class="px-6 py-3">
-              Amount
-            </th>
-            <th scope="col" class="px-6 py-3">
-              Type
-            </th>
-            <th scope="col" class="px-6 py-3">
-              Account
-            </th>
-            <th scope="col" class="px-6 py-3">
-              Bank
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @transactions.each do |transaction| %>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-              <td class="px-6 py-4">
-                <%= transaction.date %>
-              </td>
-              <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                <%= transaction.description %>
-              </td>
-              <td class="px-6 py-4">
-                <%= transaction.amount %>
-              </td>
-              <td class="px-6 py-4">
-                <%= transaction.is_credit ? 'Credit' : 'Debit' %>
-              </td>
-              <td class="px-6 py-4">
-                <%= transaction.account.nick_name || transaction.account.name %>
-              </td>
-              <td class="px-6 py-4">
-                <%= transaction.account.connector.bank_name %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
+  <div class="relative overflow-x-auto p-4 pt-0">
+    <%= render(Transactions::ListComponent.new(user: current_user, filter: @filter, page: params[:page])) %>
   </div>
 </div>

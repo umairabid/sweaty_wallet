@@ -4,7 +4,7 @@
   data-transaction_id="<%= transaction.id %>"
   class="bg-white border-b">
   <%- Transaction::COLUMNS.each do |key| %>
-    <%- if @columns[key[0]].present? && @columns[key[0]]== '1' %>
+    <%- if columns[key[0]].present? && columns[key[0]]== '1' %>
       <td class="p-4 py-2">
         <%=  Transaction::COLUMNS[key[0]][:value].call(transaction) %>
       </td>

@@ -1,9 +1,9 @@
 class Transactions::ListComponent < ViewComponent::Base
   include Pagy::Backend
 
-  def initialize(user:, columns:, filter:, page: 1)
+  def initialize(user:, columns: nil, filter: nil, page: 1)
     @params = params
-    @columns = columns
+    @columns = columns || Transaction::DEFAULT_COLUMNS.map { |k| [k, '1'] }.to_h
     @filter = filter
     @page = page
     @user = user
@@ -18,7 +18,8 @@ class Transactions::ListComponent < ViewComponent::Base
   end
 
   def set_transactions
-    scope = Transactions::ScopeBuilder.call(@filter, @user.transactions)
+    scope = @user.transactions.order(created_at: :desc)
+    scope = Transactions::ScopeBuilder.call(@filter, scope) if @filter.present?
     @pagy, @transactions = pagy(scope)
   end
 

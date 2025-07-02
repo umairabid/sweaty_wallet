@@ -11,7 +11,7 @@ class TransactionRules::ApplyRule
   end
 
   def preview
-    @rule.user.transactions.where(@category_scope.and(@rules_scope)) || []
+    @rule.user.transactions.where(@category_scope.and(@rules_scope))
   end
 
   def apply
