@@ -1,4 +1,4 @@
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe TransactionsController, type: :controller do
   let(:user) { create(:user) }
@@ -6,24 +6,24 @@ RSpec.describe TransactionsController, type: :controller do
   let(:account) { create(:account, connector: connector) }
   let(:transactions) { [create(:transaction, account: account)] }
 
-  describe "routes" do
+  describe 'routes' do
     before do
       sign_in user
     end
 
-    context "get #index" do
-      it "performs filter" do
-        expect(TransactionFilter).to receive(:new).and_return(double(TransactionsRepository, apply: user.transactions))
+    context 'get #index' do
+      it 'performs filter' do
+        expect(Transactions::Model).to receive(:new)
         get :index
       end
     end
 
-    context "post #create" do
+    context 'post #create' do
       let(:transaction) { build(:transaction, account: account) }
-      it "creates transaction" do
-        expect {
+      it 'creates transaction' do
+        expect do
           post :create, params: { transaction: transaction.as_json }
-        }.to change { Transaction.count }.by(1)
+        end.to change { Transaction.count }.by(1)
       end
     end
   end

@@ -4,7 +4,6 @@
 # Customize only what you really need and notice that the core Pagy works also without any of the following lines.
 # Should you just cherry pick part of this file, please maintain the require-order of the extras
 
-
 # Pagy Variables
 # See https://ddnexus.github.io/pagy/docs/api/pagy#variables
 # You can set any pagy variable as a Pagy::DEFAULT. They can also be overridden per instance by just passing them to
@@ -17,17 +16,14 @@
 # Pagy::DEFAULT[:count_args]  = []                    # example for non AR ORMs
 # Pagy::DEFAULT[:max_pages]   = 3000                  # example
 
-
 # Extras
 # See https://ddnexus.github.io/pagy/categories/extra
-
 
 # Legacy Compatibility Extras
 
 # Size extra: Enable the Array type for the `:size` variable (e.g. `size: [1,4,4,1]`)
 # See https://ddnexus.github.io/pagy/docs/extras/size
 # require 'pagy/extras/size'   # must be required before the other extras
-
 
 # Backend Extras
 
@@ -56,11 +52,6 @@
 #   end
 # end
 # Pagy::Calendar.prepend LocalizePagyCalendar
-
-# Countless extra: Paginate without any count, saving one query per rendering
-# See https://ddnexus.github.io/pagy/docs/extras/countless
-# require 'pagy/extras/countless'
-# Pagy::DEFAULT[:countless_minimal] = false   # default (eager loading)
 
 # Elasticsearch Rails extra: Paginate `ElasticsearchRails::Results` objects
 # See https://ddnexus.github.io/pagy/docs/extras/elasticsearch_rails
@@ -111,7 +102,6 @@
 # uncomment if you are going to use Searchkick.pagy_search
 # Searchkick.extend Pagy::Searchkick
 
-
 # Frontend Extras
 
 # Bootstrap extra: Add nav, nav_js and combo_nav_js helpers and templates for Bootstrap pagination
@@ -130,7 +120,6 @@
 # Multi size var used by the *_nav_js helpers
 # See https://ddnexus.github.io/pagy/docs/extras/pagy#steps
 # Pagy::DEFAULT[:steps] = { 0 => 5, 540 => 7, 720 => 9 }   # example
-
 
 # Feature Extras
 
@@ -209,12 +198,15 @@
 #                   filepath: 'path/to/pagy-xyz.yml',
 #                   pluralize: lambda{ |count| ... } )
 
-
 # I18n extra: uses the standard i18n gem which is ~18x slower using ~10x more memory
 # than the default pagy internal i18n (see above)
 # See https://ddnexus.github.io/pagy/docs/extras/i18n
 # require 'pagy/extras/i18n'
 
+# Countless extra: Paginate without any count, saving one query per rendering
+# See https://ddnexus.github.io/pagy/docs/extras/countless
+require 'pagy/extras/countless'
+Pagy::DEFAULT[:countless_minimal] = false # default (eager loading)
 
 # When you are done setting your own default freeze it, so it will not get changed accidentally
 Pagy::DEFAULT.freeze

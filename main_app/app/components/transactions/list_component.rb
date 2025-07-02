@@ -18,9 +18,9 @@ class Transactions::ListComponent < ViewComponent::Base
   end
 
   def set_transactions
-    scope = @user.transactions.order(created_at: :desc)
+    scope = @user.transactions
     scope = Transactions::ScopeBuilder.call(@filter, scope) if @filter.present?
-    @pagy, @transactions = pagy(scope)
+    @pagy, @transactions = pagy_countless(scope)
   end
 
   def user_repo
