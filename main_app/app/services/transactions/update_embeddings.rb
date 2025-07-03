@@ -12,18 +12,14 @@ class Transactions::UpdateEmbeddings
   end
 
   private
-  
+
   def update_neighbors!
-    @transactions.each_with_index do |t|
-      neighbors = t.nearest_neighbors(:embedding, distance: 'cosine').first(5).pluck(:id)
-      t.neighbor_ids = neighbors
-      t.save!
-    end
+    @transactions.each(&:reset_neighbors!)
   end
 
   def update_embeddings!
     @transactions.each_with_index do |transaction, index|
-      transaction.embedding = embeddings.vectors[index]
+      transaction.embedding = descriptions.size == 1 ? embeddings.vectors : embeddings.vectors[index]
       transaction.save!
     end
   end

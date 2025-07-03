@@ -1,23 +1,26 @@
 class Transactions::Update < BaseMutation
   include Callable
-  
-  ALLOWED_PARAMS = %i[
-    date
-    description
-    amount
-    is_credit
-  ].freeze
 
-  def call
-    @model.attributes = params.slice(*ALLOWED_PARAMS)
+  private
+
+  def mutate
+    @model.attributes = params
     @model.save!
     @model
   end
 
-  def params
-    return @params if self.class.opts[:safe_params]
+  def after_mutate
+    return unless @model.description_previously_changed?
 
-    @params.permit(*ALLOWED_PARAMS).to_h.symbolize_keys
+    Transactions::ResetEmbeddingsJob.perform_later([@model])
+  end
+
+  def allowed_params
+    %i[
+      date
+      description
+      amount
+      is_credit
+    ]
   end
 end
-

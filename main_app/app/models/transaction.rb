@@ -36,5 +36,10 @@ class Transaction < ApplicationRecord
       .left_joins(category: :parent_category)
   }
 
+  def reset_neighbors!
+    to_transaction_neighbors.destroy_all
+    neighbors = nearest_neighbors(:embedding, distance: 'cosine').first(5)
+    to_transaction_neighbors.create!(neighbors.map { |n| {neighbor: n} })
+  end
 end
 
