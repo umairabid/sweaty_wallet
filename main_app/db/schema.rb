@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_30_042049) do
+ActiveRecord::Schema[7.1].define(version: 2025_07_03_010940) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "vector"
@@ -198,6 +198,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_30_042049) do
     t.index ["scheduled_at"], name: "index_good_jobs_on_scheduled_at", where: "(finished_at IS NULL)"
   end
 
+  create_table "transaction_neighbors", force: :cascade do |t|
+    t.bigint "transaction_id", null: false
+    t.bigint "neighbor_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["neighbor_id"], name: "index_transaction_neighbors_on_neighbor_id"
+    t.index ["transaction_id"], name: "index_transaction_neighbors_on_transaction_id"
+  end
+
   create_table "transaction_rules", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "category_id", null: false
@@ -223,9 +232,11 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_30_042049) do
     t.bigint "category_id"
     t.datetime "deleted_at"
     t.vector "embedding", limit: 768
+    t.bigint "suggested_category_id"
     t.index ["account_id"], name: "index_transactions_on_account_id"
     t.index ["category_id"], name: "index_transactions_on_category_id"
     t.index ["secondary_external_id"], name: "index_transactions_on_secondary_external_id"
+    t.index ["suggested_category_id"], name: "index_transactions_on_suggested_category_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -258,8 +269,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_30_042049) do
   add_foreign_key "categories", "users"
   add_foreign_key "connectors", "users", on_delete: :cascade
   add_foreign_key "file_imports", "users"
+  add_foreign_key "transaction_neighbors", "transactions", column: "neighbor_id"
   add_foreign_key "transaction_rules", "categories"
   add_foreign_key "transaction_rules", "users"
   add_foreign_key "transactions", "accounts", on_delete: :cascade
+  add_foreign_key "transactions", "categories", column: "suggested_category_id"
   add_foreign_key "transactions", "categories", on_delete: :nullify
 end

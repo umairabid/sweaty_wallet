@@ -3,7 +3,6 @@ class Transaction < ApplicationRecord
 
   DIMENSION_COUNT = 768
 
-  has_neighbors :embedding, normalize: true, dimensions: Transaction::DIMENSION_COUNT
 
   COLUMNS = {
     'id' => { label: 'ID', value: ->(t) { t.id } },
@@ -21,6 +20,14 @@ class Transaction < ApplicationRecord
 
   belongs_to :account
   belongs_to :category, optional: true
+  has_neighbors :embedding, normalize: true, dimensions: Transaction::DIMENSION_COUNT
+
+
+  has_many :to_transaction_neighbors, class_name: 'TransactionNeighbor'
+  has_many :from_transaction_neighbors, foreign_key: 'neighbor_id', class_name: 'TransactionNeighbor'
+
+  has_many :to_neighbors, through: :to_transaction_neighbors, source: :neighbor
+  has_many :from_neighbors, through: :from_transaction_neighbors, source: :entry
 
   validates :external_id, uniqueness: { scope: :account }
 
@@ -28,4 +35,6 @@ class Transaction < ApplicationRecord
     where.not(parent_category: { code: 'transfers' })
       .left_joins(category: :parent_category)
   }
+
 end
+

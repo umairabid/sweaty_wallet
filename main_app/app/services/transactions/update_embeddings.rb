@@ -7,13 +7,26 @@ class Transactions::UpdateEmbeddings
 
   def call
     validate!
+    update_embeddings!
+    update_neighbors!
+  end
+
+  private
+  
+  def update_neighbors!
+    @transactions.each_with_index do |t|
+      neighbors = t.nearest_neighbors(:embedding, distance: 'cosine').first(5).pluck(:id)
+      t.neighbor_ids = neighbors
+      t.save!
+    end
+  end
+
+  def update_embeddings!
     @transactions.each_with_index do |transaction, index|
       transaction.embedding = embeddings.vectors[index]
       transaction.save!
     end
   end
-
-  private
 
   def validate!
     msg = 'All transactions must have description and no existing embedding.'
