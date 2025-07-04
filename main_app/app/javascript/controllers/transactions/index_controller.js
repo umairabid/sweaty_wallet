@@ -1,6 +1,7 @@
 import BaseController from "controllers/base_controller"
 import create_drawer from "lib/create_drawer"
 import create_modal from "lib/create_modal"
+import { blockingJob } from "lib/blocking_job"
 
 export default class extends BaseController {
   connect() {
@@ -43,5 +44,13 @@ export default class extends BaseController {
 
   close_add_drawer() {
     this.new_transaction_drawer.hide()
+  }
+
+  suggest_categories(event) {
+    event.preventDefault()
+    const button = event.currentTarget.closest('button')
+    const url = button.dataset.action_url
+    console.log(url)
+    blockingJob({ url })
   }
 }

@@ -60,12 +60,13 @@ gem 'csv'
 
 gem 'cancancan'
 
-gem 'ruby_llm'
+gem 'ruby_llm', git: 'https://github.com/compumike/ruby_llm.git', branch: 'feature/with-options'
 
 gem 'neighbor'
 
 gem 'pagy'
 
+gem 'requestjs-rails'
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]

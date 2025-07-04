@@ -1,3 +1,18 @@
+GIT
+  remote: https://github.com/compumike/ruby_llm.git
+  revision: d781d0e267495f1d603c20d06f9af7540dac3b44
+  branch: feature/with-options
+  specs:
+    ruby_llm (1.3.1)
+      base64
+      event_stream_parser (~> 1)
+      faraday (>= 1.10.0)
+      faraday-multipart (>= 1)
+      faraday-net_http (>= 1)
+      faraday-retry (>= 1)
+      marcel (~> 1.0)
+      zeitwerk (~> 2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -112,7 +127,7 @@ GEM
     factory_bot_rails (6.4.3)
       factory_bot (~> 6.4)
       railties (>= 5.0.0)
-    faraday (2.13.1)
+    faraday (2.13.2)
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
@@ -257,6 +272,8 @@ GEM
       psych (>= 4.0.0)
     reline (0.5.8)
       io-console (~> 0.5)
+    requestjs-rails (0.0.13)
+      railties (>= 7.1.0)
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
@@ -278,15 +295,6 @@ GEM
       rspec-support (~> 3.13)
     rspec-support (3.13.1)
     ruby2_keywords (0.0.5)
-    ruby_llm (1.3.1)
-      base64
-      event_stream_parser (~> 1)
-      faraday (>= 1.10.0)
-      faraday-multipart (>= 1)
-      faraday-net_http (>= 1)
-      faraday-retry (>= 1)
-      marcel (~> 1.0)
-      zeitwerk (~> 2)
     sinatra (3.2.0)
       mustermann (~> 3.0)
       rack (~> 2.2, >= 2.2.4)
@@ -362,8 +370,9 @@ DEPENDENCIES
   pg
   puma
   rails
+  requestjs-rails
   rspec-rails
-  ruby_llm
+  ruby_llm!
   sprockets-rails
   stimulus-rails
   tailwindcss-rails

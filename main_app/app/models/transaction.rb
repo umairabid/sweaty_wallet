@@ -20,6 +20,7 @@ class Transaction < ApplicationRecord
 
   belongs_to :account
   belongs_to :category, optional: true
+  belongs_to :suggested_category, class_name: 'Category', optional: true
   has_neighbors :embedding, normalize: true, dimensions: Transaction::DIMENSION_COUNT
 
 
@@ -38,7 +39,7 @@ class Transaction < ApplicationRecord
 
   def reset_neighbors!
     to_transaction_neighbors.destroy_all
-    neighbors = nearest_neighbors(:embedding, distance: 'cosine').first(5)
+    neighbors = nearest_neighbors(:embedding, distance: 'cosine').where.not(category: nil).first(5)
     to_transaction_neighbors.create!(neighbors.map { |n| {neighbor: n} })
   end
 end

@@ -12,12 +12,13 @@
     <button data-action="click->transactions--index#open_columns_modal" class="flex border border-gray-300 p-2 py-1.5 rounded-lg text-sm text-gray-500 items-center justify-center bg-white">
       <%= render 'icons/columns' %>
     </button>
-    <%= link_to with_category_suggestions_transactions_path(request.query_parameters),
-                data: { turbo_stream: "transactions_list_frame", action: "click->products-list#refresh" },
-                class: 'flex p-2 py-1.5 rounded-lg text-sm text-white bg-primary-700 items-center justify-center' do %>
+    <button 
+      class='flex p-2 py-1.5 rounded-lg text-sm text-white bg-primary-700 items-center justify-center' 
+      data-action_url="<%= suggest_categories_transactions_url(request.params) %>"
+      data-action="click->transactions--index#suggest_categories">
       <%= render 'icons/robot' %>
       <span class="pl-1">Suggest Categories</span>
-    <% end %>
+    </button>
     <button data-action="click->transactions--index#open_add_drawer" class="flex p-2 py-1.5 rounded-lg text-sm text-white bg-primary-700 items-center justify-center">
       <%= render 'icons/plus' %>
       <span class="pl-1">Add Transaction</span>
