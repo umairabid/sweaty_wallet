@@ -25,6 +25,7 @@ class Ability
       can :edit, :registration
       can :update, :registration
       can :manage, :financial_asset
+      can :manage, :blocking_job
     end
   end
 end
