@@ -21,6 +21,7 @@ class Transactions::Update < BaseMutation
       description
       amount
       is_credit
+      category_id
     ]
   end
 end

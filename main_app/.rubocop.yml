@@ -19,6 +19,9 @@ Metrics/BlockLength:
 Layout/LineLength:
   Max: 99
 
+Metrics/MethodLength:
+  Enabled: false
+
 Layout/MultilineMethodCallIndentation:
   Enabled: true
   EnforcedStyle: indented # This is the key change

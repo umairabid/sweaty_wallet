@@ -50,7 +50,35 @@ export default class extends BaseController {
     event.preventDefault()
     const button = event.currentTarget.closest('button')
     const url = button.dataset.action_url
-    console.log(url)
-    blockingJob({ url })
+    const ids = this.extractTransactionRowIdsByClass()
+    const promise = blockingJob({ url, params: { ids } })
+    promise.then(result => {
+      const currentUrl = new URL(window.location.href);
+      currentUrl.searchParams.append('with_suggestions', 1)
+      Turbo.visit(currentUrl.toString())
+    })
+  }
+
+  extractTransactionRowIdsByClass() {
+    const ids = [];
+    // Selects all elements that have the class "transaction_row"
+    const elements = document.querySelectorAll('.transaction_row');
+
+    elements.forEach(element => {
+      const id = element.id; // Get the ID attribute of the element
+
+      // Ensure the ID actually starts with 'transaction_row_' to extract the number
+      // (It's good practice to double-check, though elements with this class usually follow the ID pattern)
+      if (id.startsWith('transaction_row_')) {
+        const numericalPart = id.substring('transaction_row_'.length);
+        const numericalId = parseInt(numericalPart, 10);
+
+        if (!isNaN(numericalId)) {
+          ids.push(numericalId);
+        }
+      }
+    });
+
+    return ids;
   }
 }

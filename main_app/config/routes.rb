@@ -38,7 +38,6 @@ Rails.application.routes.draw do
   resources :transactions do
     collection do
       get :export
-      get :with_category_suggestions
       post :suggest_categories
     end
   end
@@ -55,5 +54,5 @@ Rails.application.routes.draw do
 
   resources :categories
 
-  resources :blocking_jobs, only: %[show]
+  resources :blocking_jobs, only: %(show)
 end

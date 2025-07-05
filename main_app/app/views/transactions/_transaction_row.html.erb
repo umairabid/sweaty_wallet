@@ -1,38 +1,52 @@
 <tr
-  id="transaction_row_<%= transaction.id %>"
-  data-controller="transactions--row"
-  data-transaction_id="<%= transaction.id %>"
-  class="bg-white border-b">
-  <%- Transaction::COLUMNS.each do |key| %>
-    <%- if columns[key[0]].present? && columns[key[0]]== '1' %>
-      <td class="p-4 py-2">
-        <%=  Transaction::COLUMNS[key[0]][:value].call(transaction) %>
-      </td>
+    id="transaction_row_<%= transaction.id %>"
+    data-controller="transactions--row"
+    data-transaction_id="<%= transaction.id %>"
+    class="bg-white border-b transaction_row">
+    <%- Transaction::COLUMNS.each do |key| %>
+      <%- if columns[key[0]].present? && columns[key[0]]== '1' %>
+        <%- if key[0] == 'suggested_category' && transaction.suggested_category_id %>
+          <td class="px-6 py-4">
+            <div class="inline-flex items-center border border-gray-200 rounded-lg text-xs">
+              <span class="inline-flex p-2 flex-1"><%=  Transaction::COLUMNS[key[0]][:value].call(transaction) %></span>
+              <%= button_to transaction_path(transaction, {columns:}), method: :put, class: 'bg-green-50 p-2 rounded-r-lg', params: { transaction: {category_id: transaction.suggested_category.id} } do %>
+                <svg class="h-4 w-4 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+              <% end %>
+            </div>
+          </td>
+        <%- else %>
+          <td class="p-4 py-2">
+            <%=  Transaction::COLUMNS[key[0]][:value].call(transaction) %>
+          </td>
+        <%- end %>
+      <%- end %>
     <%- end %>
-  <%- end %>
-  <td class="p-4 py-2">
-    <div class="flex">
-      <button class="py-2" type="button" data-action="click->transactions--row#open_drawer">
-        <%= render 'icons/edit' %>
-      </button>
-      <%= link_to transaction_path(transaction, request.query_parameters), class: 'py-2', data: { turbo_method: :delete, turbo_confirm: "Are you sure?", turbo_action: "replace" } do %>
-        <%= render 'icons/delete' %>
-      <% end %>
-    </div>
-    <!-- drawer component -->
-    <div id="drawer-transaction-form-<%= transaction.id %>" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80">
-      <h5 id="drawer-label" class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase">Update Transaction</h5>
-      <button data-action="click->transactions--row#close_edit_drawer" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center" >
-        <%= render "icons/cross" %>
-        <span class="sr-only">Close menu</span>
-      </button>
-      <%= form_with(model: transaction, url: transaction_url(id: transaction.id, columns: @columns)) do |f| %>
-        <%= render 'transactions/form', f: f, references: references %>
-        <div class="flex items-center justify-end">
-          <button type="button" data-action="click->transactions--row#close_edit_drawer" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 ">Decline</button>
-          <%= f.submit "Update", class: 'cursor-pointer ms-3 text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center' %>
-        </div>
-      <% end %>
-    </div>
-  </td>
+    <td class="p-4 py-2">
+      <div class="flex">
+        <button class="py-2" type="button" data-action="click->transactions--row#open_drawer">
+          <%= render 'icons/edit' %>
+        </button>
+        <%= link_to transaction_path(transaction, request.query_parameters), class: 'py-2', data: { turbo_method: :delete, turbo_confirm: "Are you sure?", turbo_action: "replace" } do %>
+          <%= render 'icons/delete' %>
+        <% end %>
+      </div>
+      <!-- drawer component -->
+      <div id="drawer-transaction-form-<%= transaction.id %>" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80">
+        <h5 id="drawer-label" class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase">Update Transaction</h5>
+        <button data-action="click->transactions--row#close_edit_drawer" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center" >
+          <%= render "icons/cross" %>
+          <span class="sr-only">Close menu</span>
+        </button>
+        <%= form_with(model: transaction, url: transaction_url(id: transaction.id, columns: @columns)) do |f| %>
+          <%= render 'transactions/form', f: f, references: references %>
+          <div class="flex items-center justify-end">
+            <button type="button" data-action="click->transactions--row#close_edit_drawer" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 ">Decline</button>
+            <%= f.submit "Update", class: 'cursor-pointer ms-3 text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center' %>
+          </div>
+        <% end %>
+      </div>
+    </td>
 </tr>
+

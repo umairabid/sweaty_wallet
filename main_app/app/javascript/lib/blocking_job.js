@@ -3,34 +3,36 @@ import { post, get } from '@rails/request.js'
 export function blockingJob(options) {
   const url = options.url
   blockUi()
-  const jobPromise = post(url)
-  return jobPromise.then(response => {
-    if (response.ok) {
-      return response.json.then(json => {
-        const job_id = json.job_id
-        return  pollJob(job_id)
-      })
-    } else {
-      return { status: 'error' }
-    }
+  return new Promise((resolve, reject) => {
+    const jobPromise = post(url, { body: JSON.stringify(options.params || {})})
+    jobPromise.then(response => {
+      if (response.ok) {
+        response.json.then(json => {
+          const job_id = json.job_id
+          pollJob(job_id, resolve, reject)
+        })
+      } else {
+        reject({ status: 'error' })
+      }
+    })
   })
 }
 
-function pollJob(job_id) {
+function pollJob(job_id, resolve, reject) {
   const pollPromise = get('/blocking_jobs/' + job_id)
     pollPromise.then(response => {
     if (response.ok) {
       response.json.then(json => {
         if (json.job.finished_at) {
           unblockUi()
-          return { status: 'success' }
+          resolve( {status:'success'} )
         } else {
-          setTimeout(pollJob.bind(null, job_id), 1000)
+          setTimeout(pollJob.bind(null, job_id, resolve, reject), 1000)
         }
       })
     } else {
       unblockUi()
-      return { status: 'error' }
+      reject( { status: 'error' } )
     }
   })
 }

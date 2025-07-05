@@ -54,7 +54,7 @@ class Transactions::ScopeBuilder
 
     scope = rule_applier.preview if has? :transaction_rule_id
 
-    scope.order(date: :desc).preload(account: :connector)
+    scope.order(date: :desc, id: :asc).preload(account: :connector)
   end
 
   private

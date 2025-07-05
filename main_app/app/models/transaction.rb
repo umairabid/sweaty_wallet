@@ -13,7 +13,8 @@ class Transaction < ApplicationRecord
     'type' => { label: 'Type', value: ->(t) { t.is_credit ? 'Credit' : 'Debit' } },
     'category_name' => { label: 'Category', value: ->(t) { t.category&.name || 'Uncategorized' } },
     'account_name' => { label: 'Account', value: ->(t) { t.account.name } },
-    'bank_name' => { label: 'Bank', value: ->(t) { t.account.connector.bank_name } }
+    'bank_name' => { label: 'Bank', value: ->(t) { t.account.connector.bank_name } },
+    'suggested_category' => { label: 'Suggested Category', value: ->(t) { t.suggested_category&.name } }
   }.freeze
 
   DEFAULT_COLUMNS = %w[date description amount type category_name account_name].freeze

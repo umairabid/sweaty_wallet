@@ -62,7 +62,7 @@ class Transactions::SetSuggestedCategories
   def prompt
     <<~PROMPT
       I am providing you with the user categories and transaction descriptions that needs to be categorized in one of user categories
-      To set the context, with each description I will provide you transaction_id, to identify transaction and neighbors that are 
+      To set the context, with each description I will provide you transaction_id, to identify transaction and neighbors that are#{' '}
       closest to the description and are already categorized, each transaction will be in the following format
       { id: 1, description: 'Walmart Charge', neighbors: [ {description: 'Other Walmart Charge', category: 'groceries'} ] }
 
@@ -74,4 +74,3 @@ class Transactions::SetSuggestedCategories
     PROMPT
   end
 end
-

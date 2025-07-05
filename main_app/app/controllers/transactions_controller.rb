@@ -2,10 +2,9 @@ class TransactionsController < ApplicationController
   before_action :set_user_references, only: %i[index update]
   before_action :set_transaction, only: %i[update destroy]
   before_action :set_columns, only: %i[index update]
+  before_action :set_filter, only: %i[index suggest_categories]
 
-  def index
-    @filter = Transactions::Model.new(current_user, params[:filter] || {})
-  end
+  def index; end
 
   def export
     job = Transactions::ExportJob.perform_later(current_user, filters: params[:filter])
@@ -22,7 +21,8 @@ class TransactionsController < ApplicationController
   end
 
   def update
-    @transaction = Transactions::Update.call(current_user, @transaction, params.require(:transaction))
+    @transaction = Transactions::Update.call(current_user, @transaction,
+                                             params.require(:transaction))
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
@@ -35,7 +35,8 @@ class TransactionsController < ApplicationController
   end
 
   def create
-    @transaction = Transactions::Create.call(current_user, Transaction.new, params.require(:transaction))
+    @transaction = Transactions::Create.call(current_user, Transaction.new,
+                                             params.require(:transaction))
     redirect_to transactions_path
   end
 
@@ -46,17 +47,9 @@ class TransactionsController < ApplicationController
                                   columns: redirect_params[:columns], page: redirect_params[:page])
   end
 
-  def with_category_suggestions
-    filter = Transactions::Model.new(current_user, params[:filter] || {})
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(
-          'transactions_list_frame', # Target ID for replacement
-          partial: 'transactions/with_category_suggestions', # A new partial for the frame content
-          locals: { user: current_user, params:, filter: }
-        )
-      end
-    end
+  def suggest_categories
+    job = Transactions::SetSuggestedCategoriesJob.perform_later(current_user, params[:ids] || [])
+    render json: { job_id: job.job_id }
   end
 
   private
@@ -69,5 +62,8 @@ class TransactionsController < ApplicationController
   def set_transaction
     @transaction = current_user.transactions.find(params[:id])
   end
-end
 
+  def set_filter
+    @filter = Transactions::Model.new(current_user, params[:filter] || {})
+  end
+end
