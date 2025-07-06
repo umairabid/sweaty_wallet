@@ -4,7 +4,9 @@ class Transactions::Update < BaseMutation
   private
 
   def mutate
-    @model.attributes = params
+    update_params = params
+    update_params[:category_id] = nil if params.dig(:category_id).to_i < 1
+    @model.attributes = update_params
     @model.save!
     @model
   end

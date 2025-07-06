@@ -5,8 +5,14 @@
     class="bg-white border-b transaction_row">
     <%- Transaction::COLUMNS.each do |key| %>
       <%- if columns[key[0]].present? && columns[key[0]]== '1' %>
-        <%- if key[0] == 'suggested_category' && transaction.suggested_category_id %>
-          <td class="px-6 py-4">
+        <%- if key[0] == 'category_name' %>
+          <td class="px-6 py-2">
+            <button data-editable_attr="category" class="inline-flex items-center hover:bg-yellow-50" data-action="click->transactions--row#make_editable">
+              <%=  Transaction::COLUMNS[key[0]][:value].call(transaction) %>
+            </button>
+          </td>
+        <%- elsif key[0] == 'suggested_category' && transaction.suggested_category_id %>
+          <td class="px-6 py-2">
             <div class="inline-flex items-center border border-gray-200 rounded-lg text-xs">
               <span class="inline-flex p-2 flex-1"><%=  Transaction::COLUMNS[key[0]][:value].call(transaction) %></span>
               <%= button_to transaction_path(transaction, {columns:}), method: :put, class: 'bg-green-50 p-2 rounded-r-lg', params: { transaction: {category_id: transaction.suggested_category.id} } do %>

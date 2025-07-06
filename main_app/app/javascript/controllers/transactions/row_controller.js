@@ -23,4 +23,10 @@ export default class extends BaseController {
   transaction_id() {
     return this.element.dataset.transaction_id
   }
+
+  make_editable(event) {
+    event.preventDefault()
+    const button = event.currentTarget.closest('button')
+    console.log(this.transaction_id())
+  }
 }
