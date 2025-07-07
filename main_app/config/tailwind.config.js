@@ -11,6 +11,7 @@ module.exports = {
     "w-1/2",
     "w-40",
     "w-20",
+    "w-28",
     "rounded-l-lg",
     "rounded-r-lg",
     "bg-gray-200",

@@ -7,9 +7,12 @@
       <%- if columns[key[0]].present? && columns[key[0]]== '1' %>
         <%- if key[0] == 'category_name' %>
           <td class="px-6 py-2">
-            <button data-editable_attr="category" class="inline-flex items-center hover:bg-yellow-50" data-action="click->transactions--row#make_editable">
-              <%=  Transaction::COLUMNS[key[0]][:value].call(transaction) %>
+            <button data-editable_attr="category" class="inline-flex items-center w-72" data-action="click->transactions--row#make_editable">
+              <span class="hover:bg-yellow-50"><%=  Transaction::COLUMNS[key[0]][:value].call(transaction) %></span>
             </button>
+            <%= form_with(model: transaction, url: transaction_url(id: transaction.id, columns: @columns),  class: 'inline-block hidden w-72 relative') do |f| %>
+              <%= f.select :category_id, references[:categories], {}, class: 'text-gray-900 text-sm rounded-lg inline-block', data: { action: 'change->transactions--row#update_category' } %>
+            <% end %>
           </td>
         <%- elsif key[0] == 'suggested_category' && transaction.suggested_category_id %>
           <td class="px-6 py-2">

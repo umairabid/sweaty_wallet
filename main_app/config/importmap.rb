@@ -14,3 +14,5 @@ pin_all_from "app/javascript/channels", under: "channels"
 pin_all_from "app/javascript/lib", under: "lib"
 pin "just-extend" # @5.1.1
 pin "d3", to: "https://cdn.jsdelivr.net/npm/d3@7/+esm"
+pin "tom-select", to: "https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"
+

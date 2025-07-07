@@ -1,5 +1,6 @@
 import BaseController from "controllers/base_controller"
 import create_drawer from "lib/create_drawer"
+import * as TomSelectModule from "tom-select"
 
 export default class extends BaseController {
   connect() {
@@ -27,6 +28,23 @@ export default class extends BaseController {
   make_editable(event) {
     event.preventDefault()
     const button = event.currentTarget.closest('button')
-    console.log(this.transaction_id())
+    const td = button.parentElement
+    const select = td.querySelector('select')
+    const form = select.form
+    const tom_select =this.get_autocomplete_select(select).enable()
+    form.classList.toggle('hidden')
+    button.classList.toggle('hidden')
+  }
+
+  get_autocomplete_select(select) {
+    if (this.autocomplete_select) return this.autocomplete_select     
+    this.autocomplete_select = new TomSelect(select)
+    return this.autocomplete_select
+  }
+
+  update_category(event) {
+    const select = event.currentTarget.closest('select')
+    const form = select.form
+    form.requestSubmit()
   }
 }
