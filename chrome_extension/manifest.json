@@ -26,7 +26,7 @@
     }
   ],
   "externally_connectable": {
-    "matches": ["*://localhost/*", "*://sweatywallet.ca/*"]
+    "matches": ["*://localhost/*", "*://*.sweatywallet.ca/*"]
   },
   "background": {
     "service_worker": "scripts/worker/service-worker.js",
