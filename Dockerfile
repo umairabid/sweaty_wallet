@@ -58,7 +58,7 @@ WORKDIR /sweaty_wallet
 RUN zip -r sweaty_wallet_chrome_extension.zip chrome_extension
 RUN rm -rf chrome_extension
 RUN rm -rf ./main_app/public/downloads/sweaty_wallet_chrome_extension.zip
-RUN mv sweaty_wallet_chrome_extension.zip ./main_app/public/downloads
+RUN mv sweaty_wallet_chrome_extension.zip ./main_app/public/downloads/
 
 
 # Final stage for app image
