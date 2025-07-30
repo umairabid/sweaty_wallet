@@ -1,6 +1,5 @@
 /chrome_extension/node_modules/
 /chrome_extension/builds/**
 .idea/
-/main_app/public/downloads/**
 **.swp
 **.vimsession
