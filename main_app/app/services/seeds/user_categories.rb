@@ -1,4 +1,4 @@
-class Categories::AddUserDefaultCategories
+class Seeds::UserCategories
   include Callable
 
   CATEGORIES = {
@@ -14,7 +14,7 @@ class Categories::AddUserDefaultCategories
       'Between Accounts', 'Peer-to-Peer Transfers', 'Credit Card Payments', 'Investments'
     ],
     'Financial Obligations' => [
-      'Loan Payments', 'Credit Card Debt', 'Car Payment', 'Other Debt Payment'
+      'Loan Payments', 'Credit Card Debt', 'Car Payment', 'Other Debt'
     ]
   }.freeze
 

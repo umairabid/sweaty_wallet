@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_07_03_010940) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_02_224617) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "vector"
@@ -28,10 +28,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_03_010940) do
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.index ["connector_id", "deleted_at"], name: "index_accounts_on_connector_id_and_deleted_at"
-    t.index ["connector_id", "external_id"], name: "index_accounts_on_connector_id_and_external_id"
+    t.index ["connector_id", "external_id"], name: "index_accounts_on_connector_id_and_external_id", unique: true
     t.index ["connector_id", "is_active"], name: "index_accounts_on_connector_id_and_is_active"
     t.index ["connector_id"], name: "index_accounts_on_connector_id"
-    t.index ["external_id"], name: "index_accounts_on_external_id", unique: true
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|

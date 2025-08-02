@@ -28,6 +28,6 @@ class User < ApplicationRecord
   private
 
   def create_categories
-    Categories::AddUserDefaultCategories.call(self)
+    Seeds::UserCategories.call(self)
   end
 end
