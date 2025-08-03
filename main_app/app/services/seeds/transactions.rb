@@ -121,7 +121,7 @@ class Seeds::Transactions
 
   def call
     dates = ((Date.today - 3.months)..Date.today).to_a
-    count.downto(1) do
+    @count.downto(1) do
       FactoryBot.create(:transaction,
                         account: @account,
                         external_id: SecureRandom.uuid,

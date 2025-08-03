@@ -24,6 +24,4 @@ Metrics/MethodLength:
 
 Layout/MultilineMethodCallIndentation:
   Enabled: true
-  EnforcedStyle: indented # This is the key change
-  # You might also want to set your indentation width explicitly if not already
-  # IndentationWidth: 2 # Or 4, depending on your project's standard
+  EnforcedStyle: indented

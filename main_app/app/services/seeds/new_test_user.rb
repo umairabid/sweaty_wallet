@@ -12,6 +12,7 @@ class Seeds::NewTestUser
     User.transaction do
       user = FactoryBot.create(:user, email: @email, password: @password)
       @connector = FactoryBot.create(:connector, user: user)
+      seed_transactions
     end
   end
 
@@ -19,7 +20,7 @@ class Seeds::NewTestUser
 
   def seed_transactions
    Seeds::Transactions.call(credit_card_account, 10, true)
-   Seeds::Transactions.call(debit_account, 10, false)
+   Seeds::Transactions.call(deposit_account, 10, false)
   end
 
   def credit_card_account
