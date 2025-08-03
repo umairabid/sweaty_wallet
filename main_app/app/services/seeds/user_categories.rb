@@ -8,7 +8,7 @@ class Seeds::UserCategories
     'Expenses' => [
       'Accommodation', 'Utilities', 'Groceries', 'Shopping', 'Personal Care', 'Healthcare',
       'Insurance', 'Entertainment', 'Education', 'Gifts', 'Miscellaneous', 'Other Expenses',
-      'Commute', 'Travel'
+      'Commute', 'Travel', 'Restaurants', 'Hobbies'
     ],
     'Transfers' => [
       'Between Accounts', 'Peer-to-Peer Transfers', 'Credit Card Payments', 'Investments'
