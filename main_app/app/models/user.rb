@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable, :trackable
 
-  after_commit :create_categories, on: %i[create update]
+  after_create :create_categories
 
   has_many :connectors, dependent: :destroy
   has_many :accounts, through: :connectors
