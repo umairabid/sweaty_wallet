@@ -16,7 +16,7 @@ class Asset < ApplicationRecord
 
   validates :name, presence: true
   validates :value, presence: true, numericality: true
-  enum asset_type: { real_estate: 0, vehicle: 1, loan: 2, investment: 3, other_asset: 4,
+  enum :asset_type, { real_estate: 0, vehicle: 1, loan: 2, investment: 3, other_asset: 4,
                      other_liability: 5 }
 
   def asset_label
