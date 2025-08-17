@@ -1,0 +1,7 @@
+version: 2
+updates:
+  # Configuration for the Rails app
+  - package-ecosystem: "bundler"
+    directory: "/main_app"
+    schedule:
+      interval: "daily"
