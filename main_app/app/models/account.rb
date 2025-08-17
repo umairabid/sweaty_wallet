@@ -15,7 +15,7 @@ class Account < ApplicationRecord
 
   FILTERABLE_ACCOUNT_TYPES = %i[credit_card deposit_account].freeze
 
-  enum account_type: { credit_card: 1, deposit_account: 2, investment: 3, credit_line: 4,
+  enum :account_type, { credit_card: 1, deposit_account: 2, investment: 3, credit_line: 4,
                        mortgage: 5 }
   validates :external_id, uniqueness: { scope: :connector }
 
