@@ -7,7 +7,7 @@ class Transactions::SetSuggestedCategories
   end
 
   def call
-    chat = RubyLLM.chat.with_request_options(generationConfig: schema)
+    chat = RubyLLM.chat.with_params(generationConfig: schema)
     content = chat.ask(prompt).content
     suggestions = JSON.parse(content)
     transactions_by_id = transactions.index_by(&:id)

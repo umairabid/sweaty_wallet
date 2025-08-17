@@ -26,10 +26,10 @@ class Connector < ApplicationRecord
     }
   }.with_indifferent_access
 
-  enum bank: { rbc: 1, td: 2, walmart_mc: 3, cibc: 4 }
-  enum auth_type: { persisted: 1, transient: 2 }, _prefix: :auth_type
-  enum status: { connecting: 1, failed: 2, connected: 3 }, _prefix: :status
-  enum auth_method: { extension: 1, direct: 2 }, _prefix: :auth_method
+  enum :bank, { rbc: 1, td: 2, walmart_mc: 3, cibc: 4 }
+  enum :auth_type, { persisted: 1, transient: 2 }, prefix: :auth_type
+  enum :status, { connecting: 1, failed: 2, connected: 3 }, prefix: :status
+  enum :auth_method, { extension: 1, direct: 2 }, prefix: :auth_method
 
   belongs_to :user
   has_many :accounts

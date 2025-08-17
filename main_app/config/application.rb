@@ -1,7 +1,4 @@
-# frozen_string_literal: true
-
 require_relative 'boot'
-
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
@@ -11,7 +8,7 @@ Bundler.require(*Rails.groups)
 module SweatyWallet
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.1
+    config.load_defaults 8.0
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
@@ -35,11 +32,11 @@ module SweatyWallet
     config.good_job.cron = {
       # Every 15 minutes, enqueue `ExampleJob.set(priority: -10).perform_later(42, "life", name: "Alice")`
       frequent_task: { # each recurring job must have a unique key
-        cron: "*/15 * * * *", # cron-style scheduling format by fugit gem
-        class: "Transactions::UpdateEmbeddingsJob", # name of the job class as a String; must reference an Active Job job class
+        cron: '*/15 * * * *', # cron-style scheduling format by fugit gem
+        class: 'Transactions::UpdateEmbeddingsJob', # name of the job class as a String; must reference an Active Job job class
         set: { priority: -10 }, # additional Active Job properties; can also be a lambda/proc e.g. `-> { { priority: [1,2].sample } }`
-        description: "Something helpful", # optional description that appears in Dashboard
+        description: 'Something helpful' # optional description that appears in Dashboard
       }
-    } 
+    }
   end
 end
