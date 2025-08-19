@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile.local
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432
       - REDIS_URL=redis://redis:6379/0
     ports:
       - "3000:3000"
@@ -15,7 +15,7 @@ services:
     image: workspace-web
     command: bundle exec sidekiq
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432
       - REDIS_URL=redis://redis:6379/0
     volumes:
       - ./main_app:/app
@@ -23,9 +23,7 @@ services:
       - web
   
   db:
-    build:
-      context: .
-      dockerfile: Dockerfile.postgres
+    image: pgvector/pgvector:pg17
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
