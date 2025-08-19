@@ -10,18 +10,18 @@ class Connectors::Rbc
   end
 
   def call
-    broadcast({ status: "logging_in" })
+    broadcast({ status: 'logging_in' })
     sleep(5)
-    broadcast({ status: "confirm_two_factor_notification" })
-    two_factor_key = wait_for_connector_prompt(:two_factor_key)
-    broadcast({ status: "received_connector_prompt" })
+    broadcast({ status: 'confirm_two_factor_notification' })
+    wait_for_connector_prompt(:two_factor_key)
+    broadcast({ status: 'received_connector_prompt' })
     sleep(5)
-    broadcast({ status: "login_complete" })
+    broadcast({ status: 'login_complete' })
   end
 
   def call_fa
-    @page.go_to("https://secure.royalbank.com/statics/login-service-ui/index#/full/signin")
-    broadcast({ status: "logging_in" })
+    @page.go_to('https://secure.royalbank.com/statics/login-service-ui/index#/full/signin')
+    broadcast({ status: 'logging_in' })
 
     wait_and_fill_node("//input[@id='userName']", @params[:username])
     sleep(5)
@@ -31,15 +31,15 @@ class Connectors::Rbc
     sleep(10)
     wait_and_click_node("//button[@id='signinNext']")
 
-    wait_for_node(@page, "//core-banking-trusted-device-notification")
-    broadcast({ status: "confirm_two_factor_notification" })
+    wait_for_node(@page, '//core-banking-trusted-device-notification')
+    broadcast({ status: 'confirm_two_factor_notification' })
 
     wait_for_connector_prompt(:two_factor_key)
-    broadcast({ status: "received_connector_prompt" })
-    @page.go_to("https://www1.royalbank.com/sgw1/olb/index-en/#/summary")
+    broadcast({ status: 'received_connector_prompt' })
+    @page.go_to('https://www1.royalbank.com/sgw1/olb/index-en/#/summary')
 
-    wait_for_node(@page, "//rbc-account-summary-layout")
-    broadcast({ status: "login_complete" })
+    wait_for_node(@page, '//rbc-account-summary-layout')
+    broadcast({ status: 'login_complete' })
     @browser.quit
   end
 

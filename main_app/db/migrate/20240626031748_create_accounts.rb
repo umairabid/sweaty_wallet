@@ -8,7 +8,7 @@ class CreateAccounts < ActiveRecord::Migration[7.1]
       t.decimal :balance, null: false, default: 0.00
       t.boolean :is_active, null: false, default: false
       t.string :currency, null: false
-      t.references :connector, index: true, null: false, foreign_key: {on_delete: :cascade}
+      t.references :connector, index: true, null: false, foreign_key: { on_delete: :cascade }
       t.timestamps
     end
   end

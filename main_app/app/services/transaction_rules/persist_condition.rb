@@ -26,7 +26,7 @@ class TransactionRules::PersistCondition
 
     if @condition_group[:join_by].blank? && group['conditions'].size > 0
       raise CustomerError,
-            'Needs join_by'
+        'Needs join_by'
     end
 
     group['conditions'] << @condition_group
@@ -38,7 +38,7 @@ class TransactionRules::PersistCondition
 
     if @condition[:join_by].blank? && group['conditions'].size > 0
       raise CustomerError,
-            'Needs join_by'
+        'Needs join_by'
     end
 
     group['conditions'] << @condition

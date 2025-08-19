@@ -263,6 +263,8 @@ GEM
     rdoc (6.14.2)
       erb
       psych (>= 4.0.0)
+    redis-client (0.25.2)
+      connection_pool
     reline (0.6.2)
       io-console (~> 0.5)
     requestjs-rails (0.0.13)
@@ -298,6 +300,12 @@ GEM
       marcel (~> 1.0)
       zeitwerk (~> 2)
     securerandom (0.4.1)
+    sidekiq (7.3.9)
+      base64
+      connection_pool (>= 2.3.0)
+      logger
+      rack (>= 2.2.4)
+      redis-client (>= 0.22.2)
     sinatra (3.2.0)
       mustermann (~> 3.0)
       rack (~> 2.2, >= 2.2.4)
@@ -379,6 +387,7 @@ DEPENDENCIES
   requestjs-rails
   rspec-rails
   ruby_llm
+  sidekiq (~> 7.3)
   sprockets-rails
   stimulus-rails
   tailwindcss-rails

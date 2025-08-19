@@ -1,5 +1,8 @@
 class FinancialAssetsController < ApplicationController
   before_action :set_asset, only: %i[update destroy]
+  def new
+    @asset = current_user.assets.new
+  end
 
   def index
     @assets = current_user.assets

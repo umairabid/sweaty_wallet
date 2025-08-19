@@ -23,20 +23,6 @@ module SweatyWallet
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    config.active_job.queue_adapter = :good_job
-
-    config.good_job.enable_cron = true
-
-    config.good_job.cron_graceful_restart_period = 1.minute
-
-    config.good_job.cron = {
-      # Every 15 minutes, enqueue `ExampleJob.set(priority: -10).perform_later(42, "life", name: "Alice")`
-      frequent_task: { # each recurring job must have a unique key
-        cron: '*/15 * * * *', # cron-style scheduling format by fugit gem
-        class: 'Transactions::UpdateEmbeddingsJob', # name of the job class as a String; must reference an Active Job job class
-        set: { priority: -10 }, # additional Active Job properties; can also be a lambda/proc e.g. `-> { { priority: [1,2].sample } }`
-        description: 'Something helpful' # optional description that appears in Dashboard
-      }
-    }
+    config.active_job.queue_adapter = :sidekiq
   end
 end

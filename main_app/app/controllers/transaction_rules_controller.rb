@@ -1,7 +1,7 @@
 class TransactionRulesController < ApplicationController
   before_action :set_user_references, only: %i[edit update new conditions]
   before_action :set_rule,
-                only: %i[update edit conditions destroy preview delete_condition apply next]
+    only: %i[update edit conditions destroy preview delete_condition apply next]
 
   def index
     @transaction_rules = current_user.transaction_rules.preload(:category)
@@ -72,13 +72,13 @@ class TransactionRulesController < ApplicationController
 
   def condition_params
     params.require(:condition).permit(:type,
-                                      :category_id,
-                                      :transaction_type,
-                                      :tags,
-                                      :group_id,
-                                      :join_by,
-                                      :bank_account_id,
-                                      :amount)
+      :category_id,
+      :transaction_type,
+      :tags,
+      :group_id,
+      :join_by,
+      :bank_account_id,
+      :amount)
   end
 
   def rule_params
@@ -87,10 +87,10 @@ class TransactionRulesController < ApplicationController
 
   def create_params
     rule_params.merge(conditions: {
-                        id: SecureRandom.uuid,
-                        type: :group,
-                        conditions: []
-                      })
+      id: SecureRandom.uuid,
+      type: :group,
+      conditions: []
+    })
   end
 
   def set_rule

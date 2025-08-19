@@ -9,7 +9,7 @@ RSpec.describe TransactionRules::PersistCondition do
     let(:params) { { type: 'category_id', category_id: condition_category.id } }
     let(:transaction_rule) do
       create(:transaction_rule, user: user, category: target_category,
-                                conditions: { type: 'group', conditions: [] })
+        conditions: { type: 'group', conditions: [] })
     end
 
     context 'when no conditions are added' do

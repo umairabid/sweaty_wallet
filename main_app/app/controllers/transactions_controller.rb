@@ -22,7 +22,7 @@ class TransactionsController < ApplicationController
 
   def update
     @transaction = Transactions::Update.call(current_user, @transaction,
-                                             params.require(:transaction))
+      params.require(:transaction))
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
@@ -36,7 +36,7 @@ class TransactionsController < ApplicationController
 
   def create
     @transaction = Transactions::Create.call(current_user, Transaction.new,
-                                             params.require(:transaction))
+      params.require(:transaction))
     redirect_to transactions_path
   end
 
@@ -44,7 +44,7 @@ class TransactionsController < ApplicationController
     @transaction.soft_delete
     redirect_params = params.to_unsafe_hash
     redirect_to transactions_path(filter: redirect_params[:filter],
-                                  columns: redirect_params[:columns], page: redirect_params[:page])
+      columns: redirect_params[:columns], page: redirect_params[:page])
   end
 
   def suggest_categories

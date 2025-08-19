@@ -13,11 +13,11 @@ class Transactions::ExportJob < ApplicationJob
     end
 
     user.transaction_exports.attach({
-                                      io: File.open(file.path),
-                                      content_type: 'text/csv',
-                                      filename: File.basename(file.path),
-                                      identify: true
-                                    })
+      io: File.open(file.path),
+      content_type: 'text/csv',
+      filename: File.basename(file.path),
+      identify: true
+    })
 
     user.save!
     url = rails_blob_path(user.transaction_exports.last, only_path: true)

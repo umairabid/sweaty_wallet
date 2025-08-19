@@ -2,8 +2,7 @@ class DashboardController < ApplicationController
   before_action :set_months, only: [:index]
   before_action :set_date, only: [:index]
 
-  def index
-  end
+  def index; end
 
   private
 
@@ -11,9 +10,9 @@ class DashboardController < ApplicationController
     current_date = Time.zone.now.to_date.beginning_of_month
     @months = []
 
-    12.downto(0) do |months_ago|
+    12.downto(0) do |_months_ago|
       month_date = current_date
-      @months << [month_date.strftime("%B %Y"), month_date]
+      @months << [month_date.strftime('%B %Y'), month_date]
       current_date -= 1.month
     end
   end

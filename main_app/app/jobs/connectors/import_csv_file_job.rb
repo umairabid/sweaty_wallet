@@ -18,7 +18,7 @@ class Connectors::ImportCsvFileJob < ApplicationJob
     accounts.each do |account_id|
       transactions = account_transactions[account_id]
       account = connector.accounts.find_or_create_by!(external_id: account_id,
-                                                      is_active: true) do |acc|
+        is_active: true) do |acc|
         transaction = transactions.first
         acc.name = transaction['account_name']
         acc.account_type = transaction['account_type']

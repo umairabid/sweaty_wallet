@@ -11,7 +11,7 @@ class AddAuthMethodToConnectors < ActiveRecord::Migration[7.1]
     change_table :connectors do |t|
       t.change :username, :string, null: false  # Reverse null change
       t.change :password, :string, null: false  # Reverse null change
-      t.remove :auth_method                       # Remove the column
+      t.remove :auth_method # Remove the column
     end
   end
 end

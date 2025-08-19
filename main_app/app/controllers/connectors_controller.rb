@@ -10,7 +10,7 @@ class ConnectorsController < ApplicationController
 
   def import_csv
     file_import = current_user.file_imports.create!(file: params[:csv],
-                                                    input: { bank: params[:bank] })
+      input: { bank: params[:bank] })
     Connectors::ImportCsvFileJob.perform_later(file_import)
     render json: { file_import_id: file_import.id }
   end
@@ -27,7 +27,7 @@ class ConnectorsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(:new_connector, template: 'connectors/new',
-                                                                  locals:)
+          locals:)
       end
 
       format.html { render :new, locals: }
@@ -43,11 +43,11 @@ class ConnectorsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(:new_connector, template: 'connectors/new', locals: {
-                                                    connector: @connector,
-                                                    bank:,
-                                                    mode: params[:mode],
-                                                    start_direct_process: @connector.save
-                                                  })
+          connector: @connector,
+          bank:,
+          mode: params[:mode],
+          start_direct_process: @connector.save
+        })
       end
     end
   end
@@ -56,7 +56,7 @@ class ConnectorsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(:new_connector,
-                                                  template: 'connectors/new_direct')
+          template: 'connectors/new_direct')
       end
 
       format.html { render :new_direct }
@@ -66,14 +66,14 @@ class ConnectorsController < ApplicationController
   def create_direct
     render_lambda = lambda {
       render turbo_stream: turbo_stream.replace(:new_connector,
-                                                partial: 'connectors/direct/connector_form')
+        partial: 'connectors/direct/connector_form')
     }
 
     if @connector.valid?
       ConnectBankJob.perform_later(connector_params)
       render_lambda = lambda {
         render turbo_stream: turbo_stream.replace(:connector_process,
-                                                  partial: 'connectors/direct/connector_process')
+          partial: 'connectors/direct/connector_process')
       }
     end
 
@@ -88,6 +88,6 @@ class ConnectorsController < ApplicationController
 
   def connector_params
     params.require(:connector).permit(:auth_type, :username, :password, :two_factor_key,
-                                      :auth_method)
+      :auth_method)
   end
 end

@@ -13,19 +13,19 @@ class Ability
       cannot :destroy, :session
     end
 
-    if user.id
-      can :manage, :dashboard
-      can :manage, :account
-      can :manage, :transaction
-      can :manage, :category
-      can :manage, :connector
-      can :manage, :transaction_rule
-      can :manage, :confirmation
-      can :destroy, :session
-      can :edit, :registration
-      can :update, :registration
-      can :manage, :financial_asset
-      can :manage, :blocking_job
-    end
+    return unless user.id
+
+    can :manage, :dashboard
+    can :manage, :account
+    can :manage, :transaction
+    can :manage, :category
+    can :manage, :connector
+    can :manage, :transaction_rule
+    can :manage, :confirmation
+    can :destroy, :session
+    can :edit, :registration
+    can :update, :registration
+    can :manage, :financial_asset
+    can :manage, :blocking_job
   end
 end

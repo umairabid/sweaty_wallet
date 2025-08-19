@@ -1,7 +1,6 @@
 require 'factory_bot_rails'
 
 class Seeds::Transactions
-
   CREDIT_DESCRIPTIONS = [
 
     'E-TRANSFER ***acD',
@@ -123,11 +122,11 @@ class Seeds::Transactions
     dates = ((Date.today - 3.months)..Date.today).to_a
     @count.downto(1) do
       FactoryBot.create(:transaction,
-                        account: @account,
-                        external_id: SecureRandom.uuid,
-                        description: descriptions.sample,
-                        date: dates.sample,
-                        is_credit: @is_credit)
+        account: @account,
+        external_id: SecureRandom.uuid,
+        description: descriptions.sample,
+        date: dates.sample,
+        is_credit: @is_credit)
     end
   end
 

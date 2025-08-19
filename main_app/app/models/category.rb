@@ -1,7 +1,7 @@
 class Category < ApplicationRecord
   belongs_to :user
   has_many :transactions, dependent: :nullify
-  belongs_to :parent_category, class_name: "Category", optional: true
+  belongs_to :parent_category, class_name: 'Category', optional: true
 
   before_create :set_code
   before_update :restore_code
@@ -13,6 +13,6 @@ class Category < ApplicationRecord
   end
 
   def set_code
-    self.code = name.downcase.gsub(/\s+/, "_")
+    self.code = name.downcase.gsub(/\s+/, '_')
   end
 end

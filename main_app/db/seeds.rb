@@ -1,1 +1,1 @@
-Seeds::NewTestUser.call("umair_test@email.com", "Password123")
+Seeds::NewTestUser.call('umair_test@email.com', 'Password123')
