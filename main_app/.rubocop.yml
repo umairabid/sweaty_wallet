@@ -1,3 +1,6 @@
+AllCops:
+  NewCops: disable
+
 Style/Documentation:
   Enabled: false
 

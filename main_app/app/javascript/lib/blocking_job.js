@@ -1,4 +1,6 @@
 import { post, get } from '@rails/request.js'
+import consumer from "channels/consumer"
+
 
 export function blockingJob(options) {
   const url = options.url
@@ -9,7 +11,7 @@ export function blockingJob(options) {
       if (response.ok) {
         response.json.then(json => {
           const job_id = json.job_id
-          pollJob(job_id, resolve, reject)
+          waitForJob(job_id, resolve, reject)
         })
       } else {
         reject({ status: 'error' })
@@ -18,23 +20,24 @@ export function blockingJob(options) {
   })
 }
 
-function pollJob(job_id, resolve, reject) {
-  const pollPromise = get('/blocking_jobs/' + job_id)
-    pollPromise.then(response => {
-    if (response.ok) {
-      response.json.then(json => {
-        if (json.job.finished_at) {
+function waitForJob(job_id, resolve, reject) {
+  const channel = consumer.subscriptions.create(
+    {
+      channel: "BackgroundProcessChannel",
+      job_id: job_id,
+    },
+    {
+      received: (data) => {
+        if (data.status == "finished") {
           unblockUi()
-          resolve( {status:'success'} )
-        } else {
-          setTimeout(pollJob.bind(null, job_id, resolve, reject), 1000)
+          resolve(data)
+        } else if (data.status == "error") {
+          unblockUi()
+          reject(data)
         }
-      })
-    } else {
-      unblockUi()
-      reject( { status: 'error' } )
+      },
     }
-  })
+  )
 }
 
 function blockUi() {

@@ -263,6 +263,8 @@ GEM
     rdoc (6.14.2)
       erb
       psych (>= 4.0.0)
+    redis (5.4.1)
+      redis-client (>= 0.22.0)
     redis-client (0.25.2)
       connection_pool
     reline (0.6.2)
@@ -384,6 +386,7 @@ DEPENDENCIES
   pg
   puma
   rails (~> 8.0)
+  redis (~> 5.4.1)
   requestjs-rails
   rspec-rails
   ruby_llm
