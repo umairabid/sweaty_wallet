@@ -386,11 +386,11 @@ DEPENDENCIES
   pg
   puma
   rails (~> 8.0)
-  redis (~> 5.4.1)
+  redis
   requestjs-rails
   rspec-rails
   ruby_llm
-  sidekiq (~> 7.3)
+  sidekiq
   sprockets-rails
   stimulus-rails
   tailwindcss-rails
