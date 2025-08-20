@@ -11,7 +11,7 @@ RSpec.describe Transactions::ExportJob, type: :job do
       expect(Transactions::ScopeBuilder).to receive(:call).and_return(user.transactions)
     end
     it 'exports transactions' do
-      expect { described_class.perform_later(user) }.to change {
+      expect { described_class.perform_now(user) }.to change {
         user.transaction_exports.count
       }.by(1)
     end

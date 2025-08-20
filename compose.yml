@@ -10,6 +10,7 @@ services:
       - "3000:3000"
     volumes:
       - ./main_app:/app
+      - bundle_cache:/usr/local/bundle
 
   worker:
     image: sweaty_wallet-web
@@ -40,3 +41,5 @@ services:
 
 volumes:
   postgres_data:
+  bundle_cache:
+
