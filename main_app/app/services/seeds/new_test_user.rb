@@ -21,8 +21,8 @@ class Seeds::NewTestUser
   private
 
   def seed_transactions
-    Seeds::Transactions.call(credit_card_account, 10, true)
-    Seeds::Transactions.call(deposit_account, 10, false)
+    Seeds::Transactions.call(credit_card_account, rand(20..40), true)
+    Seeds::Transactions.call(deposit_account, rand(200..400), false)
   end
 
   def credit_card_account

@@ -1,3 +1,9 @@
 queues:
   - default
   - mailers
+
+:scheduler:
+  :schedule:
+    update_embeddings:
+      cron: '0 0 * * * *'   # Runs once per minute
+      class: Transactions::UpdateEmbeddingsJob  

@@ -301,6 +301,8 @@ GEM
       faraday-retry (>= 1)
       marcel (~> 1.0)
       zeitwerk (~> 2)
+    rufus-scheduler (3.9.1)
+      fugit (~> 1.1, >= 1.1.6)
     securerandom (0.4.1)
     sidekiq (7.3.9)
       base64
@@ -308,6 +310,9 @@ GEM
       logger
       rack (>= 2.2.4)
       redis-client (>= 0.22.2)
+    sidekiq-scheduler (6.0.1)
+      rufus-scheduler (~> 3.2)
+      sidekiq (>= 7.3, < 9)
     sinatra (3.2.0)
       mustermann (~> 3.0)
       rack (~> 2.2, >= 2.2.4)
@@ -392,6 +397,7 @@ DEPENDENCIES
   rspec-rails
   ruby_llm
   sidekiq
+  sidekiq-scheduler
   sprockets-rails
   stimulus-rails
   tailwindcss-rails

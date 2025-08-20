@@ -1,6 +1,7 @@
 class Category < ApplicationRecord
   belongs_to :user
   has_many :transactions, dependent: :nullify
+  has_many :transaction_rules, dependent: :destroy
   belongs_to :parent_category, class_name: 'Category', optional: true
 
   before_create :set_code
