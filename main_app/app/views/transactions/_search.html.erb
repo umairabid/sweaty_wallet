@@ -1,4 +1,4 @@
-<%= form_for :filter, url: transactions_path, method: :get do |f| %>
+<%= form_for :filter, { url: transactions_path, method: :get, html: { id: 'transactions_search_form' } } do |f| %>
   <div class="p-2 py-1.5 flex border border-gray-300 rounded-lg bg-white">
     <%= render 'icons/search' %>
     <%= f.text_field :query, placeholder: 'Search for transactions', class: 'text-sm border-0 p-0 pl-2 focus:ring-0 w-52' %>

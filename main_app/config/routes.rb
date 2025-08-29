@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  mount GoodJob::Engine => 'good_job'
   devise_for :users, controllers: {
     registrations: 'users/registrations'
   }

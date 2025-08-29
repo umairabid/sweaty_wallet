@@ -24,4 +24,9 @@
       </div>
     </div>
   </body>
+  <%= javascript_tag do %>
+    window.APP_CONSTANTS = {
+      DEFAULT_TRANSACTION_COLUMNS: <%= Transaction::DEFAULT_COLUMNS.to_json.html_safe %>
+    }
+  <% end %>
 </html>
