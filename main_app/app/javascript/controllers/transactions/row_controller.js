@@ -31,7 +31,7 @@ export default class extends BaseController {
     const td = button.parentElement
     const select = td.querySelector('select')
     const form = select.form
-    const tom_select =this.get_autocomplete_select(select).enable()
+    const tom_select = this.get_autocomplete_select(select).enable()
     form.classList.toggle('hidden')
     button.classList.toggle('hidden')
   }

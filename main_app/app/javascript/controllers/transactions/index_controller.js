@@ -2,20 +2,22 @@ import BaseController from "controllers/base_controller"
 import create_drawer from "lib/create_drawer"
 import create_modal from "lib/create_modal"
 import { blockingJob } from "lib/blocking_job"
+import * as TomSelectModule from "tom-select"
 import _ from "lodash"
 
 export default class extends BaseController {
   connect() {
+    this.filtersForm = document.getElementById('transactions_search_form')
+    this.columnsForm = document.getElementById('select_columns_form')
     this.init_search_drawer()
     this.init_columns_modal()
     this.init_new_transaction_drawer()
+    this.applyTomSelect()
     this.bindPruneParams()
   }
 
   bindPruneParams() {
-    this.filtersForm = document.getElementById('transactions_search_form')
     this.filtersForm.addEventListener('submit', this.pruneFilters.bind(this))
-    this.columnsForm = document.getElementById('select_columns_form')
     this.columnsForm.addEventListener('submit', this.pruneColumns.bind(this))
   }
 
@@ -53,6 +55,13 @@ export default class extends BaseController {
 
   close_add_drawer() {
     this.new_transaction_drawer.hide()
+  }
+
+  applyTomSelect() {
+    const selects = this.filtersForm.querySelectorAll('select')
+    for (let i = 0; i < selects.length; i++) {
+      new TomSelect(selects[i])
+    }
   }
 
   suggest_categories(event) {

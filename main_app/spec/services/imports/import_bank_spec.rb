@@ -16,7 +16,6 @@ RSpec.describe Imports::ImportBank, type: :service do
   describe '#call' do
     before do
       allow(Accounts::ImportAccountJob).to receive(:perform_later)
-      allow(GoodJob::Batch).to receive(:enqueue)
     end
 
     context 'connector does not exist' do

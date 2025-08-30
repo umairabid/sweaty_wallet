@@ -16,30 +16,30 @@
     </div>
     <div class="mb-6">
       <%= f.label :time_range, 'Time Range', class: 'block mb-2 text-sm font-medium text-gray-900' %>
-      <%= f.select :time_range, @filter.selects[:time_ranges], {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+      <%= f.select :time_range, @filter.selects[:time_ranges], {}, class: 'text-gray-900 text-sm rounded-lg inline-block bg-gray-50 text-gray-900 text-sm rounded-lg block w-full' %>
     </div>
     <div class="mb-6">
       <%= f.label :account_type, 'Account Type', class: 'block mb-2 text-sm font-medium text-gray-900' %>
-      <%= f.select :account_type, @filter.selects[:account_types], {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+      <%= f.select :account_type, @filter.selects[:account_types], {}, class: 'text-gray-900 text-sm rounded-lg inline-block bg-gray-50 text-gray-900 text-sm rounded-lg block w-full' %>
     </div>
     <div class="mb-6">
       <%= f.label :account_id, 'Account', class: 'block mb-2 text-sm font-medium text-gray-900' %>
-      <%= f.select :account_id, @filter.selects[:accounts], {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+      <%= f.select :account_id, @filter.selects[:accounts], {}, class: 'text-gray-900 text-sm rounded-lg inline-block bg-gray-50 text-gray-900 text-sm rounded-lg block w-full' %>
     </div>
     <div class="mb-6">
       <%= f.label :bank, 'Bank', class: 'block mb-2 text-sm font-medium text-gray-900' %>
-      <%= f.select :bank, @filter.selects[:banks], {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+      <%= f.select :bank, @filter.selects[:banks], {}, class: 'text-gray-900 text-sm rounded-lg inline-block bg-gray-50 text-gray-900 text-sm rounded-lg block w-full' %>
     </div>
     <div class="mb-6">
       <%= f.label :type, 'Type', class: 'block mb-2 text-sm font-medium text-gray-900' %>
-      <%= f.select :type,@filter.selects[:types], {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+      <%= f.select :type,@filter.selects[:types], {}, class: 'text-gray-900 text-sm rounded-lg inline-block bg-gray-50 text-gray-900 text-sm rounded-lg block w-full' %>
     </div>
     <div class="mb-6">
       <%= f.label :categories, 'Category', class: 'block mb-2 text-sm font-medium text-gray-900' %>
-      <%= f.select :categories, @filter.selects[:categories], {}, multiple: true, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+      <%= f.select :categories, @filter.selects[:categories], {}, multiple: true, class: 'text-gray-900 text-sm rounded-lg inline-block bg-gray-50 text-gray-900 text-sm rounded-lg block w-full' %>
     </div>
     <div class="flex items-center justify-end">
-      <button type="button" data-action="click->transactions--index#close_search" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 ">Decline</button>
+      <%= link_to "Reset", transactions_path, class: 'py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 ' %>
       <%= f.submit "Apply", class: 'cursor-pointer ms-3 text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center' %>
     </div>
   </div>
