@@ -10,4 +10,6 @@ RUN bundle exec rails tailwindcss:install
 
 EXPOSE 3000
 
+ENTRYPOINT ["bin/docker-entrypoint"]
+
 CMD ["rails", "server", "-b", "0.0.0.0"]

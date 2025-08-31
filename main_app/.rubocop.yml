@@ -1,5 +1,6 @@
 AllCops:
-  NewCops: disable
+  SuggestExtensions: false
+  NewCops: enable
 
 Style/Documentation:
   Enabled: false

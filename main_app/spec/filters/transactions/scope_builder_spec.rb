@@ -6,7 +6,7 @@ RSpec.describe Transactions::ScopeBuilder do
     {
       query: 'abc',
       categories: [1, 2, 3],
-      time_range: 1,
+      time_range: 'this_month',
       account_type: 'credit_card',
       bank: 'rbc',
       type: 'credit',

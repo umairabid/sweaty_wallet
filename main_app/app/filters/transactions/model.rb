@@ -31,9 +31,19 @@ class Transactions::Model
   def set_select_options
     @selects = {
       **current_user_repo.select_options,
-      time_ranges: [['Select Duration', ''], ['Last Month', 1], ['Last Two Months', 2],
-                    ['Last Three Months', 3]],
-      types: [['Select Type', ''], %w[Credit credit], %w[Debit debit]]
+      time_ranges: [
+        ['Select Duration', ''],
+        ['This Month', 'this_month'],
+        ['Last Month', 'last_month'],
+        ['Last 30 days', 'thirty_days'],
+        ['Last 60 days', 'sixty_days'],
+        ['Last 90 days', 'ninety_days']
+      ],
+      types: [
+        ['Select Type', ''],
+        %w[Credit credit],
+        %w[Debit debit]
+      ]
     }
   end
 
