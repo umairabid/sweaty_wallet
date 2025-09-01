@@ -6,10 +6,13 @@ COPY ./main_app/Gemfile ./main_app/Gemfile.lock ./
 
 RUN bundle install
 
-RUN bundle exec rails tailwindcss:install
+RUN bundle exec rails tailwindcss:install \
+  && bundle exec rails rails_charts:install
+
+COPY . .
 
 EXPOSE 3000
 
-ENTRYPOINT ["bin/docker-entrypoint"]
+ENTRYPOINT ["bin/docker-local-entrypoint"]
 
 CMD ["rails", "server", "-b", "0.0.0.0"]

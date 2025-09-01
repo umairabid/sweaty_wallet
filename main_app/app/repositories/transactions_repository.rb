@@ -1,18 +1,7 @@
 class TransactionsRepository
-  include TimeSeriesable
 
   def initialize(base_scope)
     @base_scope = base_scope.preload(:category)
-  end
-
-  def expenses_time_series(start_date, end_date)
-    series = for_range_by_day(start_date..end_date).where(is_credit: false)
-    accumulate_time_series(series.sum(:amount), start_date, end_date)
-  end
-
-  def incomes_time_series(start_date, end_date)
-    series = for_range_by_day(start_date..end_date).where(is_credit: true)
-    accumulate_time_series(series.sum(:amount), start_date, end_date)
   end
 
   def top_transactions(start_date, end_date)
@@ -41,8 +30,6 @@ class TransactionsRepository
       .where(date: range)
       .exclude_transfers
   end
-
-  private
 
   def for_range_by_day(range)
     @base_scope

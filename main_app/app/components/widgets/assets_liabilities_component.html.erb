@@ -1,7 +1,6 @@
-<div 
-  data-controller="widgets--piechart" 
-  data-chart_data="<%= data.to_json %>">
+<div> 
   <h2 class="text-xl font-semibold leading-tight text-gray-800 mb-4">
     Assets vs Liabilities
   </h2>
+  <%= helpers.pie_chart(data, options) %>
 </div>

@@ -1,7 +1,4 @@
 <div 
-  data-controller="widgets--month_timeseries" 
-  data-dates="<%= dates %>"
-  data-expenses="<%= expenses %>"
-  data-incomes="<%= incomes %>"
   class="bg-white rounded-lg border border-gray-300 p-4 m-4 overflow-x">
+  <%= helpers.line_chart(data, options) %>
 </div>

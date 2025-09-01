@@ -10,13 +10,13 @@ class Widgets::AssetsLiabilitiesComponent < ViewComponent::Base
   def assets_percentage
     return 0 if total.zero?
 
-    (net_worth_breakdown.total_assets * 100 / total).round(2)
+    net_worth_breakdown.total_assets
   end
 
   def liabilities_percentage
     return 0 if total.zero?
 
-    (net_worth_breakdown.total_liabilities * 100 / total).round(2)
+    net_worth_breakdown.total_liabilities
   end
 
   def data
@@ -28,6 +28,17 @@ class Widgets::AssetsLiabilitiesComponent < ViewComponent::Base
 
   def render?
     @user && total.positive?
+  end
+
+  def options
+    {
+      options: {
+        toolbox: {
+          show: true, magicType: { type: %w[line bar] }
+        },
+        legend: { show: true }
+      },
+    }
   end
 
   private

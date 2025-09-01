@@ -1,0 +1,17 @@
+#!/bin/bash -e
+
+# If running the rails server then create or migrate existing database
+if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
+  ./bin/rails db:prepare
+fi
+
+if [ ! -f tmp/gemfile.checksum ] || ! sha256sum -c tmp/gemfile.checksum --quiet 2>/dev/null; then
+  echo "Gemfile changed, running bundle install..."
+  bundle install
+  mkdir -p tmp
+  sha256sum Gemfile Gemfile.lock > tmp/gemfile.checksum
+fi
+
+rm -rf tmp/pids/server.pid
+
+exec "${@}"

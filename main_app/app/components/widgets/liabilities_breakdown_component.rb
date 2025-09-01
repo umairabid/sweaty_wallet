@@ -26,7 +26,19 @@ class Widgets::LiabilitiesBreakdownComponent < ViewComponent::Base
   def data
     all_liability_types.map do |k|
       value = accounts_based_liabilities[k] || 0 + static_liabilities[k] || 0
-      { name: k.to_s.humanize, value: (value / total * 100).round(2) }
+      { name: k.to_s.humanize, value: }
     end
   end
+  
+  def options
+    {
+      options: {
+        toolbox: {
+          show: true, magicType: { type: %w[line bar] }
+        },
+        legend: { show: true }
+      },
+    }
+  end
+
 end
