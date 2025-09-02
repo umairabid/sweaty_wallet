@@ -2,7 +2,7 @@ class Widgets::TopCategoriesComponent < ViewComponent::Base
   include Widgets::WidgetHelper
 
   def top_categories
-    transactions_repo.top_categories(start_date, end_date).limit(10)
+    transactions_repo.top_categories(start_date..end_date).limit(10)
   end
 
   def render?

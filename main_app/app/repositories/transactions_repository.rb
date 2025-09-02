@@ -4,31 +4,22 @@ class TransactionsRepository
     @base_scope = base_scope.preload(:category)
   end
 
-  def top_transactions(start_date, end_date)
-    @base_scope.where(date: start_date..end_date)
-      .exclude_transfers
+  def top_transactions(range)
+    for_range(range)
       .order(amount: :desc)
   end
 
-  def for_range(start_date, end_date)
-    @base_scope
-      .where(date: start_date..end_date)
-      .exclude_transfers
-  end
-
-  def top_categories(start_date, end_date)
-    @base_scope
+  def top_categories(range)
+    for_range(range)
       .select('category_id, sum(amount) as cat_amount')
-      .where(date: start_date..end_date, is_credit: false)
-      .exclude_transfers
       .group(:category_id)
       .order(cat_amount: :desc)
   end
-
-  def primary_by_range(range)
+  
+  def for_range(range)
     @base_scope
-      .where(date: range)
       .exclude_transfers
+      .where(date: range)
   end
 
   def for_range_by_day(range)

@@ -9,7 +9,7 @@ class Widgets::TopTransactionsComponent < ViewComponent::Base
 
   def transactions
     @transactions ||= transactions_repo
-      .top_transactions(start_date, end_date)
+      .top_transactions(start_date..end_date)
       .where(is_credit: @credit).limit(10)
   end
 
