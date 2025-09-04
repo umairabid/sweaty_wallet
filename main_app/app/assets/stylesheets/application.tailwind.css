@@ -12,6 +12,13 @@
 
 */
 
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
 .field_with_errors {
   display: inline;
 }
