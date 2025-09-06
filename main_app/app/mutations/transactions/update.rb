@@ -1,6 +1,4 @@
 class Transactions::Update < BaseMutation
-  include Callable
-
   private
 
   def mutate

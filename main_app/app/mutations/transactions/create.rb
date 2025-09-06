@@ -1,5 +1,4 @@
 class Transactions::Create < BaseMutation
-  include Callable
 
   private
 
