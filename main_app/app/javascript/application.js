@@ -5,4 +5,6 @@ import "flowbite"
 import "channels"
 import "@rails/request.js"
 import "echarts"
-import "echarts/theme/dark"
+import "echarts.themeloader"
+
+window.RailsCharts.loadTheme('dark')

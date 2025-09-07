@@ -7,11 +7,13 @@ class Widgets::TopTransactionsComponent < ViewComponent::Base
     @credit = credit
   end
 
-  def filter
-    Transactions::Model.new(
-      @user, {
-        time_range: start_date..end_date
-      }
-    )
+  def transactions
+    @transactions ||= transactions_repo
+      .top_transactions(start_date..end_date)
+      .where(is_credit: @credit).limit(10)
+  end
+
+  def render?
+    transactions.present?
   end
 end

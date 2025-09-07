@@ -18,3 +18,4 @@ pin 'tom-select', to: 'https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom
 pin 'lodash' # @4.17.21
 pin "echarts", to: "echarts.min.js"
 pin "echarts/theme/dark", to: "echarts/theme/dark.js"
+pin "echarts.themeloader", to: "echarts.themeloader.js"

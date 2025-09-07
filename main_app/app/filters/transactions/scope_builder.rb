@@ -26,6 +26,8 @@ class Transactions::ScopeBuilder
     @scope = @scope.where(account: { account_type: }) if has? :account_type
     @scope = rule_applier.preview if has? :transaction_rule_id
     @scope = @scope.order(date: :desc, id: :asc).preload(account: :connector)
+    @scope = @scope.where('date >= ?', start_date) if has? :start_date
+    @scope = @scope.where('date <= ?', end_date) if has? :end_date
 
     add_time_range if has? :time_range
     add_categories if has? :categories
@@ -63,8 +65,10 @@ class Transactions::ScopeBuilder
   def add_time_range
     if monthly?
       add_month_range
-    else
+    elsif day_based?
       add_days_range
+    else
+      @scope = @scope.where(date: time_range)
     end
   end
 
@@ -85,6 +89,10 @@ class Transactions::ScopeBuilder
 
   def monthly?
     %w[this_month last_month].include?(time_range)
+  end
+
+  def day_based?
+    %w[thirty_days sixty_days ninety_days].include?(time_range)
   end
 
   def rule_applier

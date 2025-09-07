@@ -72,7 +72,9 @@ gem 'redis'
 
 gem 'sidekiq-scheduler'
 
-gem 'rails_charts', github: 'umairabid/rails_charts', branch: 'fix-echarts-lookup-in-themes'
+gem 'rails_charts', github: 'umairabid/rails_charts', branch: 'main'
+
+# gem 'rails_charts', path: 'lib/rails_charts'
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]

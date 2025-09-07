@@ -1,5 +1,5 @@
 class Transactions::Model
-  ATTRIBUTES = %i[query categories time_range account_type bank type account_id selects
+  ATTRIBUTES = %i[query categories time_range start_date end_date account_type bank type account_id selects
                   show_duplicates transaction_rule_id].freeze
 
   attr_reader(*ATTRIBUTES)

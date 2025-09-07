@@ -21,8 +21,8 @@ class Widgets::MonthTimeseriesComponent < ViewComponent::Base
 
   def options
     {
+      height: '300px',
       options: {
-        smooth: true,
         color: ['#ef4444', '#22c55e'],
         grid: {
           top: 0,
@@ -30,6 +30,9 @@ class Widgets::MonthTimeseriesComponent < ViewComponent::Base
           bottom: 0,
           left: 0,
           containLabel: false
+        },
+        series: {
+          smooth: true
         }
       }
     }

@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/umairabid/rails_charts.git
-  revision: 88e6c159f892c597c317625c270a76825635c7af
-  branch: fix-echarts-lookup-in-themes
+  revision: 814c0653bdc5940ed63ae790030e31334e13b7d5
+  branch: main
   specs:
     rails_charts (0.0.9)
       rails
