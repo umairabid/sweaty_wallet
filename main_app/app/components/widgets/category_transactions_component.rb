@@ -1,4 +1,4 @@
-class Widgets::TopTransactionsComponent < ViewComponent::Base
+class Widgets::CategoryTransactionsComponent < ViewComponent::Base
   include Widgets::WidgetHelper
 
   def initialize(user, date, credit)
