@@ -13,7 +13,7 @@
       columns: @columns,
       filter: @filter,
       page: params[:page],
-      options: { with_suggestions: params[:with_suggestions] }
+      options: { with_suggestions: params[:with_suggestions], show_pagination: true }
     )) %>
   </div>
   <div id="background_processing_modal"></div>
