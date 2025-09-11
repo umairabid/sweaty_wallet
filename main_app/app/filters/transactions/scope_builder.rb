@@ -19,15 +19,13 @@ class Transactions::ScopeBuilder
   end
 
   def call
+    @scope = rule_applier.preview if has? :transaction_rule_id
     @scope = @scope.where('description ilike ?', "%#{query}%") if has? :query
     @scope = @scope.where(accounts: { connector_id: bank }) if has? :bank
     @scope = @scope.where(is_credit: type == 'credit') if has? :type
     @scope = @scope.where(account_id:) if has? :account_id
     @scope = @scope.where(account: { account_type: }) if has? :account_type
-    @scope = rule_applier.preview if has? :transaction_rule_id
     @scope = @scope.order(date: :desc, id: :asc).preload(account: :connector)
-    @scope = @scope.where('date >= ?', start_date) if has? :start_date
-    @scope = @scope.where('date <= ?', end_date) if has? :end_date
 
     add_time_range if has? :time_range
     add_categories if has? :categories
@@ -40,18 +38,19 @@ class Transactions::ScopeBuilder
 
   def add_duplicates
     from_sql = <<~SQL
-      transactions.*,#{' '}
+      transactions.*,
       COUNT(transactions.*) OVER (
-        PARTITION BY date,#{' '}
-        TRIM(REGEXP_REPLACE(description, '\\s+', ' ', 'g')),#{' '}
-        amount,#{' '}
-        is_credit,#{' '}
+        PARTITION BY date,
+        TRIM(REGEXP_REPLACE(description, '\\s+', ' ', 'g')),
+        amount,
+        is_credit,
         account_id
       ) as duplicate_count
     SQL
-    duplicate_ids = Transaction.select('id').from(
+    query  = Transaction.unscoped.select('id').from(
       @base_scope.select(from_sql)
-    ).where('duplicate_count > ?', 1).to_a.map(&:id)
+    ).where('duplicate_count > ?', 1).where('deleted_at IS NULL')
+    duplicate_ids = query.map(&:id)
 
     @scope = @scope.where(id: duplicate_ids)
   end
@@ -83,7 +82,7 @@ class Transactions::ScopeBuilder
   def add_days_range
     days_range = TIME_RANGES[time_range]
     end_date = Time.now.to_date
-    start_date = end_date - (days_range.days)
+    start_date = end_date - days_range.days
     @scope = @scope.where(date: start_date..end_date)
   end
 
