@@ -110,7 +110,7 @@ RSpec.describe Transactions::ScopeBuilder do
 
     it 'applies the rule' do
       expect(TransactionRules::ApplyRule).to receive(:new).with(rule, anything).and_return(applier)
-      expect(subject.rule_applier).to receive(:preview)
+      expect(applier).to receive(:preview)
 
       subject.call
     end
