@@ -8,15 +8,15 @@ class Seeds::CurrentMonthEmptyDaysTransactions
   end
 
   def call
-    Seeds::Transactions.call(deposit_account, deposite_account_transactions_count, dates: dates)
+    Seeds::Transactions.call(deposit_account, deposit_account_transactions_count, dates: dates)
     Seeds::Transactions.call(credit_card_account, credit_card_account_transactions_count,
-      is_credit: true, dates: dates)
+      dates: dates)
   end
 
   private
 
-  def deposite_account_transactions_count
-    (dates.count * rand(0.7..1.1)).to_i
+  def deposit_account_transactions_count
+    (dates.count * rand(0.2..0.9)).to_i
   end
 
   def credit_card_account_transactions_count
@@ -36,7 +36,7 @@ class Seeds::CurrentMonthEmptyDaysTransactions
   end
 
   def start_date
-    last_transaction ? last_transaction.date + 1 : current_month_start_date
+    @start_date ||= last_transaction ? last_transaction.date + 1 : current_month_start_date
   end
 
   def last_transaction

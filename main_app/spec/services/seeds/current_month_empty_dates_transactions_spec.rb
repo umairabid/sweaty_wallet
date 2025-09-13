@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Seeds::CurrentMonthEmptyDaysTransactions do
   describe '#call' do
-    let(:user) { FactoryBot.create(:user) }
+    let(:user) { create(:user) }
     let(:service) { described_class.new(user) }
 
     context 'when connectors and accounts do not exist' do
@@ -21,12 +21,12 @@ RSpec.describe Seeds::CurrentMonthEmptyDaysTransactions do
     end
 
     context 'when connectors and accounts already exist' do
-      let!(:connector) { FactoryBot.create(:connector, user: user) }
+      let!(:connector) { create(:connector, user: user) }
       let!(:deposit_account) do
-        FactoryBot.create(:account, connector: connector, account_type: 'deposit_account')
+        create(:account, connector: connector, account_type: 'deposit_account')
       end
       let!(:credit_card_account) do
-        FactoryBot.create(:account, connector: connector, account_type: 'credit_card')
+        create(:account, connector: connector, account_type: 'credit_card')
       end
 
       it 'does not create additional connectors or accounts' do

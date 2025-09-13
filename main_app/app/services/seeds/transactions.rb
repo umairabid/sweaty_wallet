@@ -112,29 +112,26 @@ class Seeds::Transactions
 
   include Callable
 
-  def initialize(account, count, is_credit: false, dates: default_dates)
+  def initialize(account, count, dates: nil)
     @count = count
-    @is_credit = is_credit
     @account = account
-    @dates = dates
+    @dates = dates || default_dates
   end
 
   def call
-    @count.downto(1) do
+    @count.downto(0) do |i|
+      is_credit = i % 3 == 0
+      descriptions = is_credit ? CREDIT_DESCRIPTIONS : DEBIT_DESCRIPTIONS
       FactoryBot.create(:transaction,
         account: @account,
         external_id: SecureRandom.uuid,
         description: descriptions.sample,
         date: @dates.sample,
-        is_credit: @is_credit)
+        is_credit: is_credit)
     end
   end
 
   def default_dates
     ((Date.today - 3.months)..Date.today).to_a
-  end
-
-  def descriptions
-    @is_credit ? CREDIT_DESCRIPTIONS : DEBIT_DESCRIPTIONS
   end
 end
