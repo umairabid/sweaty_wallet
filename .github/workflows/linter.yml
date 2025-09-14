@@ -20,6 +20,5 @@ jobs:
       - uses: reviewdog/action-rubocop@v2.21.2
         with:
           use_bundler: true
-          only_changed: true
           workdir: ./main_app
 
