@@ -6,9 +6,6 @@ jobs:
   rubocop:
     name: Runner / Rubocop
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./main_app
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
