@@ -2,15 +2,15 @@ name: Linting
 on:
   push:
     branches: "**"
+defaults:
+ run:
+  working-directory: ./app
 jobs:
   rubocop:
     name: Runner / Rubocop
     runs-on: ubuntu-latest
     env:
       BUNDLE_ONLY: rubocop
-    defaults:
-      run:
-        working-directory: ./main_app
     steps:
       - uses: actions/checkout@v4.2.2
       - uses: ruby/setup-ruby@v1.227.0
