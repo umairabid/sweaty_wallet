@@ -24,3 +24,5 @@ jobs:
           rubocop_extensions: rubocop-rails:gemfile rubocop-shopify:gemfile
           reporter: github-pr-review
           fail_on_error: true
+          only_changed: true
+          workdir: ./main_app
