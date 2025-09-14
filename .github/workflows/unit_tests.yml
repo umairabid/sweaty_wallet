@@ -10,10 +10,8 @@ on:
     branches: "**"
 jobs:
   test:
+    name: Runner / Tests
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./main_app
     services:
       postgres:
         image: pgvector/pgvector:0.8.0-pg17
@@ -34,17 +32,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      # Add or replace dependency steps here
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-      # Add or replace database setup steps here
-      - name: Install dependencies
-        run: bundle install
+          working-directory: ./main_app
       - name: Set up database schema
         run: bin/rails db:schema:load
-      # Add or replace test runners here
+        working-directory: ./main_app
       - name: Run tests
-        run: rspec
+        run: bundle exec rspec
+        working-directory: ./main_app
 

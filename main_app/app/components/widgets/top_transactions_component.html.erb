@@ -1,12 +1,13 @@
 <div class="bg-white rounded-lg border border-gray-300 p-4 m-4 overflow-hidden">
-  <h3 class="p-4 py-2"><%= @credit ? 'Top Credit Transactions' : 'Top Debit Transactions' %></h3>
+  <h3 class="p-4 py-2">Top Expenses For Month</h3>
   <div class="p-2">
     <%= render(Transactions::ListComponent.new(
       user: @user,
       columns: @columns,
       filter: filter,
-      page: params[:page],
+      page: 1,
       limit: 10,
+      sort: sorts,
       options: { 
         with_suggestions: params[:with_suggestions],
         show_pagination: false

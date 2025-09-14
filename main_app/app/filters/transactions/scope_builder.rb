@@ -25,7 +25,7 @@ class Transactions::ScopeBuilder
     @scope = @scope.where(is_credit: type == 'credit') if has? :type
     @scope = @scope.where(account_id:) if has? :account_id
     @scope = @scope.where(account: { account_type: }) if has? :account_type
-    @scope = @scope.order(date: :desc, id: :asc).preload(account: :connector)
+    @scope = @scope.preload(account: :connector)
 
     add_time_range if has? :time_range
     add_categories if has? :categories

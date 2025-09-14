@@ -1,0 +1,21 @@
+name: Linting
+on:
+  push:
+    branches: "**"
+jobs:
+  rubocop:
+    name: Runner / Rubocop
+    runs-on: ubuntu-latest
+    env:
+      BUNDLE_ONLY: rubocop
+    steps:
+      - uses: actions/checkout@v4.2.2
+      - uses: ruby/setup-ruby@v1.227.0
+        with:
+          bundler-cache: true
+          working-directory: ./main_app
+      - uses: reviewdog/action-rubocop@v2.21.2
+        with:
+          use_bundler: true
+          workdir: ./main_app
+
