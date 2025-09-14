@@ -10,6 +10,7 @@ on:
     branches: "**"
 jobs:
   test:
+    name: Runner / Tests
     runs-on: ubuntu-latest
     defaults:
       run:
