@@ -41,6 +41,6 @@ jobs:
         run: bin/rails db:schema:load
         working-directory: ./main_app
       - name: Run tests
-        run: rspec
+        run: bin/rails rspec
         working-directory: ./main_app
 
