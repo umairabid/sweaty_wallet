@@ -15,6 +15,7 @@ jobs:
           bundler-cache: true
           cache-version: ${{ secrets.CACHE_VERSION }}
       - name: rubocop
+        working-directory: ./main_app
         uses: reviewdog/action-rubocop@v1
         with:
           rubocop_version: gemfile
