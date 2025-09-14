@@ -18,6 +18,7 @@ jobs:
           bundler-cache: true
       - uses: reviewdog/action-rubocop@v2.21.2
         with:
-          skip_install: true
           use_bundler: true
           only_changed: true
+          workdir: ./main_app
+
