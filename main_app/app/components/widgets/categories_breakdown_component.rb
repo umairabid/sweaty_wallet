@@ -36,7 +36,6 @@ class Widgets::CategoriesBreakdownComponent < ViewComponent::Base
   end
 
   def render?
-    puts top_categories.inspect
     top_categories.present?
   end
 end

@@ -10,7 +10,8 @@ class Widgets::TopTransactionsComponent < ViewComponent::Base
     Transactions::Model.new(
       @user, {
         time_range: start_date..end_date,
-        type: 'debit'
+        type: 'debit',
+        exclude_transfers: '1'
       }
     )
   end

@@ -1,6 +1,6 @@
 class Transactions::Model
   ATTRIBUTES = %i[query categories time_range start_date end_date account_type bank type account_id selects
-                  show_duplicates transaction_rule_id].freeze
+                  show_duplicates transaction_rule_id exclude_transfers].freeze
 
   attr_reader(*ATTRIBUTES)
 
@@ -8,9 +8,8 @@ class Transactions::Model
 
   def initialize(user, params = {})
     @user = user
-
     ATTRIBUTES.each do |attr|
-      if attr == :show_duplicates
+      if attr == :show_duplicates || attr == :exclude_transfers
         instance_variable_set("@#{attr}", params[attr] == '1')
       elsif attr == :categories
         instance_variable_set("@#{attr}", params[attr] || [])

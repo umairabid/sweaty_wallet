@@ -7,7 +7,6 @@ class Transactions::ListComponent < ViewComponent::Base
   }.freeze
 
   def initialize(**args)
-    puts args.inspect
     @options = args[:options] || DEFAULT_OPTIONS
     
     @columns = args[:columns] || Transaction::DEFAULT_COLUMNS.to_h { |k| [k, '1'] }
