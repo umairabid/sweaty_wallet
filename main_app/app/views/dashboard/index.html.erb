@@ -21,7 +21,7 @@
   </div>
   <div class="flex justify-start">
     <div class="w-1/2 h-full">
-      <%= render(Widgets::TopTransactionsComponent.new(current_user, @date, false)) %>
+      <%= render(Widgets::TopTransactionsComponent.new(current_user, @date)) %>
     </div>
     <div class="w-1/2 h-full">
       <%= render(Widgets::CategoriesBreakdownComponent.new(current_user, @date)) %>
