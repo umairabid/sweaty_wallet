@@ -10,14 +10,14 @@ jobs:
       run:
         working-directory: ./main_app
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Install Ruby and gems
+      - uses: actions/checkout@v4
+      - name: Install Ruby
         uses: ruby/setup-ruby@v1
         with:
+          ruby-version: .tool-versions
           bundler-cache: true
+          cache-version: ${{ secrets.CACHE_VERSION }}
       - name: rubocop
-        workdir: ./main_app
         uses: reviewdog/action-rubocop@v1
         with:
           rubocop_version: gemfile
