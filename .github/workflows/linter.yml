@@ -2,9 +2,6 @@ name: Linting
 on:
   push:
     branches: "**"
-defaults:
- run:
-  working-directory: ./main_app
 jobs:
   rubocop:
     name: Runner / Rubocop
