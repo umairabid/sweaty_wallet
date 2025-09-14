@@ -6,6 +6,9 @@ jobs:
   rubocop:
     name: Runner / Rubocop
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./main_app
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -14,7 +17,7 @@ jobs:
         with:
           bundler-cache: true
       - name: rubocop
-        working-directory: ./main_app
+        workdir: ./main_app
         uses: reviewdog/action-rubocop@v1
         with:
           rubocop_version: gemfile
