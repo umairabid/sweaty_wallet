@@ -150,7 +150,7 @@ GEM
     jbuilder (2.14.1)
       actionview (>= 7.0.0)
       activesupport (>= 7.0.0)
-    json (2.13.2)
+    json (2.14.1)
     language_server-protocol (3.17.0.5)
     lint_roller (1.1.0)
     logger (1.7.0)
@@ -176,7 +176,7 @@ GEM
       faraday (~> 2.1)
       rack (>= 1.4.0)
       yajl-ruby
-    marcel (1.0.4)
+    marcel (1.1.0)
     mini_mime (1.1.5)
     minitest (5.25.5)
     msgpack (1.8.0)
@@ -316,7 +316,7 @@ GEM
       rubocop-ast (>= 1.44.0, < 2.0)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
-    ruby_llm (1.7.1)
+    ruby_llm (1.8.1)
       base64
       event_stream_parser (~> 1)
       faraday (>= 1.10.0)
