@@ -5,6 +5,8 @@ class Ability
 
   def initialize(user)
     user ||= User.new # Guest user
+    can :manage, :example_bank
+
     if user.id.nil?
       can :manage, :session
       can :manage, :registration

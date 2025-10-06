@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Example Bank - Deposit Account Transactions</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+  <div class="container mx-auto p-8">
+    <h1 class="text-3xl font-bold mb-8">Example Checking Account - Transactions</h1>
+
+    <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+      <table class="min-w-full">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Date</th>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Description</th>
+            <th class="px-6 py-3 text-right text-sm font-semibold text-gray-700">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @transactions.each do |transaction| %>
+            <tr class="transaction-row border-t border-gray-200">
+              <td class="transactionDate px-6 py-4">
+                <span><%= transaction[:date] %></span>
+              </td>
+              <td class="transactions px-6 py-4">
+                <span class="transactionDescription"><%= transaction[:description] %></span>
+              </td>
+              <td class="amount <%= transaction[:type] %> px-6 py-4 text-right <%= transaction[:type] == 'credit' ? 'text-green-600' : 'text-red-600' %> font-semibold">
+                <span>$<%= transaction[:amount] %></span>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
