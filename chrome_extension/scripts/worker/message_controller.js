@@ -28,6 +28,7 @@ class MessageController {
     if (bank === "td") return this.ports.get_td_port();
     if (bank === "walmart_mc") return this.ports.get_walmart_mc_port();
     if (bank === "cibc") return this.ports.get_cibc_port();
+    if (bank === "example_bank") return this.ports.get_example_port();
 
     return null;
   }

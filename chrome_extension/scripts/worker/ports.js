@@ -2,6 +2,7 @@ import RbcPort from "./ports/rbc_port.js";
 import TdPort from "./ports/td_port.js";
 import WalmartMcPort from "./ports/walmart_mc_port.js";
 import CibcPort from "./ports/cibc_port.js";
+import ExamplePort from "./ports/example_port.js";
 
 class Ports {
   constructor() {
@@ -9,6 +10,8 @@ class Ports {
     this.td_port = new TdPort();
     this.walmart_mc_port = new WalmartMcPort();
     this.cibc_port = new CibcPort();
+    this.example_port = new ExamplePort();
+
     this.connect();
   }
 
@@ -25,6 +28,7 @@ class Ports {
     if (port.name === "td_port") this.td_port.set_port(port);
     if (port.name === "walmart_mc_port") this.walmart_mc_port.set_port(port);
     if (port.name === "cibc_port") this.cibc_port.set_port(port);
+    if (port.name === "example_port") this.example_port.set_port(port);
   }
 
   get_rbc_port() {
@@ -41,6 +45,10 @@ class Ports {
 
   get_cibc_port() {
     return this.cibc_port;
+  }
+
+  get_example_port() {
+    return this.example_port;
   }
 }
 
