@@ -1,7 +1,7 @@
 <nav class="flex mb-5" aria-label="Breadcrumb">
   <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
     <li class="inline-flex items-center">
-      <a href="/" class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-500">
+      <a href="/" class="inline-flex items-center text-gray-700 hover:text-primary-600">
         <%= render "icons/home" %>
         Home
       </a>
@@ -11,9 +11,9 @@
         <div class="flex items-center">
           <%= render "icons/arrow-right" %>
           <% if crumb[1].nil? %>
-            <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500" aria-current="page"><%= crumb[0] %></span>
+            <span class="ml-1 text-gray-400 md:ml-2" aria-current="page"><%= crumb[0] %></span>
           <% else %>
-            <a href="<%= crumb[1] %>" class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-500">
+            <a href="<%= crumb[1] %>" class="inline-flex items-center text-gray-700 hover:text-primary-600">
               <%= crumb[0] %>
             </a>
           <% end %>

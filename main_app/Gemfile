@@ -48,8 +48,6 @@ gem 'bootsnap'
 
 gem 'devise'
 
-gem 'tailwindcss-rails'
-
 gem 'view_component'
 
 gem 'csv'
