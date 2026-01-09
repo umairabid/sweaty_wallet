@@ -1,8 +1,8 @@
 <div class="mb-6">
-  <%= f.label :name, 'Category Name', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+  <%= f.label :name, 'Category Name', class: 'block mb-2 text-sm font-medium text-gray-900' %>
   <%= f.text_field :name, autofocus: true, autocomplete: "name", placeholder: 'Category Name', class: 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5' %>
 </div>
 <div class="mb-6">
-  <%= f.label :parent_category_id, 'Parent Category', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
-  <%= f.select :parent_category_id, parent_categories, {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+  <%= f.label :parent_category_id, 'Parent Category', class: 'block mb-2 text-sm font-medium text-gray-900' %>
+  <%= f.select :parent_category_id, parent_categories, {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5' %>
 </div>

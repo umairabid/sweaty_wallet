@@ -5,9 +5,9 @@
   class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full overflow-y-auto overflow-x-hidden p-4 md:inset-0"
   >
   <%= form_with url: transactions_path, method: :get, html: { id: 'select_columns_form' } do |form| %>
-    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-      <div aria-description="header" class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+    <div class="relative bg-white rounded-lg shadow">
+      <div aria-description="header" class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+        <h3 class="text-xl font-semibold text-gray-900">
           Select Columns
         </h3>
         <button data-action="click->transactions--index#close_columns_modal" type="button" class="text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
@@ -19,7 +19,7 @@
         <%= form.fields_for :columns, @columns do |f| %>
           <% Transaction::COLUMNS.each do |key, options| %>
             <div class="flex items-center mb-4 w-64">
-              <%= f.check_box key, id: "columns_#{key}", checked: @columns[key] == '1', class: 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2' %>
+              <%= f.check_box key, id: "columns_#{key}", checked: @columns[key] == '1', class: 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded' %>
               <%= f.label key, options[:label], class: 'ml-2 text-sm text-gray-900' %>
             </div>
           <% end %>

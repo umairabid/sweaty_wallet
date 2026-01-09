@@ -1,7 +1,7 @@
 <%= form_for :filter, { url: transactions_path, method: :get, html: { id: 'transactions_search_form' } } do |f| %>
   <div class="p-2 py-1.5 flex border border-gray-300 rounded-lg bg-white">
     <%= render 'icons/search' %>
-    <%= f.text_field :query, placeholder: 'Search for transactions', class: 'text-sm border-0 p-0 pl-2 focus:ring-0 w-52' %>
+    <%= f.text_field :query, placeholder: 'Search for transactions', class: 'text-sm border-0 p-0 pl-2 w-52' %>
   </div>
   <input type="hidden" name="page" value="1">
   <div id="advance_search_drawer"  class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80">
@@ -11,7 +11,7 @@
       <span class="sr-only">Close menu</span>
     </button>
     <div class="mb-6">
-      <%= f.check_box :show_duplicates, class: 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2' %>
+      <%= f.check_box :show_duplicates, class: 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded' %>
       <%= f.label :show_duplicates, 'Show Duplicates', class: 'ml-2 text-sm text-gray-900' %>
     </div>
     <div class="mb-6">

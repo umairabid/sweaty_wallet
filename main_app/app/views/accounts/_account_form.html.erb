@@ -1,23 +1,23 @@
 <%= form_with(method: 'PUT', model: account, url: account_url(id: account.id)) do |f| %>
   <div class="mb-6">
-    <%= f.label :name, 'Account Name', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+    <%= f.label :name, 'Account Name', class: 'block mb-2 text-sm font-medium text-gray-900' %>
     <%= f.text_field :name, autofocus: true, autocomplete: "name", placeholder: 'Bank Account Name', class: 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5' %>
   </div>
   <div class="mb-6">
-    <%= f.label :nick_name, 'Nick Name', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+    <%= f.label :nick_name, 'Nick Name', class: 'block mb-2 text-sm font-medium text-gray-900' %>
     <%= f.text_field :nick_name, autofocus: true, autocomplete: "nick_name", placeholder: 'Bank Account Nick Name', class: 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5' %>
   </div>
   <div class="mb-6">
-    <%= f.label :balance, 'Account Balance', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+    <%= f.label :balance, 'Account Balance', class: 'block mb-2 text-sm font-medium text-gray-900' %>
     <%= f.text_field :balance, disabled: true, autofocus: true, autocomplete: "balance", placeholder: 'Bank Account Nick Name', class: 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5' %>
   </div>
   <div class="mb-6">
-    <%= f.label :connector_id, 'Bank', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
-    <%= f.select :connector_id, bank_options, {}, disabled: true, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+    <%= f.label :connector_id, 'Bank', class: 'block mb-2 text-sm font-medium text-gray-900' %>
+    <%= f.select :connector_id, bank_options, {}, disabled: true, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5' %>
   </div>
   <div class="mb-6">
-    <%= f.label :account_type, 'Account Type', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
-    <%= f.select :account_type, account_types, {}, disabled: true, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+    <%= f.label :account_type, 'Account Type', class: 'block mb-2 text-sm font-medium text-gray-900' %>
+    <%= f.select :account_type, account_types, {}, disabled: true, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5' %>
   </div>
   <div class="flex items-center justify-end">
     <button type="button" data-action="click->accounts--row#close_drawer" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 ">Decline</button>

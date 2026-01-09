@@ -1,26 +1,26 @@
 <div class="mb-6">
-  <%= f.label :date, 'Date', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+  <%= f.label :date, 'Date', class: 'block mb-2 text-sm font-medium text-gray-900' %>
   <%= f.date_field :date, autofocus: true, autocomplete: "date", class: 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5' %>
 </div>
 <div class="mb-6">
-  <%= f.label :description, 'Description', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+  <%= f.label :description, 'Description', class: 'block mb-2 text-sm font-medium text-gray-900' %>
   <%= f.text_field :description, autofocus: true, autocomplete: "description", class: 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5' %>
 </div>
 <div class="mb-6">
-  <%= f.label :amount, 'Amount', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+  <%= f.label :amount, 'Amount', class: 'block mb-2 text-sm font-medium text-gray-900' %>
   <%= f.text_field :amount, autofocus: true, autocomplete: "description", class: 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5' %>
 </div>
 <div class="mb-6">
-  <%= f.label :category_id, 'Category', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
-  <%= f.select :category_id, references[:categories], {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+  <%= f.label :category_id, 'Category', class: 'block mb-2 text-sm font-medium text-gray-900' %>
+  <%= f.select :category_id, references[:categories], {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5' %>
 </div>
 <%- unless f.object.persisted?%>
   <div class="mb-6">
-    <%= f.label :account_id, 'Account', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
-    <%= f.select :account_id, references[:accounts], {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+    <%= f.label :account_id, 'Account', class: 'block mb-2 text-sm font-medium text-gray-900' %>
+    <%= f.select :account_id, references[:accounts], {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5' %>
   </div>
 <% end %>
 <div class="mb-6">
   <%= f.check_box :is_credit, autofocus: true, class: 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg p-2.5' %>
-  <%= f.label :is_credit, 'Is Credit?', class: 'mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+  <%= f.label :is_credit, 'Is Credit?', class: 'mb-2 text-sm font-medium text-gray-900' %>
 </div>
