@@ -5,7 +5,8 @@
   "scripts": {
     "build_cibc": "esbuild ./scripts/tabs/cibc/cibc.js --bundle --outfile=./builds/cibc.js",
     "build_td": "esbuild ./scripts/tabs/td/td.js --bundle --outfile=./builds/td.js",
-    "build": "npm run build_td && npm run build_cibc"
+    "build_example_bank": "esbuild ./scripts/tabs/example_bank/example_bank.js --bundle --outfile=./builds/example_bank.js",
+    "build": "npm run build_td && npm run build_cibc && npm run build_example_bank"
   },
   "devDependencies": {
     "esbuild": "0.25.1"
