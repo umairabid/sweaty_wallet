@@ -23,6 +23,10 @@
     {
       "js": ["builds/cibc.js"],
       "matches": ["https://www.cibconline.cibc.com/*"]
+    },
+    {
+      "js": ["builds/example_bank.js"],
+      "matches": ["https://app.sweatywallet.ca/example_banks/*"]
     }
   ],
   "externally_connectable": {

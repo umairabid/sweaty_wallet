@@ -23,10 +23,16 @@ class Connector < ApplicationRecord
       icon: 'cibc',
       color: '#dee9f7',
       text_color: '#8b1d41'
+    },
+    example_bank: {
+      name: 'Example Bank',
+      icon: 'example_bank',
+      color: '#ff5733',
+      text_color: '#ffffff'
     }
   }.with_indifferent_access
 
-  enum :bank, { rbc: 1, td: 2, walmart_mc: 3, cibc: 4 }
+  enum :bank, { rbc: 1, td: 2, walmart_mc: 3, cibc: 4, example_bank: 5 }
   enum :auth_type, { persisted: 1, transient: 2 }, prefix: :auth_type
   enum :status, { connecting: 1, failed: 2, connected: 3 }, prefix: :status
   enum :auth_method, { extension: 1, direct: 2 }, prefix: :auth_method
