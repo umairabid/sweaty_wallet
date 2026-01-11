@@ -29,16 +29,12 @@ function scrapeAccounts() {
   const accounts = [];
   const accountGroups = document.getElementsByClassName("account-groups")[0];
 
-  console.log("Account groups container:", accountGroups);
-
   if (!accountGroups) {
-    console.error("Account groups container not found");
     return accounts;
   }
 
   for (let i = 0; i < accountGroups.children.length; i++) {
     const accountGroup = accountGroups.children[i];
-    console.log("Processing account group:", accountGroup);
     const type = getAccountType(accountGroup);
 
     if (!type) continue;
