@@ -51,19 +51,18 @@ export default class ExamplePort {
   }
 
   pull_transactions_credit_card(params) {
-    console.log("redirecting to credit card");
     return new Promise((resolve) => {
       this.execute_command(
         "redirect_to_credit_card_url",
         { url: this.credit_card_url(params.encrypted_identifier) },
         () => {
-          console.log("credit card redirect received");
           setTimeout(() => {
             this.execute_command(
               "pull_transactions_credit_card",
               { encrypted_identifier: params.encrypted_identifier },
               (response) =>
               resolve({
+                identifier: params.identifier,
                 success: true,
                 status: "pulled_transactions",
                 transactions: response,
@@ -76,19 +75,18 @@ export default class ExamplePort {
   }
 
   pull_transactions_deposit_account(params) {
-    console.log("redirecting to deposit account");
     return new Promise((resolve) => {
       this.execute_command(
         "redirect_to_deposit_acc_url",
         { url: this.deposit_acc_url(params.encrypted_identifier) },
         () => {
-          console.log("deposit account redirect received");
           setTimeout(() => {
             this.execute_command(
               "pull_transactions_deposit_account",
               { encrypted_identifier: params.encrypted_identifier },
               (response) =>
               resolve({
+                identifier: params.identifier,
                 success: true,
                 status: "pulled_transactions",
                 transactions: response,
@@ -101,11 +99,11 @@ export default class ExamplePort {
   }
 
   credit_card_url(encrypted_identifier) {
-    return `https://example.com/credit_card_login?ei=${encrypted_identifier}`;
+    return `https://app.sweatywallet.ca/example_banks/credit`;
   }
 
   deposit_acc_url(encrypted_identifier) {
-    return `https://example.com/deposit_account_login?ei=${encrypted_identifier}`;
+    return `https://app.sweatywallet.ca/example_banks/debit`;
   }
 
   set_port(port) {
