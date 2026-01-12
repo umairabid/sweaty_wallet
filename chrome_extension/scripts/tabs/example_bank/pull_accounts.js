@@ -2,7 +2,7 @@ function getAccountType(element) {
   const classList = element.classList;
   if (classList.contains("deposit-accounts")) return "deposit_account";
   if (classList.contains("credit-accounts")) return "credit_card";
-  if (classList.contains("lending-accounts")) return "lending";
+  if (classList.contains("mortgage-accounts")) return "mortgage";
   if (classList.contains("investment-accounts")) return "investment";
 }
 

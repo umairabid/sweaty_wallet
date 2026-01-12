@@ -103,7 +103,7 @@ export default class ExamplePort {
   }
 
   deposit_acc_url(encrypted_identifier) {
-    return `https://app.sweatywallet.ca/example_banks/debit/${encrypted_identifier}`;
+    return `https://app.sweatywallet.ca/example_banks/${encrypted_identifier}`;
   }
 
   set_port(port) {

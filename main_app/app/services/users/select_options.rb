@@ -21,6 +21,7 @@ class Users::SelectOptions
 
   def all_banks
     banks = Connector::BANKS_CONFIG.keys
+    banks = banks.select { |b| b != :example_bank } if Rails.env.production?
     banks.map { |b| [Connector::BANKS_CONFIG[b][:name], b] }
   end
 
