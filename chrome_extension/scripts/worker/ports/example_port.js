@@ -99,11 +99,11 @@ export default class ExamplePort {
   }
 
   credit_card_url(encrypted_identifier) {
-    return `https://app.sweatywallet.ca/example_banks/credit`;
+    return `https://app.sweatywallet.ca/example_banks/${encrypted_identifier}`;
   }
 
   deposit_acc_url(encrypted_identifier) {
-    return `https://app.sweatywallet.ca/example_banks/debit`;
+    return `https://app.sweatywallet.ca/example_banks/debit/${encrypted_identifier}`;
   }
 
   set_port(port) {
