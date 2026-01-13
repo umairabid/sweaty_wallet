@@ -11,10 +11,10 @@
         <div class="flex items-center gap-x-1"> <%= @transaction_rule.name %> <%= render('icons/arrow-down') %> </div>
       </button>
       <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-xl w-44 ">
-        <ul class="py-2 border-gray-200 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+        <ul class="py-2 border-gray-200 text-sm text-gray-700" aria-labelledby="dropdownDefaultButton">
           <%- @transaction_rules.each do |rule| %>
             <li>
-              <a href="<%= edit_transaction_rule_path(rule.last) %>" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+              <a href="<%= edit_transaction_rule_path(rule.last) %>" class="block px-4 py-2 hover:bg-gray-100">
                 <%= rule.first %>
               </a>
             </li>
@@ -31,12 +31,12 @@
     <div class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
       <%= form_with(model: @transaction_rule, url: transaction_rule_path(id: params[:id])) do |f| %>
         <div class="mb-6">
-          <%= f.label :name, 'Rule Name', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+          <%= f.label :name, 'Rule Name', class: 'block mb-2 text-sm font-medium text-gray-900' %>
           <%= f.text_field :name, autofocus: true, autocomplete: "name", placeholder: 'Enter Rule Name', class: 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5' %>
         </div>
         <div class="mb-6">
-          <%= f.label :category_id, 'Target Category', class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
-          <%= f.select :category_id, @user_references[:categories], {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %>
+          <%= f.label :category_id, 'Target Category', class: 'block mb-2 text-sm font-medium text-gray-900' %>
+          <%= f.select :category_id, @user_references[:categories], {}, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5' %>
         </div>
         <div class="flex items-center justify-end">
           <%= f.submit "Update", class: 'cursor-pointer ms-3 text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center' %>
