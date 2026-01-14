@@ -6,8 +6,7 @@ COPY ./main_app/Gemfile ./main_app/Gemfile.lock ./
 
 RUN bundle install
 
-RUN bundle exec rails tailwindcss:install \
-  && bundle exec rails rails_charts:install
+RUN bundle exec rails rails_charts:install
 
 COPY . .
 
