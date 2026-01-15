@@ -116,11 +116,11 @@ GEM
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
-    faraday-multipart (1.1.1)
+    faraday-multipart (1.2.0)
       multipart-post (~> 2.0)
     faraday-net_http (3.4.2)
       net-http (~> 0.5)
-    faraday-retry (2.3.2)
+    faraday-retry (2.4.0)
       faraday (~> 2.0)
     faye-websocket (0.11.3)
       eventmachine (>= 0.12.0)
@@ -188,7 +188,7 @@ GEM
       ruby2_keywords (~> 0.0.1)
     neighbor (0.6.0)
       activerecord (>= 7.1)
-    net-http (0.8.0)
+    net-http (0.9.1)
       uri (>= 0.11.1)
     net-imap (0.6.2)
       date
@@ -326,7 +326,7 @@ GEM
       ffi (~> 1.12)
       logger
     ruby2_keywords (0.0.5)
-    ruby_llm (1.9.1)
+    ruby_llm (1.10.0)
       base64
       event_stream_parser (~> 1)
       faraday (>= 1.10.0)
