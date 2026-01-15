@@ -70,9 +70,9 @@ gem 'redis'
 
 gem 'sidekiq-scheduler'
 
-gem 'rails_charts', github: 'umairabid/rails_charts', branch: 'main'
+gem 'image_processing'
 
-# gem 'rails_charts', path: 'lib/rails_charts'
+gem 'rails_charts'
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]

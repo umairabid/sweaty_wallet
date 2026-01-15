@@ -1,11 +1,3 @@
-GIT
-  remote: https://github.com/umairabid/rails_charts.git
-  revision: 950a8f6c1a905ec831293b138c3e124ccb53c2b1
-  branch: main
-  specs:
-    rails_charts (0.0.9)
-      rails
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -124,15 +116,17 @@ GEM
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
-    faraday-multipart (1.2.0)
+    faraday-multipart (1.1.1)
       multipart-post (~> 2.0)
     faraday-net_http (3.4.2)
       net-http (~> 0.5)
-    faraday-retry (2.4.0)
+    faraday-retry (2.3.2)
       faraday (~> 2.0)
     faye-websocket (0.11.3)
       eventmachine (>= 0.12.0)
       websocket-driver (>= 0.5.1)
+    ffi (1.17.3-arm64-darwin)
+    ffi (1.17.3-x86_64-linux-gnu)
     fugit (1.11.0)
       et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
@@ -140,7 +134,10 @@ GEM
       activesupport (>= 6.1)
     i18n (1.14.8)
       concurrent-ruby (~> 1.0)
-    importmap-rails (2.2.3)
+    image_processing (1.14.0)
+      mini_magick (>= 4.9.5, < 6)
+      ruby-vips (>= 2.0.17, < 3)
+    importmap-rails (2.2.2)
       actionpack (>= 6.0.0)
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
@@ -180,6 +177,8 @@ GEM
       rack (>= 1.4.0)
       yajl-ruby
     marcel (1.1.0)
+    mini_magick (5.3.1)
+      logger
     mini_mime (1.1.5)
     minitest (6.0.1)
       prism (~> 1.5)
@@ -189,7 +188,7 @@ GEM
       ruby2_keywords (~> 0.0.1)
     neighbor (0.6.0)
       activerecord (>= 7.1)
-    net-http (0.9.1)
+    net-http (0.8.0)
       uri (>= 0.11.1)
     net-imap (0.6.2)
       date
@@ -256,6 +255,8 @@ GEM
     rails-html-sanitizer (1.6.2)
       loofah (~> 2.21)
       nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
+    rails_charts (1.0.0)
+      rails
     railties (8.1.2)
       actionpack (= 8.1.2)
       activesupport (= 8.1.2)
@@ -267,7 +268,7 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.3.1)
-    rdoc (7.0.3)
+    rdoc (7.1.0)
       erb
       psych (>= 4.0.0)
       tsort
@@ -321,8 +322,11 @@ GEM
       rubocop (>= 1.75.0, < 2.0)
       rubocop-ast (>= 1.44.0, < 2.0)
     ruby-progressbar (1.13.0)
+    ruby-vips (2.3.0)
+      ffi (~> 1.12)
+      logger
     ruby2_keywords (0.0.5)
-    ruby_llm (1.9.2)
+    ruby_llm (1.9.1)
       base64
       event_stream_parser (~> 1)
       faraday (>= 1.10.0)
@@ -376,7 +380,7 @@ GEM
       railties (>= 7.1.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    tzinfo-data (1.2025.3)
+    tzinfo-data (1.2025.2)
       tzinfo (>= 1.0.0)
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
@@ -413,6 +417,7 @@ DEPENDENCIES
   debug
   devise
   factory_bot_rails
+  image_processing
   importmap-rails
   jbuilder
   mailcatcher
@@ -422,7 +427,7 @@ DEPENDENCIES
   pg
   puma
   rails (~> 8.1)
-  rails_charts!
+  rails_charts
   redis
   requestjs-rails
   rspec-rails
@@ -442,4 +447,4 @@ RUBY VERSION
    ruby 3.3.6p108
 
 BUNDLED WITH
-   2.5.9
+   2.5.22
