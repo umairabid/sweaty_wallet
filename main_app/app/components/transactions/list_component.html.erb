@@ -20,7 +20,7 @@
 </div>
 <% if @options[:show_pagination] %>
   <div class="flex justify-center p-6">
-    <%== helpers.pagy_nav(@pagy) %>
+    <%== @pagy.series_nav  %>
   </div>
 <% end %>
 

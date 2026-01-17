@@ -1,5 +1,5 @@
 class Transactions::ListComponent < ViewComponent::Base
-  include Pagy::Backend
+  include Pagy::Method
 
   DEFAULT_OPTIONS = {
     with_suggestions: false,
@@ -34,7 +34,7 @@ class Transactions::ListComponent < ViewComponent::Base
     scope = @user.transactions.preload(:account)
     scope = Transactions::ScopeBuilder.call(@filter, scope) if @filter.present?
     scope = scope.order(@sort)
-    @pagy, @transactions = pagy_countless(scope, limit: @limit,
+    @pagy, @transactions = pagy(:countless, scope, limit: @limit,
       request_path: helpers.transactions_path)
   end
 
