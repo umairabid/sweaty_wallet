@@ -21,6 +21,7 @@ class MessageController {
     }
 
     handler(request.params).then((res) => sendResponse(res));
+    return true;
   }
 
   get_bank_port(bank) {
