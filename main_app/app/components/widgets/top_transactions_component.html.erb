@@ -8,9 +8,14 @@
       page: 1,
       limit: 10,
       sort: sorts,
-      options: { 
+      options: {
         with_suggestions: params[:with_suggestions],
         show_pagination: false
+      },
+      empty_state: {
+        message: "No transactions found for this month",
+        cta_text: "Import transactions",
+        cta_path: "/connectors"
       }
     )) %>
   </div>
