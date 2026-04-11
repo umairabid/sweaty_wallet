@@ -1,0 +1,33 @@
+#!/bin/bash
+
+
+GetWorkerContainerId() {
+  local container_name="sweaty_wallet-worker"
+  local row=""
+  local tries=0
+  local max_tries=6
+  local container_id=""
+
+  while [[ -z "$row" && tries -lt max_tries ]]; do
+    row=$(docker ps | grep -P "$container_name-\d")
+    IFS=' ' read -ra parts <<< "$row"
+
+    if [[ -z "$row" ]]; then
+      sleep 5
+      tries=$((tries+1))
+    else
+      container_id="${parts[0]}"
+      break
+    fi
+  done
+
+  echo "$container_id"
+}
+
+container_id=$(GetWorkerContainerId)
+if [[ -n "$container_id" ]]; then
+  echo "Attaching to container: $container_id"
+  docker exec -it "$container_id" bin/rails console
+else
+  echo "Worker container not found after multiple attempts."
+fi

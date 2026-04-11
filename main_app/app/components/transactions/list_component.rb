@@ -8,10 +8,11 @@ class Transactions::ListComponent < ViewComponent::Base
 
   def initialize(**args)
     @options = args[:options] || DEFAULT_OPTIONS
-    
+    @empty_state = args[:empty_state]
+
     @columns = args[:columns] || Transaction::DEFAULT_COLUMNS.to_h { |k| [k, '1'] }
     @columns['suggested_category'] = '1' if @options[:with_suggestions]
-    
+
     @filter = args[:filter]
     @page = args[:page] || 1
     @user = args[:user]

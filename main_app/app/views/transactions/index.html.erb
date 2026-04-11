@@ -13,7 +13,12 @@
       columns: @columns,
       filter: @filter,
       page: params[:page],
-      options: { with_suggestions: params[:with_suggestions], show_pagination: true }
+      options: { with_suggestions: params[:with_suggestions], show_pagination: true },
+      empty_state: {
+        message: "No transactions found.",
+        cta_text: "Import transactions",
+        cta_path: "/connectors"
+      }
     )) %>
   </div>
   <div id="background_processing_modal"></div>
