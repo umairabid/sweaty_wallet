@@ -6,16 +6,25 @@
         <%= link_to "Add New", new_connector_path, class: 'p-2 py-1.5 rounded-lg text-sm text-white bg-primary-700', data: {'turbo-stream' => ''} %>
       </div>
     </div>
-    <div>
-      <% @connectors.each do |connector| %>
-        <%= render "connectors/connector_accounts", 
-            bank: connector, 
-            accounts: connector.accounts, 
-            bank_options: @user_references[:banks], 
-            account_types: @user_references[:account_types],
-            refresh_path: new_connector_path(bank: connector.bank) %>
-      <% end %>
-    </div>
+    <% if @connectors.empty? %>
+      <div class="flex flex-col items-center justify-center py-12 text-center">
+        <p class="text-gray-500 text-sm">No banks connected yet.</p>
+        <%= link_to "Connect your first bank", new_connector_path,
+              class: "mt-4 inline-flex items-center px-4 py-2 bg-primary-700 text-white text-sm font-medium rounded-lg hover:bg-primary-800",
+              data: { 'turbo-stream' => '' } %>
+      </div>
+    <% else %>
+      <div>
+        <% @connectors.each do |connector| %>
+          <%= render "connectors/connector_accounts",
+              bank: connector,
+              accounts: connector.accounts,
+              bank_options: @user_references[:banks],
+              account_types: @user_references[:account_types],
+              refresh_path: new_connector_path(bank: connector.bank) %>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>
 <div id="new_connector"></div>
