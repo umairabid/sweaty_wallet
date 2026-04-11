@@ -6,6 +6,8 @@ class FinancialAssetsController < ApplicationController
 
   def index
     @assets = current_user.assets
+    breakdown = current_user.net_worth_breakdown
+    @show_empty_state = breakdown.total_assets.zero? && breakdown.total_liabilities.zero?
   end
 
   def create

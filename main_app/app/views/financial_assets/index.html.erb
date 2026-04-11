@@ -6,17 +6,37 @@
     <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl">Your Net Worth</h1>
     <div class="flex justify-center items-center text-green-800 font-bold"><%= number_to_currency current_user.net_worth %></div>
   </div>
-  <div class="flex">
-    <div class="w-1/3 bg-white rounded-lg border border-gray-300 p-4 m-4 overflow-hidden text-sm">
-      <%= render(Widgets::AssetsLiabilitiesComponent.new(current_user)) %>
+  <% if @show_empty_state %>
+    <div
+      class="relative m-4 rounded-lg overflow-hidden border border-gray-300"
+      style="background-image: url('<%= asset_path('net_worth_empty_state.png') %>'); background-size: cover; background-position: center; min-height: 420px;">
+      <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4"
+           style="background-color: rgba(255, 255, 255, 0.82); backdrop-filter: blur(4px);">
+        <p class="text-gray-700 font-semibold mb-2">No assets or liabilities yet</p>
+        <p class="text-gray-500 text-sm mb-6">Add your assets manually or connect a bank to get started.</p>
+        <div class="flex gap-3">
+          <button data-action="click->assets--index#open_add_drawer" class="px-4 py-2 bg-primary-700 text-white text-sm font-medium rounded-lg hover:bg-primary-800">
+            Add Static Asset
+          </button>
+          <%= link_to "Connect a Bank", connectors_path,
+                class: "px-4 py-2 text-sm font-medium rounded-lg border",
+                style: "border-color: var(--color-primary-700); color: var(--color-primary-700);" %>
+        </div>
+      </div>
     </div>
-    <div class="w-1/3 bg-white rounded-lg border border-gray-300 p-4 m-4 overflow-hidden text-sm">
-      <%= render(Widgets::AssetsBreakdownComponent.new(current_user)) %>
+  <% else %>
+    <div class="flex">
+      <div class="w-1/3 bg-white rounded-lg border border-gray-300 p-4 m-4 overflow-hidden text-sm">
+        <%= render(Widgets::AssetsLiabilitiesComponent.new(current_user)) %>
+      </div>
+      <div class="w-1/3 bg-white rounded-lg border border-gray-300 p-4 m-4 overflow-hidden text-sm">
+        <%= render(Widgets::AssetsBreakdownComponent.new(current_user)) %>
+      </div>
+      <div class="w-1/3 bg-white rounded-lg border border-gray-300 p-4 m-4 overflow-hidden text-sm">
+        <%= render(Widgets::LiabilitiesBreakdownComponent.new(current_user)) %>
+      </div>
     </div>
-    <div class="w-1/3 bg-white rounded-lg border border-gray-300 p-4 m-4 overflow-hidden text-sm">
-      <%= render(Widgets::LiabilitiesBreakdownComponent.new(current_user)) %>
-    </div>
-  </div>
+  <% end %>
   <div class="m-4 p-4 bg-white border border-gray-300 rounded-lg">
     <div class="flex">
       <h3 class="flex-1 text-xl font-semibold text-gray-900 flex items-center">Assets</h3>
@@ -25,11 +45,21 @@
         <span class="pl-1">Add Asset</span>
       </button>
     </div>
-    <div class="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
-      <% @assets.each do |asset| %>
-        <%= render('financial_assets/row', asset: asset) %>
-      <% end %>
-    </div>
+    <% if @assets.empty? %>
+      <div class="flex flex-col items-center justify-center py-12 text-center">
+        <p class="text-gray-500 text-sm">No assets yet.</p>
+        <button data-action="click->assets--index#open_add_drawer"
+                class="mt-4 px-4 py-2 bg-primary-700 text-white text-sm font-medium rounded-lg hover:bg-primary-800">
+          Add your first asset
+        </button>
+      </div>
+    <% else %>
+      <div class="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
+        <% @assets.each do |asset| %>
+          <%= render('financial_assets/row', asset: asset) %>
+        <% end %>
+      </div>
+    <% end %>
   </div>
   <%= render('financial_assets/new') %>
 </div>
