@@ -144,3 +144,11 @@ samp,
 pre {
   font-family: ui-monospace, SFMono-Regular, 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
 }
+
+select {
+  appearance: none;
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="%239ca3af" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 17px center;
+  background-size: 12px;
+}
