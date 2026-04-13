@@ -1,0 +1,7 @@
+date,external_id,description,amount,is_credit,external_account_id,account_type,account_name,currency,bank
+2026-04-08,"Apr08,2026-DepositInterest-debit-44.37",Deposit Interest,44.37,false,debit,deposit_account,Example Checking Account,CAD,example_bank
+2026-04-12,"Apr12,2026-UberTrip-debit-401.12",Uber Trip,401.12,false,credit,credit_card,Example Credit Card,CAD,example_bank
+2026-04-07,"Apr07,2026-CoffeeShop-debit-418.26",Coffee Shop,418.26,false,debit,deposit_account,Example Checking Account,CAD,example_bank
+2026-04-12,"Apr12,2026-OnlineShopping-credit-313.71",Online Shopping,313.71,true,credit,credit_card,Example Credit Card,CAD,example_bank
+2026-04-02,"Apr02,2026-PayrollDeposit-debit-499.14",Payroll Deposit,499.14,false,debit,deposit_account,Example Checking Account,CAD,example_bank
+2026-04-10,"Apr10,2026-PaymentThankYou-credit-209.98",Payment Thank You,209.98,true,credit,credit_card,Example Credit Card,CAD,example_bank

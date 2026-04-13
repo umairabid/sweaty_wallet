@@ -18,7 +18,7 @@ export default class extends BaseController {
     document.getElementById("instructions").classList.toggle("hidden")
     document.getElementById("process").classList.toggle("hidden")
     document.getElementById("next_button").classList.toggle("hidden")
-    document.getElementById("done_button").classList.toggle("hidden")
+    this.toggle_actions()
     this.import()
   }
 
@@ -48,10 +48,18 @@ export default class extends BaseController {
     } else {
       this.handle_error(data)
     }
+    this.toggle_actions()
   }
 
   progress_spinner() {
     return document.getElementById("progress-spinner")
+  }
+
+  toggle_actions() {
+    const actions = document.getElementsByClassName("actions")
+    for (let i = 0; i < actions.length; i++) {
+      actions[i].classList.toggle("hidden")
+    }
   }
 
   error_messages_alert() {

@@ -286,6 +286,8 @@ body {
 .h-10 { height: 2.5rem; }
 .h-12 { height: 3rem; }
 .h-16 { height: 4rem; }
+.h-32 { height: 8rem; }
+.h-99 { height: calc(100% - 1rem); }
 
 .h-full { height: 100%; }
 .h-screen { height: 100vh; }
@@ -358,6 +360,7 @@ body {
 .text-blue-500 { color: var(--color-blue-500); }
 .text-blue-600 { color: var(--color-blue-600); }
 .text-blue-700 { color: var(--color-blue-700); }
+.text-blue-800 { color: var(--color-primary-800); }
 .text-orange-500 { color: var(--color-orange-500); }
 
 /* ===== 11. Color Utilities (Background) ===== */
@@ -404,6 +407,8 @@ body {
 .bg-pink-100 { background-color: var(--color-pink-100); }
 
 .bg-opacity-50 { --tw-bg-opacity: 0.5; }
+
+.fill-blue-600 { fill: var(--color-blue-600); }
 
 /* ===== 12. Border Utilities ===== */
 .border { border-width: 1px; border-style: solid; }
@@ -720,3 +725,6 @@ body {
     border: 0 solid #e5e7eb;
     box-sizing: border-box;
 }
+
+.list-inside { list-style-position: inside; }
+.list-decimal { list-style-type: decimal; }
