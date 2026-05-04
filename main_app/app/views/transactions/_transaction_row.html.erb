@@ -2,7 +2,7 @@
     id="transaction_row_<%= transaction.id %>"
     data-controller="transactions--row"
     data-transaction_id="<%= transaction.id %>"
-    class="bg-white border-b transaction_row">
+    class="bg-white border-b transaction_row border-gray-300">
     <%- Transaction::COLUMNS.each do |key| %>
       <%- if columns[key[0]].present? && columns[key[0]]== '1' %>
         <%- if key[0] == 'category_name' %>
@@ -10,7 +10,7 @@
             <button data-editable_attr="category" class="inline-flex items-center w-72" data-action="click->transactions--row#make_editable">
               <span class="hover:bg-yellow-50"><%=  Transaction::COLUMNS[key[0]][:value].call(transaction) %></span>
             </button>
-            <%= form_with(model: transaction, url: transaction_url(id: transaction.id, columns: @columns),  class: 'inline-block hidden w-72 relative') do |f| %>
+            <%= form_with(model: transaction, url: transaction_url(id: transaction.id, columns: @columns),  class: 'hidden w-72 relative') do |f| %>
               <%= f.select :category_id, references[:categories], {}, class: 'text-gray-900 text-sm rounded-lg inline-block', data: { action: 'change->transactions--row#update_category' } %>
             <% end %>
           </td>

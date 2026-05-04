@@ -1,6 +1,6 @@
 <div class="relative p-4 w-full max-w-2xl max-h-full">
   <div class="relative bg-white rounded-lg shadow">
-    <div aria-description="header" class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+    <div aria-description="header" class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-300">
       <h3 class="text-xl font-semibold text-gray-900">
         Connect Bank
       </h3>
@@ -13,7 +13,7 @@
       <div class="py-4 px-6">
         <%= select_tag('new_banks', options_for_select(@user_references[:all_banks], @bank), { 
           class: 'border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5',
-          style: 'background-size: 0.9em; background-position: right 1.3em center; background-repeat: no-repeat;',
+          style: 'background-size: 0.9em; background-position: right 1em center; background-repeat: no-repeat;',
         }) %>
         <%= link_to new_connector_path(bank: @bank, mode: 'import'), class: "flex border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 my-4 pr-1.5 #{@bank.present? ? '' : 'invisible'}", data: {'turbo-stream' => ''} do %>
           <span class="text-left text-sm flex-1">Import Transactions CSV</span>

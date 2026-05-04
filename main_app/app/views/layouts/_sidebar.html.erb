@@ -6,7 +6,7 @@
           <%- sidebar_menu.each do |menu| %>
             <li>
               <%= link_to(menu[:path], 
-                class: "nav-link flex items-center p-2 text-base text-gray-500 rounded-lg font-semibold#{current_page?(menu[:path]) ? ' active' : ''}") do %>
+                class: "nav-link flex items-center p-2 text-base rounded-lg font-semibold#{current_page?(menu[:path]) ? ' active' : ' text-gray-500'} hover:bg-blue-700 hover:text-white") do %>
                 <%= render "icons/#{menu[:icon]}" %>
                 <span class="ml-3" sidebar-toggle-item><%= menu[:name] %></span>
               <% end %>

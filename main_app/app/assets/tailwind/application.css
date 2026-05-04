@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+@theme {
+  /* Primary colors */
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
+
+  /* Use the same gray as before (Tailwind v3 Gray) */
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+
+  --color-red-500: #ef4444;
+  --color-green-500: #22c55e;
+  --color-blue-500: #3b82f6;
+  --color-orange-500: #f97316;
+}
+
+@layer base {
+  html {
+    @apply h-full;
+  }
+
+  body {
+    @apply h-full antialiased;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  }
+}
+
+@layer components {
+  /* Form validation styling */
+  .field_with_errors {
+    @apply inline;
+  }
+
+  .field_with_errors input {
+    @apply border-red-800;
+  }
+
+  .form-errors ul {
+    @apply list-disc;
+  }
+
+  /* Navigation link styles */
+  .nav-link svg,
+  .nav-link path {
+    @apply stroke-gray-700 fill-white;
+  }
+
+  .nav-link.active {
+    @apply bg-blue-700 text-white;
+  }
+
+  .nav-link:hover svg,
+  .nav-link:hover path,
+  .nav-link.active svg,
+  .nav-link.active path {
+    @apply stroke-white fill-blue-700;
+  }
+
+  /* Pagination styles */
+  .pagy {
+    @apply flex font-sans text-sm font-semibold text-gray-500 space-x-1;
+  }
+
+  .pagy a:not(.gap) {
+    @apply block no-underline rounded-lg bg-gray-200 px-3 py-1 text-inherit;
+  }
+
+  .pagy a:not(.gap):hover {
+    @apply bg-gray-300;
+  }
+
+  .pagy a:not(.gap):not([href]) {
+    @apply cursor-default bg-gray-100 text-gray-300;
+  }
+
+  .pagy a:not(.gap).current {
+    @apply bg-gray-400 text-white;
+  }
+
+  .pagy label {
+    @apply whitespace-nowrap inline-block rounded-lg bg-gray-200 px-3 py-0.5;
+  }
+
+  .pagy label input {
+    @apply leading-6 rounded-md border-none bg-gray-100;
+  }
+
+  /* Custom application-specific classes */
+  .bg-card { @apply bg-white; }
+  
+  .drawer-backdrop {
+    @apply fixed inset-0 z-30 bg-gray-900/50;
+  }
+
+  .dark .drawer-backdrop {
+    @apply bg-gray-900/80;
+  }
+
+  select {
+    appearance: none;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="%239ca3af" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 0.625rem center;
+    background-size: 0.625rem;
+    padding: 0.625em;
+    padding-right: 1.8rem;
+  }
+
+}
+
+/* Custom utilities if needed */
+@utility min-w-kanban {
+  min-width: 28rem;
+}

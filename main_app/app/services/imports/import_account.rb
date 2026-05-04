@@ -20,7 +20,7 @@ class Imports::ImportAccount
   end
 
   def account
-    @connector.accounts.unscoped.find_by(external_id: @params[:external_id])
+    @connector.accounts.find_by(external_id: @params[:external_id])
   end
 
   def create_params

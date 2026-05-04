@@ -4,6 +4,7 @@ class ConnectorsController < ApplicationController
 
   def import
     parameters = params.slice(:accounts, :bank).to_unsafe_hash
+    puts current_user.inspect
     job = Connectors::ImportBankJob.perform_later(parameters, current_user)
     render json: { job_id: job.job_id }
   end
