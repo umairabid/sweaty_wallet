@@ -3,7 +3,7 @@ class TransactionRules::ApplyRule
     @rule = rule
     @arel_table = Transaction.arel_table
     @rules_scope = build_group_query(@rule.conditions)
-    @category_scope = @arel_table.grouping(@arel_table[:category_id].not_eq(nil))
+    @category_scope = @arel_table.grouping(@arel_table[:category_id].eq(nil))
     @base_scope = base_scope || @rule.user.transactions
   end
 
