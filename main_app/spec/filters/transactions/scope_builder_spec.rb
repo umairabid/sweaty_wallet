@@ -84,7 +84,6 @@ RSpec.describe Transactions::ScopeBuilder do
 
         it 'returns transactions for last month' do
           result = subject.call
-          puts result.inspect
           expect(result.first.id).to eq t1.id
         end
       end
