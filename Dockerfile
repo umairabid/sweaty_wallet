@@ -8,20 +8,20 @@ WORKDIR /sweaty_wallet
 
 # Set production environment
 ENV RAILS_ENV="production" \
-    BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development" \
-    NODE_PATH="/usr/local/lib/node_modules"
+  BUNDLE_DEPLOYMENT="1" \
+  BUNDLE_PATH="/usr/local/bundle" \
+  BUNDLE_WITHOUT="development" \
+  NODE_PATH="/usr/local/lib/node_modules"
 
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
-ARG NODE_VERSION=18.x
+ARG NODE_VERSION=24.x
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libpq-dev \
-    libffi-dev libyaml-dev zlib1g-dev libvips pkg-config curl zip
+  apt-get install --no-install-recommends -y build-essential git libpq-dev \
+  libffi-dev libyaml-dev zlib1g-dev libvips pkg-config curl zip
 
 # Install node
 RUN echo "Debugging NODE_VERSION: https://deb.nodesource.com/setup_${NODE_VERSION}"
@@ -31,8 +31,8 @@ RUN apt-get install -y nodejs
 # Install application gems
 COPY main_app/Gemfile main_app/Gemfile.lock ./
 RUN bundle install && \
-    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
-    bundle exec bootsnap precompile --gemfile
+  rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
+  bundle exec bootsnap precompile --gemfile
 
 # Install node packages
 COPY chrome_extension/package.json chrome_extension/package-lock.json ./
@@ -66,8 +66,8 @@ FROM base
 
 # Install packages needed for deployment
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libvips postgresql-client && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+  apt-get install --no-install-recommends -y curl libvips postgresql-client && \
+  rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
